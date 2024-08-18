@@ -1,190 +1,190 @@
 中文版请见：[FSRS4Anki 使用指北](https://zhuanlan.zhihu.com/p/636564830)
 
-# Table of contents
-- [Step 1: Enabling the FSRS Scheduler](#step-1-enabling-the-fsrs-scheduler)
-- [Step 2: Personalizing FSRS](#step-2-personalizing-fsrs)
-- [Configuring Different Parameters for Different Decks](#configuring-different-parameters-for-different-decks)
+# 目次
+- [ステップ1: FSRSスケジューラを有効にする](#step-1-enabling-the-fsrs-scheduler)
+- [ステップ2: FSRSをパーソナライズする](#step-2-personalizing-fsrs)
+- [異なるデッキに異なるパラメータを設定する](#configuring-different-parameters-for-different-decks)
 - [FAQ](#faq)
 
-To get started with FSRS, you'll need to follow a two-step process.
+FSRSを始めるには、2つのステップを踏む必要があります。
 
-- First, you'll need to enable the FSRS scheduler in your Anki application.
-- Next, you'll need to personalize FSRS to suit your learning patterns.
+- まず、AnkiアプリケーションでFSRSスケジューラを有効にする必要があります。
+- 次に、FSRSをあなたの学習パターンに合わせてパーソナライズする必要があります。
 
-Let's now discuss both of these steps in detail.
+それでは、これらのステップについて詳しく説明します。
 
-## Step 1: Enabling the FSRS Scheduler
+## ステップ1: FSRSスケジューラを有効にする
 
-### 1.1 Enable Anki's V3 Scheduler
+### 1.1 AnkiのV3スケジューラを有効にする
 
-Go to Tools > Preferences > Review > Enable V3 Scheduler.
+ツール > 設定 > レビュー > V3スケジューラを有効にする。
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/8f91fba8-9b8b-405c-8aa9-42123ba5faeb"></p>
 
-### 1.2 Paste FSRS Scheduler Code
+### 1.2 FSRSスケジューラのコードを貼り付ける
 
-- Go to the following page and copy all of the code. https://github.com/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_scheduler.js
-- In Anki, open the deck options of any deck (it doesn’t matter which deck). Find the Advanced Settings column, and paste the code you copied into the Custom Scheduling field:
+- 以下のページにアクセスし、すべてのコードをコピーします。 https://github.com/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_scheduler.js
+- Ankiで、任意のデッキのデッキオプションを開きます（どのデッキでも構いません）。「高度な設定」列を見つけ、コピーしたコードを「カスタムスケジューリング」フィールドに貼り付けます：
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/5c292f91-8845-4f8c-ac42-55f9a0f2946e"></p>
 
-- Ensure that the learning and re-learning steps are shorter than 1 day in any deck you want to use with FSRS. Other settings, such as “Graduating interval” and “Easy interval”, don’t matter. For more details about which Anki settings matter and which are obsolete, see the [FAQs](https://github.com/open-spaced-repetition/fsrs4anki/wiki/FAQ).
+- FSRSを使用するデッキでは、学習および再学習のステップが1日未満であることを確認してください。「卒業間隔」や「簡単間隔」などの他の設定は重要ではありません。どのAnki設定が重要で、どの設定が不要かについての詳細は、[FAQ](https://github.com/open-spaced-repetition/fsrs4anki/wiki/FAQ)を参照してください。
 <p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/ba36847d-28f5-4df3-b4b3-4ff425609c04"></p>
 
-After you perform the above steps, the FSRS4Anki Scheduler should ideally be active. If you want to confirm this, you can change this part of the code:
+上記の手順を実行すると、FSRS4Ankiスケジューラが正常にアクティブになるはずです。これを確認したい場合は、コードのこの部分を変更できます：
 
 ```javascript
 const display_memory_state = false;
 ```
 
-to:
+を次のように変更します：
 
 ```javascript
 const display_memory_state = true;
 ```
 
-Then open any deck for review and you'll see the following message:
+次に、任意のデッキを開いてレビューを開始すると、以下のメッセージが表示されます：
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/0a5d4561-6052-45f3-91a5-5f21dd6497b9"></p>
 
-This shows that the FSRS scheduler is running normally. If you don’t see D, S and R, and only see “FSRS enabled”, it means that the card is in the “learning” or “relearning” stage, not in the “review” stage.
+これはFSRSスケジューラが正常に動作していることを示しています。D、S、Rが表示されず、「FSRS enabled」のみが表示される場合、そのカードは「学習」または「再学習」段階にあり、「レビュー」段階にはないことを意味します。
 
-You can then change the code back and the message will no longer display.
+その後、コードを元に戻すと、メッセージは表示されなくなります。
 
-## Step 2: Personalizing FSRS
+## ステップ2: FSRSをパーソナライズする
 
-Personalizing FSRS for your learning needs involves a two-step process.
+FSRSをあなたの学習ニーズに合わせてパーソナライズするには、2つのステップが必要です。
 
-- First, you'll need to train the FSRS parameters for your collection using the FSRS optimizer, tailoring the algorithm to your learning patterns.
-- Next, you'll need to choose the desired retention rate and maximum interval.
+- まず、FSRSオプティマイザーを使用してコレクションのFSRSパラメータをトレーニングし、アルゴリズムをあなたの学習パターンに合わせます。
+- 次に、望ましい保持率と最大間隔を選択します。
 
-Let's now discuss both of these steps in detail.
+それでは、これらのステップについて詳しく説明します。
 
-### Step 2.1 Training the FSRS Parameters
+### ステップ2.1 FSRSパラメータのトレーニング
 
-For most users, it is advisable to use one of the following two methods (Google Colab and Hugging Face) for training the parameters. Advanced users can explore other options mentioned [here](https://github.com/open-spaced-repetition/fsrs4anki/wiki/Advanced-methods-of-optimization).
+ほとんどのユーザーにとって、パラメータをトレーニングするためには、以下の2つの方法（Google ColabとHugging Face）のいずれかを使用することをお勧めします。上級ユーザーは、[こちら](https://github.com/open-spaced-repetition/fsrs4anki/wiki/Advanced-methods-of-optimization)に記載されている他のオプションを探索することもできます。
 
-Note that the FSRS optimizer requires a minimum of 2,000 reviews to produce accurate results. If you don't have enough data, you can skip this step and use the default parameters instead, which are already entered into the scheduler code.
+FSRSオプティマイザーは、正確な結果を得るために最低2,000回のレビューが必要であることに注意してください。データが十分でない場合は、このステップをスキップして、スケジューラコードに既に入力されているデフォルトのパラメータを使用することができます。
 
 <details>
-  <summary>Method 1: Training using Google Colab</summary>
+  <summary>方法1: Google Colabを使用したトレーニング</summary>
 
-Open the [optimizer's notebook](https://colab.research.google.com/github/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_optimizer.ipynb). You don't need to configure the coding environment yourself and you can use Google's machines for free (you'll need to have a Google account):
+[オプティマイザーのノートブック](https://colab.research.google.com/github/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_optimizer.ipynb)を開きます。コーディング環境を自分で設定する必要はなく、Googleのマシンを無料で使用できます（Googleアカウントが必要です）：
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/5f5af21b-583d-496c-9bad-0eef0b1fb7a6"></p>
 
-After the Colab website opens, switch to the folder tab. Once the Optimizer connects to Google's machines, you can right-click to upload your deck file/collection file exported from Anki.
+Colabのウェブサイトが開いたら、フォルダタブに切り替えます。オプティマイザーがGoogleのマシンに接続されたら、右クリックしてAnkiからエクスポートしたデッキファイル/コレクションファイルをアップロードできます。
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/66f9e323-fca8-4553-bcb2-b2e511fcf559"></p>
 
-When exporting these files, make sure to select "Include scheduling information" and "Support older Anki versions". You don't need to include media.
+これらのファイルをエクスポートする際は、「スケジューリング情報を含む」と「古いAnkiバージョンをサポート」を選択してください。メディアを含める必要はありません。
 
 <details>
-  <summary>A note on Privacy</summary>
+  <summary>プライバシーに関する注意</summary>
   
-The decks that you upload to the optimizer can't be accessed by the author of FSRS. This can be verified by anyone who understands code because the code of the optimizer is open-source.
+オプティマイザーにアップロードするデッキは、FSRSの作者がアクセスできません。オプティマイザーのコードはオープンソースであるため、コードを理解できる人なら誰でもこれを確認できます。
 
-Google may have access to the uploaded data. But, the risk is similar to uploading the data to your personal Google Drive folder.
+Googleはアップロードされたデータにアクセスできる可能性がありますが、リスクは個人のGoogleドライブフォルダにデータをアップロードするのと同様です。
 
-If you are too worried about privacy, you still have two options.
-- Advanced users can run the script locally using the options mentioned [here](https://github.com/open-spaced-repetition/fsrs4anki/wiki/Advanced-methods-of-optimization).
-- Other users can export their collection with blanked-out fields. To do this, go through the following steps:
-    - Take a backup by going to `File → Create Backup` just in case anything goes wrong.
-    - Go to `Browse > Notes > Find and Replace`.
-    - Type `(.|\n)*` in the "Find" field and keep the "Replace With" field empty.
-    - Check (✓) the "Treat input as regular expression" option. Uncheck "Selected notes only" if you want to apply this to all notes.<p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/eaaf818d-e0b1-486f-875a-4aa6b96e258a"></p>
-    - Export your collection using the steps mentioned above.
-    - Restore the contents of your notes by going to `Edit → Undo Find and Replace`.
+プライバシーが心配な場合は、以下の2つのオプションがあります。
+- 上級ユーザーは、[こちら](https://github.com/open-spaced-repetition/fsrs4anki/wiki/Advanced-methods-of-optimization)に記載されているオプションを使用してスクリプトをローカルで実行できます。
+- 他のユーザーは、フィールドを空白にしてコレクションをエクスポートできます。これを行うには、以下の手順に従ってください：
+    - 万が一問題が発生した場合に備えて、`ファイル → バックアップを作成`でバックアップを取ります。
+    - `ブラウズ > ノート > 検索と置換`に移動します。
+    - 「検索」フィールドに `(.|\n)*` と入力し、「置換」フィールドは空白のままにします。
+    - 「入力を正規表現として扱う」オプションにチェック（✓）を入れます。「選択されたノートのみ」のチェックを外します。これをすべてのノートに適用する場合は、チェックを外してください。<p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/eaaf818d-e0b1-486f-875a-4aa6b96e258a"></p>
+    - 上記の手順に従ってコレクションをエクスポートします。
+    - `編集 → 検索と置換の元に戻す`に移動して、ノートの内容を復元します。
 
 </details>
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/65da272d-7a01-4c46-a1d9-093e548f1a2d"></p>
 
-- After uploading the file, replace the `collection-2022-09-18@13-21-58.colpkg` with the name of your uploaded file.
-- Replace `Asia/Shanghai` with your timezone. The notebook contains a link to the list of time zones.
-- Also, replace the value of `next_day_starts_at`. To find this value, Go to `Tools > Preferences > Review > Next day starts at` in your Anki. 
+- ファイルをアップロードした後、`collection-2022-09-18@13-21-58.colpkg`をアップロードしたファイルの名前に置き換えます。
+- `Asia/Shanghai`をあなたのタイムゾーンに置き換えます。ノートブックにはタイムゾーンのリストへのリンクが含まれています。
+- `next_day_starts_at`の値も置き換えます。この値を見つけるには、Ankiの`ツール > 設定 > レビュー > 次の日の開始時刻`に移動します。
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/f344064c-4ccf-4884-94d0-fc0a1d3c3c24"></p>
 
-Then, run the optimizer by either pressing `Ctrl+F9` or going to `Runtime > Run all`.
+次に、`Ctrl+F9`を押すか、`ランタイム > すべて実行`に移動してオプティマイザーを実行します。
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/77947790-6916-4a99-ba28-8da42fd5b350"></p>
 
-Wait for the code to finish running. Then, go to section 2.2 (Result), where the optimized parameters will be available. Copy these parameters.
+コードの実行が完了するのを待ちます。その後、セクション2.2（結果）に移動し、最適化されたパラメータが利用可能になります。これらのパラメータをコピーします。
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/8df1d210-73c3-4194-9b3b-256279c4c2fd"></p>
 </details>
 
 <details>
-  <summary>Method 2: Training using Hugging Face</summary>
+  <summary>方法2: Hugging Faceを使用したトレーニング</summary>
   
-Simply upload your exported decks to this website and it will optimise it for you.  
+エクスポートしたデッキをこのウェブサイトにアップロードするだけで、最適化してくれます。  
 https://huggingface.co/spaces/open-spaced-repetition/fsrs4anki_app
 
 <p align="center"><img width="625" alt="image" src="https://github.com/Luc-mcgrady/fsrs4anki/assets/63685643/a03217f0-6627-4854-971f-f2bc9d14da5c"></p>
 </details>
 
-After training the parameters by either of the methods above, replace the parameters in the FSRS code that you copied earlier.
+上記のいずれかの方法でパラメータをトレーニングした後、以前にコピーしたFSRSコード内のパラメータを置き換えます。
 
 <p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/70b3b45a-f014-4574-81eb-cad6d19f93d9"></p>
 
-⚠️Note: When replacing these parameters, make sure that you don't accidentally erase the square brackets or the comma after the closing bracket. The code will break without them.
+⚠️注意: これらのパラメータを置き換える際に、角括弧や閉じ括弧の後のコンマを誤って消さないようにしてください。これらがないとコードが動作しません。
 
-Even after you start using FSRS, you should re-train the parameters once in every two months. However, it depends on how old your collection is. Users with relatively newer collections might want to re-optimize monthly. Re-optimization will ensure that FSRS works well with your current patterns of learning.
+FSRSを使用し始めた後も、2ヶ月に一度はパラメータを再トレーニングするべきです。ただし、これはコレクションの古さによります。比較的新しいコレクションを持つユーザーは、毎月再最適化することを検討するかもしれません。再最適化により、FSRSが現在の学習パターンにうまく適応することが保証されます。
 
-### Step 2.2: Choosing the desired retention rate and maximum interval
+### ステップ2.2: 望ましい保持率と最大間隔の選択
 
-Now, you need to choose your `requestRetention`, which denotes the retention rate (i.e. the fraction of the cards recalled successfully) that FSRS will try to achieve. 
+次に、FSRSが達成しようとする保持率（つまり、カードが成功裏に想起される割合）を示す`requestRetention`を選択する必要があります。
 
-As an aid in deciding this value, you can view your past retention rate in Anki stats. For example, if your retention rate in the past was 90%, you can set 0.90 as your `requestRetention`.
+この値を決定するための補助として、Ankiの統計で過去の保持率を確認できます。例えば、過去の保持率が90%であった場合、`requestRetention`を0.90に設定できます。
 
-You can set a higher `requestRetention` but keep in mind that as you increase the `requestRetention` above 0.90, the review load (reviews/day) will increase very rapidly. For the same reason, it is not advisable to use a `requestRetention` greater than 0.97.
+より高い`requestRetention`を設定することもできますが、`requestRetention`を0.90以上にすると、レビューの負荷（1日あたりのレビュー数）が非常に急速に増加することに注意してください。同じ理由で、`requestRetention`を0.97以上に設定することはお勧めしません。
 
-After deciding the value of `requestRetention`, put this into the scheduler code. At the same time, decide the value of `maximumInterval`, which is the maximum interval any card is allowed to attain. The value in the FSRS scheduler code overrides the value set in Anki's deck options.
+`requestRetention`の値を決定したら、これをスケジューラコードに入力します。同時に、任意のカードが達成できる最大間隔を示す`maximumInterval`の値も決定します。FSRSスケジューラコード内の値は、Ankiのデッキオプションで設定された値を上書きします。
 
 <p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/6989b282-7988-4d9e-9fbe-0b79985e9952"></p>
 
-After performing the above steps, you are ready to start using FSRS. Just start reviewing and FSRS will do its work.
+上記の手順を実行した後、FSRSの使用を開始する準備が整いました。レビューを開始すれば、FSRSがその役割を果たします。
 
-### Using the FSRS4Anki Helper add-on to reschedule existing cards
-After setting up FSRS in your Anki, you can install the [FSRS4Anki Helper add-on](https://ankiweb.net/shared/info/759844606) and use it to reschedule your existing cards. This is a one-time measure to reschedule the cards that were previously scheduled according to Anki's built-in algorithm. The add-on also offers many other useful features. Read more about the add-on here: https://github.com/open-spaced-repetition/fsrs4anki-helper
+### FSRS4Anki Helperアドオンを使用して既存のカードを再スケジュールする
+AnkiでFSRSを設定した後、[FSRS4Anki Helperアドオン](https://ankiweb.net/shared/info/759844606)をインストールし、既存のカードを再スケジュールするために使用できます。これは、Ankiの内蔵アルゴリズムに従って以前にスケジュールされたカードを再スケジュールするための一度限りの措置です。このアドオンは他にも多くの便利な機能を提供します。アドオンの詳細については、こちらをご覧ください: https://github.com/open-spaced-repetition/fsrs4anki-helper
 
 <p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/92289976-8b35-44b3-b5cd-3e6f89759c8d"></p>
 
 
-## Configuring Different Parameters for Different Decks
+## 異なるデッキに異なるパラメータを設定する
 
-You can also generate different parameters for different decks and configure them separately in the code. In the default configuration, `deckParams` already contains three groups of parameters.
+異なるデッキに対して異なるパラメータを生成し、コード内でそれぞれを設定することもできます。デフォルトの設定では、`deckParams`にはすでに3つのパラメータグループが含まれています。
 
-The group "global config for FSRS4Anki" is global parameters.
+「FSRS4Ankiのグローバル設定」グループは、グローバルパラメータです。
 
-The group "MainDeck1" are the parameters applied to the deck "MainDeck1" and its sub-decks.
+「MainDeck1」グループは、デッキ「MainDeck1」とそのサブデッキに適用されるパラメータです。
 
-Similarly, the third group is the parameters applied to the deck "MainDeck2::SubDeck::SubSubDeck" and its sub-decks. You can replace these with the decks you want to configure. If you need more, feel free to copy and add them.
+同様に、3番目のグループはデッキ「MainDeck2::SubDeck::SubSubDeck」とそのサブデッキに適用されるパラメータです。これらを設定したいデッキに置き換えることができます。さらに必要な場合は、自由にコピーして追加してください。
 
 ```javascript
 const deckParams = [
   {
-    // Default parameters of FSRS4Anki for global
-    "deckName": "global config for FSRS4Anki",
+// FSRS4Ankiのデフォルトパラメータ（グローバル設定）
+    "deckName": "FSRS4Ankiのグローバル設定",
     "w": [0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05, 0.34, 1.26, 0.29, 2.61],
-    // The above parameters can be optimized via FSRS4Anki optimizer.
-    // For details about the parameters, please see: https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm
-    // User's custom parameters for global
-    "requestRetention": 0.9, // recommended setting: 0.75 - 0.95
+    // 上記のパラメータはFSRS4Ankiオプティマイザーで最適化できます。
+    // パラメータの詳細については、こちらをご覧ください: https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm
+    // ユーザーのカスタムパラメータ（グローバル設定）
+    "requestRetention": 0.9, // 推奨設定: 0.75 - 0.95
     "maximumInterval": 36500,
-    // FSRS only modifies the long-term scheduling. So (re)learning steps in deck options work as usual.
-    // I recommend setting steps shorter than 1 day.
+    // FSRSは長期スケジューリングのみを変更します。そのため、デッキオプションの（再）学習ステップは通常通り機能します。
+    // 1日未満のステップを設定することをお勧めします。
   },
   {
-    // Example 1: User's custom parameters for this deck and its sub-decks.
+    // 例1: このデッキおよびそのサブデッキに対するユーザーのカスタムパラメータ。
     "deckName": "MainDeck1",
     "w": [0.6, 0.9, 2.9, 6.8, 4.72, 1.02, 1, 0.04, 1.49, 0.17, 1.02, 2.15, 0.07, 0.35, 1.17, 0.32, 2.53],
     "requestRetention": 0.9,
     "maximumInterval": 36500,
   },
   {
-    // Example 2: User's custom parameters for this deck and its sub-decks.
-    // Don't omit any keys.
+    // 例2: このデッキおよびそのサブデッキに対するユーザーのカスタムパラメータ。
+    // いかなるキーも省略しないでください。
     "deckName": "MainDeck2::SubDeck::SubSubDeck",
     "w": [0.6, 0.9, 2.9, 6.8, 4.72, 1.02, 1, 0.04, 1.49, 0.17, 1.02, 2.15, 0.07, 0.35, 1.17, 0.32, 2.53],
     "requestRetention": 0.9,
@@ -193,7 +193,7 @@ const deckParams = [
 ];
 ```
 
-If there are some decks you don't want to use FSRS with, you can add their names to the `skip_decks` list.
+FSRSを使用したくないデッキがある場合は、その名前を `skip_decks` リストに追加できます。
 
 ```javascript
 const skip_decks = ["MainDeck3", "MainDeck4::SubDeck"];
@@ -201,122 +201,122 @@ const skip_decks = ["MainDeck3", "MainDeck4::SubDeck"];
 
 # FAQ
 
-Q0: Why should the (re)learning steps be kept low with FSRS? What is considered as long interval by FSRS (from faq it seems maybe 1 day)?
+Q0: なぜFSRSでは（再）学習ステップを短く保つべきなのでしょうか？FSRSにとって長い間隔とはどのくらいですか（FAQによると1日かもしれません）？
 
-A0: Due to limitations of Anki's custom scheduling, the FSRS scheduler can't determine whether the reviews in the learning or relearning steps occur on the same day or on different days. So, the scheduler assumes that all those reviews occur on the same day. This means that even if the last learning step is greater than 1 day, the first interval set by the FSRS scheduler can still be equal to 1 day. To prevent this unexpected behaviour, it is recommend to not use learning or relearning steps of more than or equal to 1 day.
+A0: Ankiのカスタムスケジューリングの制限により、FSRSスケジューラは学習または再学習ステップのレビューが同じ日に行われるか、異なる日に行われるかを判断できません。そのため、スケジューラはすべてのレビューが同じ日に行われると仮定します。これにより、最後の学習ステップが1日以上であっても、FSRSスケジューラによって設定される最初の間隔は1日と等しくなる可能性があります。この予期しない動作を防ぐために、1日以上の学習または再学習ステップを使用しないことをお勧めします。
 
-If you still want to use learning (or relearning) steps greater than one day, it is recommended to reschedule your cards daily using the FSRS helper add-on. The helper add-on can read the entire review history of the card and, thus, provide more accurate next intervals in such cases.
+それでも1日以上の学習（または再学習）ステップを使用したい場合は、FSRSヘルパーアドオンを使用してカードを毎日再スケジュールすることをお勧めします。ヘルパーアドオンはカードの全レビュー履歴を読み取ることができるため、そのような場合により正確な次の間隔を提供できます。
 
-"Auto reschedule the card after each review" allows you to set learning steps longer than 1d (it's not recommended otherwise), but then the intervals displayed above the answer buttons won't match real intervals. So pick your poison - disable this option and use learning steps no longer than or equal to 1d, or enable it but then your displayed intervals won't match real intervals. To enable this feature, you need to install the helper add-on: https://ankiweb.net/shared/info/759844606
-
-***
-
-Q1: Will AnkiDroid kill this (since it still doesn't use v3 scheduling)?
-
-A1: AnkiDroid currently supports the v3 scheduler, which can be enabled through an advanced setting. However, it doesn't support custom scheduling yet, which is required for FSRS to work. AnkiDroid is expected to support FSRS in v2.17. For more details, please see: https://github.com/ankidroid/Anki-Android/issues/12620
-
-Till then, you can enable the "auto-reschedule after sync" option in the FSRS helper add-on. This way, when you sync your reviews from AnkiDroid to Desktop, they would be automatically rescheduled according to the FSRS algorithm. For best results, it is recommended to sync the reviews daily.
-
-However, if you only use AnkiDroid, you're out of luck.
+「各レビュー後にカードを自動再スケジュールする」オプションを有効にすると、1日以上の学習ステップを設定できます（それ以外は推奨されません）が、その場合、回答ボタンの上に表示される間隔は実際の間隔と一致しません。したがって、このオプションを無効にして1日以上の学習ステップを使用しないか、有効にして表示される間隔が実際の間隔と一致しないかを選択してください。この機能を有効にするには、ヘルパーアドオンをインストールする必要があります: https://ankiweb.net/shared/info/759844606
 
 ***
 
-Q2: Would a "dormant" deck not actively being used affect the results?
+Q1: AnkiDroidはこれを無効にしますか（まだv3スケジューリングを使用していないため）？
 
-A2: The cards in the "dormant" deck would have long intervals. So FSRS4Anki will predict you will forget them with a high possibility. If you remember them, FSRS4Anki will give longer intervals, but not be linear to the delay.
+A1: AnkiDroidは現在、v3スケジューラをサポートしており、高度な設定から有効にすることができます。ただし、FSRSが動作するために必要なカスタムスケジューリングはまだサポートしていません。AnkiDroidはv2.17でFSRSをサポートする予定です。詳細については、こちらをご覧ください: https://github.com/ankidroid/Anki-Android/issues/12620
 
-***
+それまでは、FSRSヘルパーアドオンで「同期後に自動再スケジュール」オプションを有効にすることができます。これにより、AnkiDroidからデスクトップにレビューを同期すると、FSRSアルゴリズムに従って自動的に再スケジュールされます。最良の結果を得るためには、レビューを毎日同期することをお勧めします。
 
-Q3: Does the algorithm change the way the card ease changes? If I just do good and hard will I be stuck in ease hell?
-
-A3: FSRS4Anki substitutes the card ease with the difficulty variable. The lower the difficulty, the higher the factor. The ease hell is solved by mean reversion of difficulty. If you press `good` continuously, the difficulty will converge to $D_0(3)$. For more details about the algorithm, please see [Free Spaced Repetition Scheduler](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm).
+ただし、AnkiDroidのみを使用している場合は、残念ながら対応できません。
 
 ***
 
-Q4: How can I see if it's working?
+Q2: 使用されていない「休眠」デッキは結果に影響しますか？
 
-A4: You can use the [AnkiWebView Inspector](https://ankiweb.net/shared/info/31746032) add-on. Open the inspector before you review the cards. Then you will get into debug mode and see the custom scheduling code in the inspector. For more details, please see: [How does the scheduler work?](https://github.com/open-spaced-repetition/fsrs4anki/wiki/How-does-the-scheduler-work%3F)
-
-***
-
-Q5: Does it work on existing cards, using their past review history? Or does it only work with information that is yet to be created in the future?
-
-A5: The scheduler doesn't use the review history, but the optimizer does. The scheduler uses the ease factor and interval of cards to set memory states for existing cards. And you can use [FSRS4Anki Helper](https://ankiweb.net/shared/info/759844606) to reschedule the existing cards based on the entire review history. 
+A2: 「休眠」デッキのカードは長い間隔を持つことになります。そのため、FSRS4Ankiはそれらを忘れる可能性が高いと予測します。もし覚えていた場合、FSRS4Ankiはより長い間隔を設定しますが、その間隔は遅延に対して線形にはなりません。
 
 ***
 
-Q6: Once I started using this FSRS algorithm on my existing deck, if I ever have to go back to using Anki's built-in algorithm for the same deck, would that still be possible?
+Q3: アルゴリズムはカードのイーズの変化方法を変更しますか？「良い」と「難しい」だけを選択すると、イーズ地獄に陥りますか？
 
-A6: The ease factor is modified by the v3 scheduler as usual, and FSRS4Anki doesn’t intervene in it. FSRS4Anki only modifies the interval of cards. So you can go back without any problem.
-
-***
-
-Q7: Once FSRS is running, which Anki settings will become irrelevant (in the sense that changing them won't affect scheduling anymore), and which won't?
-
-A7: FSRS only modifies the long-term scheduling. So `Learning steps` and `Relearning steps` work as usual. And I recommend not setting a step of more than one day. For example, if your current steps are `10m 1h 1d 2d`, you had better remove the `1d 2d` from the steps.
-
-In the latest version of FSRS4Anki, `maximum interval` has been supported. You can modify them in  [fsrs4anki_scheduler.js](../blob/main/fsrs4anki_scheduler.js). 
-
-The `graduating interval`, `easy interval`, `new interval`, `starting ease`, `interval modifier`,  `easy bonus`, and `hard interval` become irrelevant.
+A3: FSRS4Ankiはカードのイーズを難易度変数に置き換えます。難易度が低いほど、ファクターが高くなります。イーズ地獄は難易度の平均回帰によって解決されます。「良い」を連続して押すと、難易度は$D_0(3)$に収束します。アルゴリズムの詳細については、[Free Spaced Repetition Scheduler](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm)をご覧ください。
 
 ***
 
-Q8: How to set different parameters for specific decks?
+Q4: ちゃんと動作しているかどうかを確認するにはどうすればいいですか？
+
+A4: [AnkiWebView Inspector](https://ankiweb.net/shared/info/31746032)アドオンを使用できます。カードをレビューする前にインスペクターを開きます。すると、デバッグモードに入り、インスペクターでカスタムスケジューリングコードを見ることができます。詳細については、こちらをご覧ください: [スケジューラはどのように動作しますか？](https://github.com/open-spaced-repetition/fsrs4anki/wiki/How-does-the-scheduler-work%3F)
+
+***
+
+Q5: 過去のレビュー履歴を使用して既存のカードに対して機能しますか？それとも、将来作成される情報にのみ機能しますか？
+
+A5: スケジューラはレビュー履歴を使用しませんが、オプティマイザーは使用します。スケジューラはカードのイーズファクターと間隔を使用して、既存のカードのメモリ状態を設定します。また、[FSRS4Anki Helper](https://ankiweb.net/shared/info/759844606)を使用して、全レビュー履歴に基づいて既存のカードを再スケジュールすることができます。
+
+***
+
+Q6: 既存のデッキでこのFSRSアルゴリズムを使用し始めた後、同じデッキでAnkiの内蔵アルゴリズムに戻す必要がある場合、それは可能ですか？
+
+A6: イーズファクターは通常通りv3スケジューラによって変更され、FSRS4Ankiはそれに介入しません。FSRS4Ankiはカードの間隔のみを変更します。したがって、問題なく戻すことができます。
+
+***
+
+Q7: FSRSが動作している場合、どのAnki設定が無関係になりますか（つまり、変更してもスケジューリングに影響しなくなる設定）？また、どの設定が影響を受けないままですか？
+
+A7: FSRSは長期スケジューリングのみを変更します。そのため、「学習ステップ」と「再学習ステップ」は通常通り機能します。そして、1日以上のステップを設定しないことをお勧めします。例えば、現在のステップが「10分、1時間、1日、2日」である場合、「1日、2日」をステップから削除することをお勧めします。
+
+最新バージョンのFSRS4Ankiでは、「最大間隔」がサポートされています。これを[fsrs4anki_scheduler.js](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_scheduler.js)で変更できます。
+
+「卒業間隔」、「簡単間隔」、「新しい間隔」、「開始イーズ」、「間隔修正」、「簡単ボーナス」、および「難しい間隔」は無関係になります。
+
+***
+
+Q8: 特定のデッキに異なるパラメータを設定するにはどうすればよいですか？
 
 A8:
 
-Step 1: Add code to the front template of the cards (if the version of Anki that you are using is above 2.1.62, you can skip this step)
+ステップ1: カードの表面テンプレートにコードを追加する（使用しているAnkiのバージョンが2.1.62以上の場合、このステップをスキップできます）
 
-Copy the following code `<div id=deck deck_name="{{Deck}}"></div>` and paste it in the front template of cards.
+以下のコード `<div id=deck deck_name="{{Deck}}"></div>` をコピーして、カードの表面テンプレートに貼り付けます。
 
 ![image](https://user-images.githubusercontent.com/32575846/193453322-2e1220e1-3601-43c3-ad9f-fcd46fd85de6.png)
 
-Step 2: Optimize the parameters for your specific deck
+ステップ2: 特定のデッキのパラメータを最適化する
 
 ![image](https://user-images.githubusercontent.com/32575846/192762296-d7bd9b5e-d2d0-45af-b51d-95cd7774b353.png)
 
 ![image](https://user-images.githubusercontent.com/32575846/215369494-9a14387f-14a2-4731-8d6f-87e39c23316c.png)
 
-Step 3: Set different parameters for specific decks and their sub-decks
+ステップ3: 特定のデッキおよびそのサブデッキに異なるパラメータを設定する
 
 ![image](https://user-images.githubusercontent.com/32575846/221179126-0942a10c-5dcc-4c76-a50f-29d13b554ac0.png)
 
 ***
 
-Q9: Can I use (addon name), which modifies Anki's algorithm and changes the math behind it, together with FSRS?
+Q9: Ankiのアルゴリズムを変更し、その背後の計算を変更する（アドオン名）をFSRSと一緒に使用できますか？
 
-A9: No. Any algorithm that affects Anki's built-in scheduler will either become useless once you start using FSRS, or will actively interfere with FSRS and cause problems.
-
-***
-
-Q10: FSRS is giving huge intervals to recently learnt cards. How can I fix this?
-
-A10: For many users, the default scheduler in Anki (SM-2) tends to show new cards at unnecessarily short intervals. So, when users switch to FSRS, they tend to feel that the intervals given to new cards are too large. But these larger intervals match the target retention (configured in the scheduler code) better. By using these larger intervals, FSRS can prevent many of the unnecessary reviews that happen when using SM-2. So, it is advisable to try using these larger first intervals for a few days and see how it goes.
-
-If you still want to decrease the intervals, you can increase the requestRetention in the scheduler. But note that this will decrease all the intervals, not just the first intervals.
+A9: いいえ。Ankiの内蔵スケジューラに影響を与えるアルゴリズムは、FSRSを使用し始めると無効になるか、FSRSと干渉して問題を引き起こします。
 
 ***
 
-Q11: How can I grade the card to make FSRS more effective?
+Q10: FSRSが最近学習したカードに非常に長い間隔を設定しています。どうすれば修正できますか？
 
-A11: The grade should be chosen based only on how easy it was to answer the card, not how long you want to wait until you see it again. 
+A10: 多くのユーザーにとって、Ankiのデフォルトスケジューラ（SM-2）は新しいカードを不必要に短い間隔で表示する傾向があります。そのため、ユーザーがFSRSに切り替えると、新しいカードに設定される間隔が長すぎると感じることがあります。しかし、これらの長い間隔はスケジューラコードで設定された目標保持率により適合しています。これらの長い間隔を使用することで、FSRSはSM-2を使用した場合に発生する多くの不必要なレビューを防ぐことができます。したがって、これらの長い最初の間隔を数日間試してみることをお勧めします。
 
-For example, if you habitually avoid the easy button because it shows long intervals, you can end up in a negative cycle: You'd be making the "easy" situations even rarer and easy grade's intervals longer and longer.
-
-This means you should ignore the intervals shown above the answer buttons and instead focus on how well you recall the information.
-
-If you still want to see a deck sooner rather than later, for example because you have an exam coming up, you can use the Advance function of the Helper add-on. Advance is the preferable method because it doesn't skew the grading history of the cards.
+それでも間隔を短くしたい場合は、スケジューラ内のrequestRetentionを増やすことができます。ただし、これにより最初の間隔だけでなく、すべての間隔が短くなることに注意してください。
 
 ***
 
-Q12: I only use "Again" and "Good", will FSRS work fine?
+Q11: FSRSをより効果的にするためにカードをどのように評価すればよいですか？
 
-A12: Yes. FSRS is about equally accurate for people who rarely use "Hard" and "Easy" and for people who use all 4 buttons a lot. However, this is not the final conclusion, and as we gather more data, this conclusion may change.
+A11: カードの評価は、カードを答えるのがどれだけ簡単だったかに基づいて選択するべきであり、次にそのカードを見るまでの期間をどれだけ長くしたいかに基づいて選択するべきではありません。
+
+例えば、長い間隔が表示されるために「簡単」ボタンを避ける習慣がある場合、負のサイクルに陥る可能性があります。「簡単」な状況をますます稀にし、「簡単」評価の間隔をますます長くしてしまいます。
+
+これは、回答ボタンの上に表示される間隔を無視し、情報をどれだけよく思い出せるかに集中するべきであることを意味します。
+
+それでもデッキを早く見たい場合、例えば試験が近づいているために早く見たい場合は、HelperアドオンのAdvance機能を使用できます。Advanceはカードの評価履歴を歪めないため、好ましい方法です。
 
 ***
 
-You haven't seen the answer for your question? Here are many questions asked by others: https://github.com/open-spaced-repetition/fsrs4anki/issues?q=is%3Aissue+label%3Aquestion+
+Q12: 「もう一度」と「良い」しか使わないのですが、FSRSは正常に動作しますか？
 
-If you still have trouble, please open a new issue to provide the details about that.
+A12: はい。FSRSは、「難しい」と「簡単」をほとんど使わない人と、4つのボタンすべてを頻繁に使う人に対して、ほぼ同じ精度で動作します。ただし、これは最終的な結論ではなく、データが増えるにつれてこの結論が変わる可能性があります。
+
+***
+
+あなたの質問に対する答えが見つかりませんか？他の人が尋ねた多くの質問はこちらです: https://github.com/open-spaced-repetition/fsrs4anki/issues?q=is%3Aissue+label%3Aquestion+
+
+それでも問題が解決しない場合は、新しいIssueを開いて詳細を提供してください。
 
 https://github.com/open-spaced-repetition/fsrs4anki/issues/new/choose
