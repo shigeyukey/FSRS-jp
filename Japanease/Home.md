@@ -2,13 +2,13 @@
 
 # FSRS4Anki Wikiへようこそ！
 
-FSRSの概要: [FSRSのABC](https://github.com/open-spaced-repetition/fsrs4anki/wiki/ABC-of-FSRS)
+FSRSの概要: [FSRSのABC](ABC-of-FSRS.md)
 
-FSRSに関するよくある質問: [FAQ](https://github.com/open-spaced-repetition/fsrs4anki/wiki/FAQ)
+FSRSに関するよくある質問: [FAQ](FAQ.md)
 
-FSRSで使用される記憶の公式: [アルゴリズム](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm)
+FSRSで使用される記憶の公式: [アルゴリズム](The-Algorithm.md)
 
-FSRSのトレーニングプロセス: [最適化の仕組み](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-mechanism-of-optimization)
+FSRSのトレーニングプロセス: [最適化の仕組み](The-mechanism-of-optimization.md)
 
 SM-2、FSRS v3、FSRS v4、および他のアルゴリズムの比較: [ベンチマーク](https://github.com/open-spaced-repetition/srs-benchmark)
 

@@ -8,7 +8,7 @@
 
 # FSRS4Anki
 
-_✨ [フリー間隔反復スケジューラーアルゴリズム](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm) に基づいたAnki用の最新の間隔反復スケジューラー ✨_
+_✨ [フリー間隔反復スケジューラーアルゴリズム](The-Algorithm.md) に基づいたAnki用の最新の間隔反復スケジューラー ✨_
 
 </div>
 
@@ -35,9 +35,9 @@ _✨ [フリー間隔反復スケジューラーアルゴリズム](https://gith
 FSRS4Ankiは、スケジューラーとオプティマイザー(最適化装置)の2つの主要な部分で構成されています。
 
 - スケジューラーはAnkiの内蔵スケジューラーを置き換え、FSRSアルゴリズムに従ってカードをスケジュールします。
-- オプティマイザーは機械学習を使用してあなたの記憶パターンを学習し、レビュー履歴に最適なパラメータを見つけます。オプティマイザーの動作の詳細については、[最適化の仕組み](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-mechanism-of-optimization)をお読みください。
+- オプティマイザーは機械学習を使用してあなたの記憶パターンを学習し、レビュー履歴に最適なパラメータを見つけます。オプティマイザーの動作の詳細については、[最適化の仕組み](The-mechanism-of-optimization.md)をお読みください。
 
-FSRSアルゴリズムの詳細については、[アルゴリズム](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm)をお読みください。興味があれば、私の論文もご覧いただけます：
+FSRSアルゴリズムの詳細については、[アルゴリズム](The-Algorithm.md)をお読みください。興味があれば、私の論文もご覧いただけます：
 - [間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム](https://www.maimemo.com/paper/)（無料アクセス）、および
 - [記憶のダイナミクスを捉えて間隔反復スケジュールを最適化する](https://www.researchgate.net/publication/369045947_Optimizing_Spaced_Repetition_Schedule_by_Capturing_the_Dynamics_of_Memory)（リクエストを提出）。
 
