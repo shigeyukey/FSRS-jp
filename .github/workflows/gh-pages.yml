@@ -30,6 +30,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set execute permission
+        run: chmod +x .github/workflows/build.sh
+
       - name: Build
         run: CHECK=1 .github/workflows/build.sh
 
