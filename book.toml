@@ -1,23 +1,10 @@
 [book]
-authors = ["Ankitects Pty Ltd and contributors"]
+authors = ["Shigeyuki"]
 language = "jp"
 multilingual = false
 src = "src"
 title = "FSRS Wiki 日本語版"
 
-[build]
-create-missing = true
-
 [output.html]
-# no-section-label = true
 git-repository-url = "https://github.com/shigeyukey/FSRS-jp"
-
-[preprocessor.toc]
-command = "mdbook-toc"
-renderer = ["html"]
-
-[output.linkcheck]
-optional = true
-warning-policy = "warn"
-follow-web-links = true
-exclude = [ '*' ]
+git-repository-icon = "fa-github"
