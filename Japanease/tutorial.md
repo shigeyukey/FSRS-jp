@@ -1,6 +1,6 @@
 中文版请见：[Anki 新算法 FSRS 配置指南](https://zhuanlan.zhihu.com/p/664758200)
 
-(Anki v23.10以降のネイティブバージョンのFSRS)
+(Anki v23.10以降のネイティブ版のFSRS)
 
 # 目次
 - [超短縮版](#%E8%B6%85%E7%9F%AD%E7%B8%AE%E7%89%88)
