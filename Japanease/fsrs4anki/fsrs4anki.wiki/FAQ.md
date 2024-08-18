@@ -1,3 +1,3 @@
-If you are using the native version of FSRS (in Anki v23.10+), refer to these [FAQs](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md#faq).
+Anki v23.10以降のネイティブバージョンのFSRSを使用している場合は、こちらの[FAQ](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md#faq)を参照してください。
 
-If you are using the custom scheduling version of FSRS (in Anki version older than 23.10), refer to these [FAQs](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial2.md#faq).
+Anki v23.10より古いバージョンでカスタムスケジューリングバージョンのFSRSを使用している場合は、こちらの[FAQ](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial2.md#faq)を参照してください。

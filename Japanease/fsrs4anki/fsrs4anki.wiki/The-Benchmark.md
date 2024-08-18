@@ -1,1 +1,1 @@
-See: https://github.com/open-spaced-repetition/srs-benchmark
+こちら: https://github.com/open-spaced-repetition/srs-benchmark

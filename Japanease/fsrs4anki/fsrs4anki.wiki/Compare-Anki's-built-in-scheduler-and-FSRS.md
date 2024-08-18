@@ -1,38 +1,37 @@
-For simplicity, the comparison only focuses on the intervals given in different rating sequences. The ratings in (re)learning steps will be ignored, only consider the first rating of new cards.
+簡単のため、比較は異なるレビュー順序で与えられる間隔のみに焦点を当てます。（再）学習ステップでの評価は無視し、新しいカードの最初の評価のみを考慮します。
 
-The default parameters of FSRS for comparison: 
+比較のためのFSRSのデフォルトパラメータ：
 ```javascript
 var w = [0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05, 0.34, 1.26, 0.29, 2.61];
 ```
 
-# Case one: press `good` continuously, with different first ratings.
+# ケース1: 最初の評価が異なる場合に「良い」を連続して押す
 
-Rating sequence: `1,3,3,3,3,3,3,3,3,3`
+レビュー順序: `1,3,3,3,3,3,3,3,3,3`
 
-Anki's intervals: `1d,3d,8d,20d,1.7m,4.2m,10.4m,2.1y,5.4y,13.4y`
+Ankiの間隔: `1日,3日,8日,20日,1.7ヶ月,4.2ヶ月,10.4ヶ月,2.1年,5.4年,13.4年`
 
-FSRS's intervals: `1d,2d,6d,14d,1.1m,2.3m,4.7m,9.1m,1.4y,2.5y`
+FSRSの間隔: `1日,2日,6日,14日,1.1ヶ月,2.3ヶ月,4.7ヶ月,9.1ヶ月,1.4年,2.5年`
 
 ***
 
-Rating sequence: `2,3,3,3,3,3,3,3,3,3`
+レビュー順序: `2,3,3,3,3,3,3,3,3,3`
 
-Anki's intervals: `1d,3d,8d,20d,1.7m,4.2m,10.4m,2.1y,5.4y,13.4y`
+Ankiの間隔: `1日,3日,8日,20日,1.7ヶ月,4.2ヶ月,10.4ヶ月,2.1年,5.4年,13.4年`
 
-FSRS's intervals: `1d,3d,9d,24d,1.9m,4.4m,9.5m,1.6y,3.1y,5.7y`
+FSRSの間隔: `1日,3日,9日,24日,1.9ヶ月,4.4ヶ月,9.5ヶ月,1.6年,3.1年,5.7年`
 
 *** 
 
-Rating sequence: `3,3,3,3,3,3,3,3,3,3`
+レビュー順序: `3,3,3,3,3,3,3,3,3,3`
 
-Anki's intervals: `1d,3d,8d,20d,1.7m,4.2m,10.4m,2.1y,5.4y,13.4y`
+Ankiの間隔: `1日,3日,8日,20日,1.7ヶ月,4.2ヶ月,10.4ヶ月,2.1年,5.4年,13.4年`
 
-FSRS's intervals: `2d,7d,21d,1.9m,4.8m,11.2m,2.0y,4.1y,8.1y,15.0y`
-
+FSRSの間隔: `2日,7日,21日,1.9ヶ月,4.8ヶ月,11.2ヶ月,2.0年,4.1年,8.1年,15.0年`
 ***
 
-Rating sequence: `4,3,3,3,3,3,3,3,3,3`
+レビュー順序: `4,3,3,3,3,3,3,3,3,3`
 
-Anki's intervals: `4d,10d,25d,2.1m,5.3m,1.1y,2.7y,6.8y,16.9y,42.3y`
+Ankiの間隔: `4日,10日,25日,2.1ヶ月,5.3ヶ月,1.1年,2.7年,6.8年,16.9年,42.3年`
 
-FSRS's intervals: `6d,20d,2.0m,5.5m,1.1y,2.6y,5.6y,11.5y,22.3y,41.4y`
+FSRSの間隔: `6日,20日,2.0ヶ月,5.5ヶ月,1.1年,2.6年,5.6年,11.5年,22.3年,41.4年`

@@ -1,76 +1,76 @@
-aka **C**ompute **M**inimum **R**ecommended **R**etention (CMRR)
+別名 **C**ompute **M**inimum **R**ecommended **R**etention（最小推奨保持率の計算、CMRR）
 
-# Definition
+# 定義
 
-When talking about spaced repetition, we are concerned about two factors:
+間隔反復について話すとき、私たちは次の2つの要素を考慮します：
 
-1. How many flashcards will I remember? (knowledge acquisition)
-2. How much time will it take? (workload in minutes of studying per day)
+1. どれだけのフラッシュカードを覚えているか？（知識の習得）
+2. どれだけの時間がかかるか？（1日にかかる勉強時間の負担）
 
-We want to remember as much as possible while spending as little time as possible. In FSRS, by choosing an appropriate value of the desired retention, we can either minimize the workload or maximize the knowledge acquisition.
+私たちは、できるだけ多くのことを覚えながら、できるだけ少ない時間を費やしたいと考えています。FSRSでは、望ましい保持率の適切な値を選択することで、負担を最小限に抑えるか、知識の習得を最大化することができます。
 
-Imagine we’re adding new cards constantly every day and doing reviews on time. Our knowledge acquisition will be high if we set a high desired retention.
+毎日新しいカードを追加し、時間通りにレビューを行うと想像してみてください。望ましい保持率を高く設定すれば、知識の習得は高くなります。
 
-Total knowledge can be taken as the sum of the probability of recall of each card.
+総知識は、各カードのリコール確率の合計として考えることができます。
 
-Mathematically, $\text{knowledge} = \sum\limits_{i=1}^n R_i$, where $n$ is how many cards we’ve learned, and $R_i$ is the probability we can recall the i<sup>th</sup> card.
+数学的には、$\text{knowledge} = \sum\limits_{i=1}^n R_i$ で表されます。ここで、$n$ は学習したカードの数、$R_i$ はi番目のカードをリコールできる確率です。
 
-Below is a graph that shows how knowledge depends on desired retention. On all of the graphs in this article, the Y axis doesn't have values because they depend on many things (FSRS parameters, time spent per card, deck size, new card limits, etc.) and don't provide valuable insights. It's the overall shape that matters.
+以下のグラフは、知識が望ましい保持率にどのように依存するかを示しています。この記事のすべてのグラフでは、Y軸に値がないのは、それらが多くの要素（FSRSパラメータ、カードごとに費やす時間、デッキサイズ、新しいカードの制限など）に依存しており、貴重な洞察を提供しないためです。重要なのは全体的な形状です。
 
 ![image](https://github.com/user-attachments/assets/1fbaf201-6697-467e-adef-7bf5958e4184)
 
-A high value of desired retention means we must review cards more often, which increases our workload. If we decrease the desired retention, the workload and the knowledge decrease. However, if the desired retention is very low, we forget a lot and have to relearn cards, again increasing our workload. So, there are two "forces" at play here:
-1) As desired retention increases, intervals become shorter, which increases the number of reviews per day.
-2) As desired retention decreases, we forget more and must re-learn more of our material.
+望ましい保持率の値が高いと、カードをより頻繁にレビューする必要があり、作業負荷が増加します。望ましい保持率を下げると、作業負荷と知識が減少します。しかし、望ましい保持率が非常に低い場合、多くを忘れてしまい、カードを再学習する必要があり、再び作業負荷が増加します。したがって、ここには2つの「力」が働いています：
+1) 望ましい保持率が増加すると、間隔が短くなり、1日に行うレビューの数が増加します。
+2) 望ましい保持率が減少すると、より多くを忘れてしまい、学習した内容を再学習する必要が増えます。
 
-As a result, if we plot the workload as a function of desired retention, the graph has a point of minimum workload.
+その結果、望ましい保持率を関数として作業負荷をプロットすると、作業負荷が最小になる点が現れます。
 
-**Note**: the following graphs are generated from the default parameters of FSRS. The real graphs vary among different learners.
+**注**: 以下のグラフはFSRSのデフォルトパラメータから生成されています。実際のグラフは学習者によって異なります。
 
 ![image](https://github.com/user-attachments/assets/57e1c61a-c288-401c-848a-8723d81c7ac7)
 
-A similar graph is obtained if we divide workload by the acquired knowledge (the formula at the beginning of this article), which tells us how much we will have to study *relative* to how much we will remember. The value of the desired retention that corresponds to this minimum is slightly different.
+同様のグラフは、作業負荷を習得した知識で割った場合にも得られます（この記事の冒頭の式）。これは、どれだけ覚えているかに対して相対的にどれだけ勉強する必要があるかを示しています。この最小値に対応する望ましい保持率の値は若干異なります。
 
 ![image](https://github.com/user-attachments/assets/b72af322-be5e-48ce-9065-7fd259779837)
 
-Minimizing workload/knowledge seems to be more practical than minimizing the workload. For example, if you had to study 30 minutes per day to achieve 80% retention and 31 minutes per day to achieve 90% retention, you would likely agree to study for one extra minute to remember 10% more.
+作業負荷/知識を最小化することは、作業負荷を最小化するよりも実用的であるように思われます。例えば、80%の保持率を達成するために1日30分勉強し、90%の保持率を達成するために1日31分勉強する必要がある場合、10%多く覚えるために1分多く勉強することに同意するでしょう。
 
-# Simulation
+# シミュレーション
 
-With FSRS, it's possible to simulate the learning process in Anki.
+FSRSを使用すると、Ankiでの学習プロセスをシミュレートすることができます。
 
-Code: https://github.com/open-spaced-repetition/fsrs-rs/blob/0634cb08b08fecb96b0b8a9caba4a5e6938e85bb/src/optimal_retention.rs#L107-L407
+コード: https://github.com/open-spaced-repetition/fsrs-rs/blob/0634cb08b08fecb96b0b8a9caba4a5e6938e85bb/src/optimal_retention.rs#L107-L407
 
-Here's a step-by-step overview of the simulation:
+シミュレーションのステップバイステップの概要は次のとおりです：
 
-1. **Initialization and Configuration Reading**:
-   - Extract various parameters from the `SimulatorConfig` configuration, such as deck size, learning span, maximum cost per day, etc. Here and hereafter "cost" refers to seconds of studying.
-   - Initialize the `card_table` as a zero matrix, then fill it with initial values based on the configuration (like learning span and very small values for difficulty and stability).
+1. **初期化と設定の読み込み**:
+   - `SimulatorConfig`設定からデッキサイズ、学習期間、1日あたりの最大コストなどのさまざまなパラメータを抽出します。ここで以降「コスト」は勉強にかかる秒数を指します。
+   - `card_table`をゼロ行列として初期化し、設定に基づいて初期値（学習期間や難易度と安定性の非常に小さい値など）で埋めます。
 
-2. **Initialize Daily Counters and Cost Arrays**:
-   - Initialize arrays for daily review counts, learning counts, memorized counts, and total daily costs.
+2. **日次カウンターとコスト配列の初期化**:
+   - 日次レビュー数、学習数、記憶数、および総日次コストの配列を初期化します。
 
-3. **Simulation Loop**:
-   - For each day (within the learning span, "Days to simulate"), perform the following steps:
-     - Calculate the elapsed days since the last review (`delta_t`) and retrievability for learned cards based on the card's stability and last review date.
-     - Determine which cards need to be reviewed and generate random values for these cards to later decide if they are forgotten. The probability that a user will press Good/Hard/Easy is estimated from the user's review history.
-     - Based on retrievability and random values, determine which cards are forgotten and assign ratings to cards that need to be reviewed.
-     - Update the cost of cards based on whether they are forgotten, their review ratings, and the cost parameters defined in the configuration. Cost parameters, such as how much time the user spends per card when he answers "Good" or "Again", are estimated from the user's review history.
-     - Compute the cumulative sum of costs to determine which cards will be reviewed. Due to the daily maximum cost and review limits, not all cards can always be reviewed.
-     - Determine which new cards need to be reviewed for the first time.
-     - Randomly generate ratings for newly learned cards, and update their stability and difficulty.
-     - Update cards' `last_date`, `stability`, `difficulty`, `interval`, and `due` fields.
-     - Update daily review counts, learning counts, memorized counts, and total costs.
+3. **シミュレーションループ**:
+   - 各日（学習期間内、「シミュレートする日数」）に対して、次のステップを実行します：
+     - 最後のレビューから経過した日数（`delta_t`）と、カードの安定性および最後のレビュー日付に基づいて学習済みカードの再現性を計算します。
+     - どのカードをレビューする必要があるかを決定し、これらのカードに対してランダムな値を生成して、後でそれらが忘れられているかどうかを判断します。ユーザーが「Good」「Hard」「Easy」を押す確率は、ユーザーのレビュー履歴から推定されます。
+     - 再現性とランダムな値に基づいて、どのカードが忘れられているかを判断し、レビューが必要なカードに評価を割り当てます。
+     - カードが忘れられているかどうか、そのレビュー評価、および設定で定義されたコストパラメータに基づいてカードのコストを更新します。コストパラメータ（ユーザーが「Good」または「Again」と答えたときにカードごとに費やす時間など）は、ユーザーのレビュー履歴から推定されます。
+     - コストの累積和を計算して、どのカードがレビューされるかを決定します。1日の最大コストとレビュー制限のため、すべてのカードを常にレビューできるわけではありません。
+     - 初めてレビューする必要がある新しいカードを決定します。
+     - 新しく学習したカードに対してランダムに評価を生成し、それらの安定性と難易度を更新します。
+     - カードの`last_date`、`stability`、`difficulty`、`interval`、および`due`フィールドを更新します。
+     - 日次レビュー数、学習数、記憶数、および総コストを更新します。
 
-4. **Return Results**:
-   - Return arrays of memorized counts, review counts, learning counts, and daily total costs.
+4. **結果の返却**:
+   - 記憶数、レビュー数、学習数、および日次総コストの配列を返します。
 
-The memorized count is the total knowledge acquired from the first day to the current day in the simulation. The review count is the number of cards reviewed during the current day. The learn count is the number of new cards learned during the current day. The daily total cost is time spent reviewing cards and learning new cards during the current day.
+記憶数は、シミュレーションの最初の日から現在の日までに習得した総知識です。レビュー数は、現在の日にレビューされたカードの数です。学習数は、現在の日に新しく学習されたカードの数です。日次総コストは、現在の日にカードをレビューし、新しいカードを学習するのに費やした時間です。
 
-# Optimization
+# 最適化
 
-With the simulator, it's possible to predict the workload for each desired retention level. The optimizer uses [Brent's method](https://en.wikipedia.org/wiki/Brent%27s_method) to find the optimal retention.
+シミュレーターを使用すると、各望ましい保持率レベルに対する作業負荷を予測することができます。オプティマイザーは[ブレント法](https://en.wikipedia.org/wiki/Brent%27s_method)を使用して最適な保持率を見つけます。
 
-Code: https://github.com/open-spaced-repetition/fsrs-rs/blob/0634cb08b08fecb96b0b8a9caba4a5e6938e85bb/src/optimal_retention.rs#L478-L589
+コード: https://github.com/open-spaced-repetition/fsrs-rs/blob/0634cb08b08fecb96b0b8a9caba4a5e6938e85bb/src/optimal_retention.rs#L478-L589
 
-Note: Before Anki 24.04, the goal was to maximize knowledge acquisition (the sum of all probabilities of recall), but in Anki 24.04+, the goal is to minimize workload/knowledge (minutes of studying divided by the aforementioned sum).
+注: Anki 24.04以前では、目標は知識の習得（すべてのリコール確率の合計）を最大化することでしたが、Anki 24.04以降では、目標は作業負荷/知識（勉強にかかる分数を前述の合計で割ったもの）を最小化することです。

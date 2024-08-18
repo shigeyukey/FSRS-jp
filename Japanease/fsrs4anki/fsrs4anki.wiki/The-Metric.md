@@ -1,56 +1,55 @@
-# Introduction
+# はじめに
 
-Root Mean Square Error in Bins (RMSE (bins)) is a metric designed to measure how well FSRS and other spaced repetition algorithms can predict the probability of recall (R).
+Bin(区間､階級)ごとの二乗平均平方根誤差（RMSE（bins））は、FSRSや他の間隔反復アルゴリズムがリコールの確率（R）をどれだけ正確に予測できるかを測定するために設計された指標です。
 
-In our benchmark experiment, we discovered that the RMSE (bins) metric can sometimes be cheated. So, we modified the binning method to prevent algorithms from obtaining artificially low RMSE (bins).
+ベンチマーク実験では、RMSE（bins）指標が時々不正に利用されることがあると判明しました。そのため、アルゴリズムが人工的に低いRMSE（bins）を取得するのを防ぐために、binning方法を修正しました。
 
-## Old method of calculating RMSE (bins)
+## RMSE（bins）の旧計算方法
 
-​1​​\) ​Group the predicted values of R into bins. For example, let's group some predictions between 0.8 and 0.9 in the bin 1:
+1\) Rの予測値をbinにグループ化します。例えば、0.8から0.9の間の予測をbin 1にグループ化します：
 
-    Bin 1 (predictions): [0.81, 0.82, 0.83, 0.84, 0.85, 0.86]
+    Bin 1（予測値）：[0.81, 0.82, 0.83, 0.84, 0.85, 0.86]
 
-2\) For each bin, record the actual outcome of a review, either 1 or 0. Again = 0. Hard/Good/Easy = 1.
+2\) 各binに対して、レビューの実際の結果を記録します。Again = 0。Hard/Good/Easy = 1。
 
-    Bin 1 (actual): [0, 1, 1, 1, 1, 1]
+    Bin 1（実際の結果）：[0, 1, 1, 1, 1, 1]
 
-3\) Calculate the average of all predictions within a bin.
+3\) Bin内のすべての予測値の平均を計算します。
 
-    Bin 1 average (predictions) = mean([0.81, 0.82, 0.83, 0.84, 0.85, 0.86]) = 0.835
+    Bin 1の平均（予測値） = mean([0.81, 0.82, 0.83, 0.84, 0.85, 0.86]) = 0.835
 
-4\) Calculate the average of all actual outcomes.
+4\) すべての実際の結果の平均を計算します。
 
-    Bin 1 average (actual) = mean([0, 1, 1, 1, 1, 1]) = 0.833
+    Bin 1の平均（実際の結果） = mean([0, 1, 1, 1, 1, 1]) = 0.833
 
-5\) Calculate the squared difference between the average of the predictions and the average of the actual review outcomes.
+5\) 予測値の平均と実際のレビュー結果の平均の二乗差を計算します。
 
-6\) Repeat steps 2-5 for each bin. The number of bins is arbitrary. The number of reviews in each bin is used for weighting.
+6\) 各binに対してステップ2-5を繰り返します。binの数は任意です。各binのレビュー数は重み付けに使用されます。
 
-7\) Calculate the final value using the following formula: 
+7\) 次の式を使用して最終値を計算します：
 
 $$RMSE(bins)=\sqrt\frac{\sum\limits\_{i=1}^{n} w\_{i} \cdot ({\overline{R}\_{i}}\_{\text{predicted}}-{\overline{R}\_{i}}\_{\text{measured}})^2}{\sum\limits_{i=1}^{n} w\_{i}}$$
 
-where,
-- $\overline{R}\_{\text{predicted}}$ is the average of predicted probabilities of recall within a given bin,
-$\overline{R}\_{\text{measured}}$ is the average of actual review outcomes within a given bin,
-- $w$ is the number of reviews within a given bin, and
-- $n$ is the number of bins.
+ここで、
+- $\overline{R}\_{\text{predicted}}$ は特定のbin内のリコールの予測確率の平均、
+- $\overline{R}\_{\text{measured}}$ は特定のbin内の実際のレビュー結果の平均、
+- $w$ は特定のbin内のレビュー数、
+- $n$ はbinの数です。
 
+## どのように操作(cheated)されるか
 
-## How it could be cheated
+もしアルゴリズムが各レビューでデータセットの平均保持率と正確に等しい一定の数値を予測すると、RMSE（bins）は0になります。これは極端な例ですが、露骨に操作しないアルゴリズムでも、予測の分散を減らすことで微妙に操作することができます。
 
-If an algorithm bets a constant number on each review that is precisely equal to the average retention in the dataset, it will achieve an RMSE (bins) of 0. This is an extreme example, but even an algorithm that does not cheat so blatantly can still cheat subtly by reducing the variance of its predictions.
-
-The calibration graph on the left is from an algorithm that doesn't cheat; the calibration graph on the right is from a cheating algorithm.
+左のキャリブレーショングラフは操作しないアルゴリズムのもので、右のキャリブレーショングラフは操作するアルゴリズムのものです。
 
 ![311506217-948f32d0-a1f9-4b4e-b0be-0964105bb284](https://github.com/open-spaced-repetition/fsrs4anki/assets/83031600/338d8d81-9389-4d91-9cca-5b9b6551d548)
 
 
-## New method of calculating RMSE (bins)
+## RMSE（bins）の新しい計算方法
 
-The main difference is the binning method. Instead of grouping algorithmic predictions and the review outcomes based on the predicted R, the new method groups them based on three features: the interval length, the number of reviews, and the number of lapses (instances when the user pressed Again). The values of these three features are rounded using formulas designed for this metric. These formulas are arbitrary and can be adjusted. Then, reviews are grouped into bins based on the rounded values. For example, reviews with interval length = 100, n(reviews) = 7, n(lapses) = 0 and reviews with interval length = 101, n(reviews) = 7, n(lapses) = 0 would both fall into the same bin. Previously, the bin into which the value of predicted R would fall was determined by its distribution. Binning is now independent of the distribution of predicted R.
+主な違いはbinning方法です。予測されたRに基づいてアルゴリズムの予測とレビューの結果をグループ化する代わりに、新しい方法では、間隔の長さ、レビューの回数、およびラプスの回数（ユーザーが「Again」を押した回数）の3つの特徴に基づいてグループ化します。これら3つの特徴の値は、この指標のために設計された式を使用して丸められます。これらの式は任意であり、調整可能です。その後、丸められた値に基づいてレビューがbinにグループ化されます。例えば、間隔の長さが100、レビューの回数が7、ラプスの回数が0のレビューと、間隔の長さが101、レビューの回数が7、ラプスの回数が0のレビューは、同じbinに分類されます。以前は、予測されたRの値がどのbinに入るかはその分布によって決定されていました。binningは現在、予測されたRの分布に依存しません。
 
-Below is the pseudocode for rounding functions:
+以下は丸め関数の疑似コードです：
 
 ```py
 delta_t = round(2.48 * power(2.57, floor(log(x)/log(2.57))), 2)

@@ -1,27 +1,27 @@
-FSRS is a modern [spaced repetition](https://en.wikipedia.org/wiki/Spaced_repetition) algorithm that was developed by Jarrett Ye. It aims to learn your memory patterns and schedule reviews more efficiently than Anki's legacy SM-2 algorithm. 
+FSRSは、Jarrett Yeによって開発された最新の[間隔反復](https://en.wikipedia.org/wiki/Spaced_repetition)アルゴリズムです。これは、Ankiの従来のSM-2アルゴリズムよりも効率的にレビューをスケジュールし、あなたの記憶パターンを学習することを目指しています。
 
-The goal of a spaced repetition algorithm is to calculate the optimal intervals between reviews. But what makes an interval "optimal"? In FSRS, an interval is considered optimal if it corresponds to a specific probability of recalling a card. For example, if you want to be 90% sure that you will successfully recall a card the next time you see it, the optimal interval is the one at which the probability of recall is 90%.
+間隔反復アルゴリズムの目標は、レビュー間の最適な間隔を計算することです。しかし、何が「最適」な間隔を決定するのでしょうか？FSRSでは、カードを思い出す確率に対応する間隔が最適と見なされます。例えば、次回カードを見たときに90%の確率で思い出せるようにしたい場合、その確率が90%になる間隔が最適な間隔です。
 
-FSRS is based on the "Three Component Model of Memory". The model asserts that three variables are sufficient to describe the status of a unitary memory in a human brain. These three variables include:
+FSRSは「記憶の三成分モデル」に基づいています。このモデルは、人間の脳内の単一の記憶の状態を説明するのに3つの変数が十分であると主張しています。これらの3つの変数には以下が含まれます：
 
-* Retrievability (R): The probability that the person can successfully recall a particular information at a given moment. It depends on the time elapsed since the last review and the memory stability (S).
+* 再認可能性 (R): 特定の情報を特定の瞬間に成功裏に思い出せる確率。これは、最後のレビューから経過した時間と記憶の安定性 (S) に依存します。
 
-* Stability (S): The time, in days, required for R to decrease from 100% to 90%. For example, S = 365 means that an entire year will pass before the probability of recalling a particular card drops to 90%.
+* 安定性 (S): Rが100%から90%に低下するのに必要な日数。例えば、S = 365の場合、特定のカードを思い出す確率が90%に低下するまでに1年が経過することを意味します。
 
-* Difficulty (D): The inherent complexity of a particular information. It represents how difficult it is to increase memory stability after a review.
+* 難易度 (D): 特定の情報の固有の複雑さ。これは、レビュー後に記憶の安定性を向上させるのがどれほど難しいかを表します。
 
-In FSRS, these three values are collectively called the "memory state". The value of R changes daily, while D and S change only after a card has been reviewed. FSRS takes into account only the first review of the day. Each card has its own DSR values, in other words, each card has its own memory state.
+FSRSでは、これらの3つの値をまとめて「記憶状態」と呼びます。Rの値は毎日変化しますが、DとSはカードがレビューされた後にのみ変化します。FSRSはその日の最初のレビューのみを考慮します。各カードには独自のDSR値、つまり各カードには独自の記憶状態があります。
 
-To accurately estimate the DSR values, FSRS analyzes the user's review history and uses machine learning to calculate parameters that provide the best fit to the review history. The most recent version of FSRS uses 17 parameters in the formulas for D and S (the formula for retrievability doesn't require any parameters). If you are interested in the details, you can read the following wiki pages: [The Algorithm](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm) and [The mechanism of optimization](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-mechanism-of-optimization). If a user doesn't have enough reviews yet, the default parameters are used instead. They have been found by running the FSRS optimizer on several hundred millions of reviews from ~20k users. Even with the default parameters, FSRS is better than Anki's default algorithm.
+DSR値を正確に推定するために、FSRSはユーザーのレビュー履歴を分析し、レビュー履歴に最も適合するパラメータを計算するために機械学習を使用します。FSRSの最新バージョンでは、DとSの計算式に17のパラメータを使用しています（再認可能性の計算式にはパラメータは必要ありません）。詳細に興味がある場合は、次のWikiページを参照してください: [アルゴリズム](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm) および [最適化の仕組み](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-mechanism-of-optimization)。ユーザーに十分なレビューがない場合は、代わりにデフォルトのパラメータが使用されます。これらのパラメータは、約2万人のユーザーからの数億回のレビューを基にFSRSオプティマイザーを実行して見つけられました。デフォルトのパラメータでも、FSRSはAnkiのデフォルトアルゴリズムよりも優れています。
 
-Note that the users should not tweak the parameters manually. If you want to adjust the scheduling, all you need to do is choose an appropriate value of desired retention. Values between 70% and 97% are considered reasonable. In other words, with FSRS, users can target a specific value of retention, allowing them to balance how much they remember and how many reviews they have to do. Higher retention leads to more reviews per day.
+ユーザーはパラメータを手動で調整しないように注意してください。スケジューリングを調整したい場合は、望ましい保持率の適切な値を選択するだけで済みます。70%から97%の値が合理的と見なされます。言い換えれば、FSRSを使用すると、ユーザーは特定の保持率の値を目標にすることができ、どれだけ覚えているかと、どれだけのレビューを行う必要があるかのバランスを取ることができます。保持率が高いほど、1日に行うレビューの数が増えます。
 
-Aside from allowing the users to choose their desired retention, FSRS has some other advantages when compared to Anki's default algorithm. With FSRS, users have to do 20–30% fewer reviews than with Anki's default algorithm to achieve the same retention level. FSRS is also much better at scheduling cards that have been reviewed with a delay, for example, if the user took a break from Anki for a few weeks. In addition, the [FSRS4Anki Helper add-on](https://github.com/open-spaced-repetition/fsrs4anki-helper) provides some useful features that are not available otherwise.
+ユーザーが望む保持率を選択できることに加えて、FSRSにはAnkiのデフォルトアルゴリズムと比較していくつかの利点があります。FSRSを使用すると、同じ保持率を達成するためにAnkiのデフォルトアルゴリズムよりも20〜30％少ないレビューで済みます。また、FSRSは遅延してレビューされたカードのスケジューリングが非常に得意です。例えば、ユーザーが数週間Ankiを休んだ場合などです。さらに、[FSRS4Anki Helperアドオン](https://github.com/open-spaced-repetition/fsrs4anki-helper)は、他では利用できないいくつかの便利な機能を提供します。
 
-If your Anki version is 23.10 or newer, read [this guide](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md). If your Anki version is older than 23.10, then you can use the standalone version of FSRS, please read [this guide](https://github.com/open-spaced-repetition/fsrs4anki#how-to-get-started) to learn how to install it.
+Ankiのバージョンが23.10以降の場合は、[このガイド](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md)を読んでください。Ankiのバージョンが23.10より古い場合は、FSRSのスタンドアロンバージョンを使用できます。インストール方法については、[このガイド](https://github.com/open-spaced-repetition/fsrs4anki#how-to-get-started)を読んでください。
 
-If you want to see how FSRS performs in comparison to other algorithms, read these pages: [Benchmark](https://github.com/open-spaced-repetition/fsrs-benchmark) and [FSRS vs SM-17](https://github.com/open-spaced-repetition/fsrs-vs-sm17), one of the most recent SuperMemo algorithms.
+FSRSが他のアルゴリズムと比較してどのように機能するかを確認したい場合は、次のページを読んでください: [ベンチマーク](https://github.com/open-spaced-repetition/fsrs-benchmark) および [FSRS vs SM-17](https://github.com/open-spaced-repetition/fsrs-vs-sm17)（最新のSuperMemoアルゴリズムの一つ）。
 
-If you have any further questions about FSRS, check the [FAQ](https://github.com/open-spaced-repetition/fsrs4anki/wiki/FAQ).
+FSRSに関するさらなる質問がある場合は、[FAQ](https://github.com/open-spaced-repetition/fsrs4anki/wiki/FAQ)を確認してください。
 
-If you want to learn more about spaced repetition algorithms, you can check out [Spaced Repetition Algorithm: A Three‐Day Journey from Novice to Expert](https://github.com/open-spaced-repetition/fsrs4anki/wiki/Spaced-Repetition-Algorithm:-A-Three%E2%80%90Day-Journey-from-Novice-to-Expert).
+間隔反復アルゴリズムについてもっと知りたい場合は、[間隔反復アルゴリズム: 初心者から専門家までの3日間の旅](https://github.com/open-spaced-repetition/fsrs4anki/wiki/Spaced-Repetition-Algorithm:-A-Three%E2%80%90Day-Journey-from-Novice-to-Expert)をチェックしてください。

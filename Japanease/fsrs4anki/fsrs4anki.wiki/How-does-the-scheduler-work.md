@@ -1,73 +1,72 @@
-# Update
+# 更新
 
-This wiki page describes the execution process of the custom scheduling code, which has been outdated since FSRS was integrated into Anki 23.10+ and AnkiDroid 2.17+.
+このWikiページでは、カスタムスケジューリングコードの実行プロセスについて説明していますが、FSRSがAnki 23.10+およびAnkiDroid 2.17+に統合されて以来、内容が古くなっています。
 
-# Requirement
+# 要件
 
-To more deeply understand the working process of the FSRS4Anki scheduler, we recommend you install [AnkiWebView Inspector
-](https://ankiweb.net/shared/info/31746032). The following text will use the screenshot with the `Inspector` window.
+FSRS4Ankiスケジューラの動作プロセスをより深く理解するために、[AnkiWebView Inspector](https://ankiweb.net/shared/info/31746032)をインストールすることをお勧めします。以下のテキストでは、`Inspector`ウィンドウのスクリーンショットを使用します。
 
-And please note, open the inspector before you start the review.
+レビューを開始する前にインスペクタを開いてください。
 
-# How to see the execution of the scheduler?
+# スケジューラの実行を確認する方法
 
-Launch the inspector before you clicking `Study Now`, and then enter into a deck, you will see the following:
+`今すぐ勉強`をクリックする前にインスペクタを起動し、デッキに入ると次のような画面が表示されます：
 
 ![image](https://user-images.githubusercontent.com/32575846/192134957-1c058d80-984e-4420-8206-5de5b404835a.png)
 
-The left window shows the running code of custom scheduling.
+左側のウィンドウには、カスタムスケジューリングの実行中のコードが表示されます。
 
-`F10` or the button in the next figure is used to execute the code per line.
+`F10`キーまたは次の図のボタンを使用して、コードを1行ずつ実行します。
 
 ![image](https://user-images.githubusercontent.com/32575846/192135103-0cbe2eae-4e7e-449b-a1b6-70f4fb756900.png)
 
-Important!: Don't click the `show answer` before the code run to the end. You can use `F8` to execute to the end.
+重要！: コードが最後まで実行される前に`答えを表示`をクリックしないでください。`F8`キーを使用して最後まで実行できます。
 
-# Details about the scheduler
+# スケジューラの詳細
 
-There are three parts of the scheduler's code.
+スケジューラのコードは3つの部分に分かれています。
 
-## Set parameters
+## パラメータの設定
 
-Line 5-18 are setting the parameters for all cards. Line 24-40 are setting the parameters for a specific deck. 
+5行目から18行目はすべてのカードに対してパラメータを設定しています。24行目から40行目は特定のデッキに対してパラメータを設定しています。
 
-> Related discussion: [[Question] How to workaround with Anki custom scheduling not being "Per Deck"](https://github.com/open-spaced-repetition/fsrs4anki/issues/7)
+> 関連する議論: [[質問] Ankiのカスタムスケジューリングが「デッキごと」にならない問題の回避方法](https://github.com/open-spaced-repetition/fsrs4anki/issues/7)
 
 ![image](https://user-images.githubusercontent.com/32575846/192135583-713edf25-4ca5-41ea-b5fb-3f61b9b8775d.png)
 
-## Check the states of scheduling
+## スケジューリングの状態を確認
 
-Line 142-192 are used to check the scheduling states. In Anki, there are four types of states for card scheduling: `New`, `Learning`, `Review`, and `Relearning`. `Learning` and `Relearning` are the same in scheduling. And there are two types of decks: normal and filtered. In normal decks, all reviews will modify the interval of cards. But in filtered decks, only checking the box `Reschedule cards based on my answer in this deck` will allow Anki to update the interval of cards. The FSRS4Anki scheduler also supports filtered decks.
+142行目から192行目はスケジューリングの状態を確認するために使用されます。Ankiでは、カードのスケジューリングには4つの状態があります：`New`、`Learning`、`Review`、および`Relearning`です。`Learning`と`Relearning`はスケジューリングにおいて同じです。また、デッキには通常のデッキとフィルターデッキの2種類があります。通常のデッキでは、すべてのレビューがカードの間隔を変更します。しかし、フィルターデッキでは、`このデッキでの回答に基づいてカードを再スケジュールする`ボックスにチェックを入れた場合にのみ、Ankiはカードの間隔を更新します。FSRS4Ankiスケジューラはフィルターデッキもサポートしています。
 
 ![image](https://user-images.githubusercontent.com/32575846/192136063-a8f777b6-b79d-4a2a-9c41-d018e80f49b0.png)
 
-## Calculate memory states
+## 記憶状態の計算
 
-The FSRS4Anki scheduler will calculate memory states from your rating and the DSR model. The scheduled interval is based on memory states and your custom parameters.
+FSRS4Ankiスケジューラは、あなたの評価とDSRモデルから記憶状態を計算します。スケジュールされた間隔は、記憶状態とカスタムパラメータに基づいています。
 
 ![image](https://user-images.githubusercontent.com/32575846/192137490-dba0944d-a163-469d-af2c-5e3f82efa0ce.png)
 
-If the memory states are not available during review, the FSRS4Anki scheduler will convert the Anki's built-in scheduling information to the memory states. 
+レビュー中に記憶状態が利用できない場合、FSRS4AnkiスケジューラはAnkiの内蔵スケジューリング情報を記憶状態に変換します。
 
 ![image](https://user-images.githubusercontent.com/32575846/192137829-d987d748-5ff2-44a0-9aa3-d58d4cb52ebb.png)
 
-The `interval` and `factor` of Anki's built-in scheduling, an SM-2 variation, will be automatically converted to the memory states of FSRS.
+Ankiの内蔵スケジューリングの`interval`と`factor`（SM-2の変種）は、自動的にFSRSの記憶状態に変換されます。
 
-### Interval to Stability
+### 間隔から安定性へ
 
-If the card's memory states are empty, FSRS assumes that the $\text{Interval}$ given by Anki is equal to $\text{Stability} \times \text{Interval modifier}$, where
+カードの記憶状態が空の場合、FSRSはAnkiによって与えられた$\text{Interval}$が$\text{Stability} \times \text{Interval modifier}$に等しいと仮定します。ここで、
 $\text{Interval modifier} = 9 \times \left(\frac{1}{\text{RequestRetention}} - 1 \right)$
 
-So, $\text{Stability} = \text{Interval} / \text{Interval modifier}$ 
+したがって、$\text{Stability} = \text{Interval} / \text{Interval modifier}$ 
 
-### Ease Factor to Difficulty
+### イーズファクターから難易度へ
 
-In SM-2, after a recall, the interval (stability) increases by the Ease Factor.
+SM-2では、リコール後、間隔（安定性）はイーズファクターによって増加します。
 
-In FSRS, after a recall, the stability increases by a factor of $(1 + e^{w_8} \cdot (11-D) \cdot S^{-w_9} \cdot (e^{w_{10}\cdot(1-R)}-1) \cdot w_{15}(\textrm{if G = 2}) \cdot w_{16}(\textrm{if G = 4}))$.
+FSRSでは、リコール後、安定性は次の係数によって増加します：$(1 + e^{w_8} \cdot (11-D) \cdot S^{-w_9} \cdot (e^{w_{10}\cdot(1-R)}-1) \cdot w_{15}(\textrm{if G = 2}) \cdot w_{16}(\textrm{if G = 4}))$。
 
-If we equate these two, the Difficulty can be calculated as:
+これら二つを等しくすると、難易度は次のように計算できます：
 
-$$D = 11 - \cfrac{factor - 1}{e^{w_8}\cdot S^{-w_9}\cdot(e^{w_{10}\cdot(1-R)}-1)}.$$
+$$D = 11 - \cfrac{factor - 1}{e^{w_8}\cdot S^{-w_9}\cdot(e^{w_{10}\cdot(1-R)}-1)}。$$
 
-After the stability and difficulty are calculated as above, they are used for the calculation of the next stability and the next difficulty (after the review).
+上記のように安定性と難易度が計算された後、それらは次の安定性と次の難易度（レビュー後）の計算に使用されます。

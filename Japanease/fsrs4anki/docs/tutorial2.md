@@ -1,9 +1,9 @@
 中文版请见：[FSRS4Anki 使用指北](https://zhuanlan.zhihu.com/p/636564830)
 
 # 目次
-- [ステップ1: FSRSスケジューラを有効にする](#step-1-enabling-the-fsrs-scheduler)
-- [ステップ2: FSRSをパーソナライズする](#step-2-personalizing-fsrs)
-- [異なるデッキに異なるパラメータを設定する](#configuring-different-parameters-for-different-decks)
+- [ステップ1: FSRSスケジューラを有効にする](#%E3%82%B9%E3%83%86%E3%83%83%E3%83%971-fsrs%E3%82%B9%E3%82%B1%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%A9%E3%82%92%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B)
+- [ステップ2: FSRSをパーソナライズする](#%E3%82%B9%E3%83%86%E3%83%83%E3%83%972-fsrs%E3%82%92%E3%83%91%E3%83%BC%E3%82%BD%E3%83%8A%E3%83%A9%E3%82%A4%E3%82%BA%E3%81%99%E3%82%8B)
+- [異なるデッキに異なるパラメータを設定する](#%E7%95%B0%E3%81%AA%E3%82%8B%E3%83%87%E3%83%83%E3%82%AD%E3%81%AB%E7%95%B0%E3%81%AA%E3%82%8B%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B)
 - [FAQ](#faq)
 
 FSRSを始めるには、2つのステップを踏む必要があります。

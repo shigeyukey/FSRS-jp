@@ -1,269 +1,269 @@
-I am Jarrett Ye, the principal author of the papers *[A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition Scheduling](https://www.maimemo.com/paper/)* and *[Optimizing Spaced Repetition Schedule by Capturing the Dynamics of Memory](https://ieeexplore.ieee.org/document/10059206)*. I am currently working at MaiMemo Inc., where I am chiefly responsible for developing the spaced repetition algorithm within MaiMemo's language learning app. For a detailed account of my academic journey leading to the publication of these papers, please refer to [How did I publish a paper in ACMKDD as an undergraduate?](https://medium.com/@JarrettYe/how-did-i-publish-a-paper-in-acmkdd-as-an-undergraduate-c0199baddf31)
+私はJarrett Yeです。論文「[間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム](https://www.maimemo.com/paper/)」および「[記憶の動態を捉えて間隔反復スケジュールを最適化する](https://ieeexplore.ieee.org/document/10059206)」の主著者です。現在、MaiMemo Inc.で働いており、MaiMemoの語学学習アプリ内の間隔反復アルゴリズムの開発を主に担当しています。これらの論文の発表に至るまでの私の学術的な旅の詳細については、「[学部生としてACMKDDに論文を発表するまでの道のり](https://medium.com/@JarrettYe/how-did-i-publish-a-paper-in-acmkdd-as-an-undergraduate-c0199baddf31)」をご参照ください。
 
-This tutorial, "Spaced Repetition Algorithm: A Three-Day Journey from Novice to Expert," is adapted from a preport I initially prepared for internal presentations at MaiMemo. The goal of this article is to explain how exactly spaced repetition algorithms work and to inspire new researchers to contribute to this field and advance the progress of learning technology. Without further ado, let us embark on this intellectual journey!
+このチュートリアル「間隔反復アルゴリズム：初心者から専門家への3日間の旅」は、もともとMaiMemoでの内部プレゼンテーションのために準備したレポートを基にしています。この記事の目的は、間隔反復アルゴリズムがどのように機能するかを詳しく説明し、新しい研究者がこの分野に貢献し、学習技術の進歩を促進することを目指しています。それでは、さっそくこの知的な旅に出発しましょう！
 
-## Preface
+## 序文
 
-Since their school days, most students intuitively know the following two facts:
+学生時代から、ほとんどの学生は次の2つの事実を直感的に知っています：
 
-1. Reviewing information multiple times helps us remember it better.
-2. Different memories fade at different rates, we don't forget everything all at once.
+1. 情報を複数回復習することで、よりよく覚えられる。
+2. 記憶の消失速度は異なり、すべてを一度に忘れるわけではない。
 
-These insights raise further questions:
+これらの洞察はさらに次のような疑問を引き起こします：
 
-1. Can we estimate how much knowledge we have already forgotten?
-2. How quickly are we forgetting it?
-3. What is the best way to schedule reviews to minimize forgetting?
+1. 既にどれだけの知識を忘れてしまったかを推定できるか？
+2. それをどれくらいの速さで忘れているのか？
+3. 忘却を最小限に抑えるための最適な復習スケジュールは何か？
 
-In the past, very few people have tried to answer these questions. Developing spaced repetition algorithms requires finding the answers.
+過去には、これらの質問に答えようとした人はほとんどいませんでした。間隔反復アルゴリズムを開発するには、これらの答えを見つける必要があります。
 
-In the next three days, we will delve into spaced repetition algorithms from three perspectives:
+次の3日間で、間隔反復アルゴリズムを3つの視点から掘り下げていきます：
 
-1. Empirical algorithms
-2. Theoretical models
-3. Latest progress
+1. 経験的アルゴリズム
+2. 理論モデル
+3. 最新の進展
 
-## Day 1: Exploring Empirical Algorithms
+## 1日目: 経験的アルゴリズムの探求
 
-Today, we begin our journey by diving into the simplest yet impactful empirical algorithms. We'll uncover the details and the ideas that guide them. But first, let's trace the roots of a term "spaced repetition".
+今日は、最もシンプルでありながら影響力のある経験的アルゴリズムに飛び込むことから旅を始めます。それらの詳細とそれを導くアイデアを明らかにします。しかしまず、「間隔反復」という用語のルーツをたどってみましょう。
 
-### Spaced Repetition
+### 間隔反復
 
-For readers new to the subject of spaced repetition, let's learn about the concept of the "forgetting curve."
+間隔反復のテーマに初めて触れる読者のために、「忘却曲線」の概念について学びましょう。
 
 ![image](https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/a10e912d-0795-4113-925e-ea48f8689c28)
 
-After we learn something, whether from a book or via other means, we start to forget it. This happens gradually.
+本やその他の手段で何かを学んだ後、私たちはそれを忘れ始めます。これは徐々に起こります。
 
-The forgetting curve illustrates the way our memory retains knowledge. It exhibits a unique trajectory: in the absence of active review, memory decay is initially rapid and slows down over time.
+忘却曲線は、私たちの記憶が知識を保持する方法を示しています。それは独特の軌跡を描きます：積極的な復習がない場合、記憶の減衰は最初は急速であり、時間が経つにつれて遅くなります。
 
-How can we counteract this natural tendency to forget? Let's consider the effect of reviews.
+この自然な忘却の傾向に対抗するにはどうすればよいでしょうか？復習の効果を考えてみましょう。
 
 ![image](https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/0bc2a613-73af-4f9a-b844-ab45018219a2)
 
-Periodically reviewing the material flattens the forgetting curve. In other words, it decreases the rate at which we forget information.
+定期的に資料を復習することで、忘却曲線が平坦になります。言い換えれば、情報を忘れる速度が減少します。
 
-Now, a question arises: how can these review intervals be optimized for efficient memory retention?
+ここで疑問が生じます：効率的な記憶保持のためにこれらの復習間隔をどのように最適化できるでしょうか？
 
 ![image](https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/5364fbbd-e070-4cbe-95d8-f9dc2420f9a9)
 
-Did you notice that after each review, the interval that corresponds to a certain level of retention increases? Shorter intervals are better suited for unfamiliar content, while longer ones should be employed for more familiar material. This method, known as spaced repetition, augments the formation of long-term memories.
+各復習の後、特定の保持レベルに対応する間隔が増加することに気づきましたか？短い間隔は馴染みのない内容に適しており、長い間隔はより馴染みのある資料に使用されるべきです。この方法は「間隔反復」として知られ、長期記憶の形成を促進します。
 
-But how effective is it? Here are some studies that show the benefits of spaced repetition ([source](https://gwern.net/spaced-repetition#distributed)):
+しかし、それはどれほど効果的でしょうか？ここに、間隔反復の利点を示すいくつかの研究があります（[出典](https://gwern.net/spaced-repetition#distributed)）。
 
-- Rea & Modigliani 1985, [“The effect of expanded versus massed practice on the retention of multiplication facts and spelling lists”](https://gwern.net/doc/psychology/spaced-repetition/1985-rea.pdf):
+- Rea & Modigliani 1985, [「拡張練習と集中練習が掛け算の事実とスペリングリストの保持に与える影響」](https://gwern.net/doc/psychology/spaced-repetition/1985-rea.pdf):
 
-> A test immediately following the training showed superior performance for the distributed group (70% correct) compared to the massed group (53% correct). These results seem to show that the spacing effect applies to school-age children and to at least some types of materials that are typically taught in school.
+> トレーニング直後のテストでは、分散練習グループ（70%正解）が集中練習グループ（53%正解）よりも優れた成績を示しました。これらの結果は、間隔効果が学齢期の子供たちや学校で通常教えられるいくつかの種類の教材に適用されることを示しているようです。
 
-- Donovan & Radosevich 1999, [“A meta-analytic review of the distribution of practice effect: Now you see it, now you don’t”](https://gwern.net/doc/psychology/spaced-repetition/1999-donovan.pdf):
+- Donovan & Radosevich 1999, [「練習効果の分布に関するメタ分析レビュー：今見える、今見えない」](https://gwern.net/doc/psychology/spaced-repetition/1999-donovan.pdf):
 
-> The overall mean weighted effect size was 0.46, with a 95% confidence interval that extended from 0.42 to 0.50. ...the 95% confidence interval for this effect size does not contain zero, indicating that spaced practice was significantly superior to massed practice in terms of task performance.
+> 全体の平均加重効果サイズは0.46であり、95%信頼区間は0.42から0.50まで広がっていました。...この効果サイズの95%信頼区間にはゼロが含まれていないため、間隔練習が集中練習よりもタスクパフォーマンスの点で有意に優れていたことを示しています。
 
-In simple terms, it means that between 62% and 64% of people who use spaced repetition will get better results than people who use massed repetition. This effect isn't as big as some other studies report, but it's still significant, both in the statistical sense and in the practical sense.
+簡単に言えば、間隔反復を使用する人の62%から64%が、集中反復を使用する人よりも良い結果を得ることを意味します。この効果は他の研究が報告するほど大きくはありませんが、それでも統計的にも実際的にも有意です。
 
-You might be thinking "If spaced repetition is so effective, why isn't it more popular?"
+「間隔反復がそんなに効果的なら、なぜもっと普及していないのか？」と思うかもしれません。
 
 ![Challenges](https://l-m-sherlock.github.io/thoughts-memo/%e5%a4%a7%e9%87%8f%e5%8d%a1%e7%89%87.jpg)
 
-The main obstacle is the overwhelming volume of knowledge that must be learned. Each piece of knowledge has its unique forgetting curve, which makes manual tracking and scheduling an impossible task.
+主な障害は、学ばなければならない知識の膨大な量です。各知識には独自の忘却曲線があり、手動での追跡とスケジューリングは不可能です。
 
-This is the role of spaced repetition algorithms: automating the tracking of memory states and finding efficient review schedules.
+ここで間隔反復アルゴリズムの役割が重要になります。記憶状態の追跡を自動化し、効率的な復習スケジュールを見つけることです。
 
-By now, you should have a basic understanding of spaced repetition. But some questions likely still linger, such as the calculation of optimal intervals and best practices for efficient spaced repetition. These questions will be answered in the upcoming chapters.
+これで、間隔反復について基本的な理解ができたと思います。しかし、最適な間隔の計算や効率的な間隔反復のベストプラクティスなど、まだ疑問が残っているかもしれません。これらの質問は、次の章で回答されます。
 
-#### Review Section
+#### レビューセクション
 
-| Question                                                     | Answer                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| What aspect of memory does the forgetting curve capture?     | The curve describes how knowledge retention decays over time. |
-| How does memory retention decline in the absence of review? | Initially it declines rapidly and then slowly.          |
-| How does the forgetting curve change after a successful review? | The new curve is flatter, indicating a slower rate of forgetting. |
-| How does spaced repetition accommodate different material? | Shorter intervals are used for unfamiliar material, while longer ones are used for familiar material. |
-| What is the role of algorithms in spaced repetition?      | They automate the tracking of memory states and the efficient scheduling of reviews. |
+| 質問                                                     | 答え                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------- |
+| 忘却曲線は記憶のどの側面を捉えていますか？               | 知識の保持が時間とともにどのように減少するかを示しています。 |
+| 復習がない場合、記憶の保持はどのように低下しますか？   | 最初は急速に低下し、その後ゆっくりと低下します。           |
+| 成功した復習の後、忘却曲線はどのように変化しますか？   | 新しい曲線はより平坦になり、忘却の速度が遅くなることを示します。 |
+| 間隔反復は異なる教材にどのように対応しますか？         | 馴染みのない教材には短い間隔を使用し、馴染みのある教材には長い間隔を使用します。 |
+| 間隔反復におけるアルゴリズムの役割は何ですか？         | 記憶状態の追跡と効率的な復習スケジュールの自動化を行います。 |
 
 ---
 
-Having delved into the concept of spaced repetition, you may find yourself pondering over this guiding principle:
+間隔反復の概念を掘り下げると、次の指針について考えることになるかもしれません：
 
-> Shorter intervals are used for unfamiliar content, while longer ones are employed for more familiar material, which scatter reviews over different timings in the future.
+> 馴染みのない内容には短い間隔を使用し、馴染みのある内容には長い間隔を使用して、将来の異なるタイミングでレビューを散らします。
 
-What exactly defines these 'short' or 'long' intervals? Furthermore, how can one distinguish between material that is 'familiar' and that which is 'unfamiliar'?
+これらの「短い」または「長い」間隔を正確に定義するものは何でしょうか？さらに、「馴染みのある」教材と「馴染みのない」教材をどのように区別するのでしょうか？
 
-Intuitively, we know that the more familiar the material is, the slower we forget it, and so we can use longer intervals for more familiar material. But the less we want to forget, the shorter the interval should be. The shorter the interval, the higher the frequency of reviews.
+直感的には、教材に馴染みがあるほど忘れる速度が遅くなるため、馴染みのある教材には長い間隔を使用できることがわかります。しかし、忘れたくないほど、間隔は短くするべきです。間隔が短いほど、レビューの頻度が高くなります。
 
-It seems that there's an inherent contradiction between the frequency of reviews and the rate of forgetting. On the one hand, we want to do more reviews to remember more. On the other hand, we don't need to review familiar material very often. How do we resolve this contradiction?
+レビューの頻度と忘却の速度の間には矛盾があるように思えます。一方では、より多くのレビューを行ってより多くを覚えたいと考えます。他方では、馴染みのある教材を頻繁にレビューする必要はありません。この矛盾をどのように解決するのでしょうか？
 
-Let's take a look at how the creator of the first computerized spaced repetition algorithm set out on his journey in the exploration of memory.
+最初のコンピュータ化された間隔反復アルゴリズムの作成者が、記憶の探求の旅にどのように出発したかを見てみましょう。
 
 ### SM-0
 
-In 1985, a young college student named Piotr Woźniak was struggling with the problem of forgetting:
+1985年、若い大学生であるピョートル・ヴォズニアックは、忘却の問題に悩んでいました。
 
-![Woz's Lexicon](https://supermemo.guru/images/thumb/a/a9/English-Polish_word_pairs_%28Wozniak_1982%29.jpg/550px-English-Polish_word_pairs_%28Wozniak_1982%29.jpg)
+![Wozの辞書](https://supermemo.guru/images/thumb/a/a9/English-Polish_word_pairs_%28Wozniak_1982%29.jpg/550px-English-Polish_word_pairs_%28Wozniak_1982%29.jpg)
 
-The above image shows a page from his vocabulary notebook, which contained 2,794 words spread across 79 pages. Each page had about 40 pairs of English-Polish words. Managing all those reviews was a headache for Wozniak. At first, he didn't have a systematic plan for reviewing the words; he just reviewed whatever he had time for. But he did something crucial: he kept track of when he reviewed and how many words he forgot, allowing him to measure his progress.
+上の画像は彼の語彙ノートの1ページを示しています。このノートには2,794語が79ページにわたって記載されていました。各ページには約40組の英語-ポーランド語の単語がありました。これらのレビューを管理することはヴォズニアックにとって頭痛の種でした。最初は、彼には単語を復習するための体系的な計画がなく、時間があるときに復習するだけでした。しかし、彼は重要なことを行いました：いつ復習したか、どれだけの単語を忘れたかを記録し、進捗を測定できるようにしたのです。
 
-He compiled a year's worth of review data and discovered that his rate of forgetting ranged between 40% and 60%. This was unacceptable to him. He needed a reasonable study schedule that would lower his forgetting rate without overwhelming him with reviews. To find the optimal intervals for his reviews, he commenced his memory experiments.
+彼は1年分のレビューのデータをまとめ、忘却率が40%から60%の間であることを発見しました。これは彼にとって受け入れがたいものでした。彼は、レビューに圧倒されることなく忘却率を下げるための合理的な学習スケジュールが必要でした。最適なレビュー間隔を見つけるために、彼は記憶実験を開始しました。
 
-Wozniak wanted to find the longest possible time between reviews while keeping the forgetting rate under 5%.
+ヴォズニアックは、忘却率を5%未満に保ちながら、レビュー間隔をできるだけ長くしたいと考えていました。
 
-Here are the details about his experiment:
+以下は彼の実験の詳細です：
 
-**Material**: Five pages of English-Polish vocabulary, each with 40 word pairs.
+**教材**: 40組の英語-ポーランド語の単語ペアが記載された5ページ。
 
-**Initial learning**: Memorize all 5 pages of material. Look at the English word, recall the Polish translation, and then check whether the answer is correct. If the answer is correct, eliminate the word pair from this stage. If the answer is incorrect, try to recall it later. Keep doing this until all the answers are correct.
+**初回学習**: 5ページすべての教材を暗記する。英語の単語を見て、ポーランド語の翻訳を思い出し、答えが正しいかどうかを確認する。答えが正しければ、その単語ペアをこの段階から除外する。答えが間違っていれば、後で再度思い出すようにする。すべての答えが正しくなるまでこれを繰り返す。
 
-**Initial review**: A one-day interval was employed for the first review, based on Wozniak's previous review experience.
+**初回レビュー**: ヴォズニアックの以前のレビュー経験に基づき、初回レビューには1日の間隔を採用した。
 
-The ensuing key stages — A, B, and C — revealed the following:
+続く重要なステージ — A、B、C — では次のことが明らかになった：
 
-**Stage A**: Wozniak reviewed five pages of notes at intervals of 2, 4, 6, 8, and 10 days. The resulting forgetting rates were 0%, 0%, 0%, 1%, and 17%, respectively. He determined that a 7-day interval was optimal for the second review.
+**ステージA**: ヴォズニアックは2日、4日、6日、8日、10日の間隔で5ページのノートをレビューした。結果として得られた忘却率はそれぞれ0%、0%、0%、1%、17%だった。彼は2回目のレビューには7日の間隔が最適であると判断した。
 
-**Stage B**: A new set of five pages was reviewed after 1 day for the first time and then after 7 days for the second time. For the third review, the intervals were 6, 8, 11, 13, and 16 days, with forgetting rates of 3%, 0%, 0%, 0%, and 1%. Wozniak selected a 16-day interval for the third review.
+**ステージB**: 新しい5ページのセットを1日後に初回レビューし、7日後に2回目のレビューを行った。3回目のレビューには6日、8日、11日、13日、16日の間隔を使用し、忘却率はそれぞれ3%、0%、0%、0%、1%だった。ヴォズニアックは3回目のレビューには16日の間隔を選択した。
 
-**Stage C**: Another fresh set of five pages was reviewed at 1, 7, and 16-day intervals for the first three reviews. For the fourth review, the intervals were 20, 24, 28, 33, and 38 days, with forgetting rates of 0%, 3%, 5%, 3%, and 0%. Wozniak opted for a 35-day interval for the fourth review.
+**ステージC**: 別の新しい5ページのセットを1日、7日、16日の間隔で初回から3回目のレビューを行った。4回目のレビューには20日、24日、28日、33日、38日の間隔を使用し、忘却率はそれぞれ0%、3%、5%、3%、0%だった。ヴォズニアックは4回目のレビューには35日の間隔を選択した。
 
-During his experiments, he noticed that the subsequent optimal interval was approximately twice as long as the preceding one. Finally, he formalized the SM-0 algorithm on paper.
+彼の実験中、次の最適な間隔は前の間隔の約2倍であることに気づきました。最終的に、彼はSM-0アルゴリズムを紙にまとめました。
 
-- I(1) = 1 day
-- I(2) = 7 days
-- I(3) = 16 days
-- I(4) = 35 days
-- for i>4: I(i) = I(i-1) * 2
-- Words forgotten in the first four reviews were moved to a new page and cycled back into repetition along with new materials.
+- I(1) = 1日
+- I(2) = 7日
+- I(3) = 16日
+- I(4) = 35日
+- i > 4の場合: I(i) = I(i-1) * 2
+- 最初の4回のレビューで忘れた単語は新しいページに移され、新しい教材と一緒に再度繰り返されました。
 
-Here, $I(i)$ denotes the interval employed for the $i^{th}$ review. The interval for the fifth repetition was set to be twice that of the preceding one, a decision grounded in intuitive assumptions. Over the two years of utilizing the SM-0 algorithm, Wozniak collected sufficient data to confirm the plausibility of this hypothesis.
+ここで、$I(i)$は$i^{th}$レビューに使用される間隔を示します。5回目の繰り返しの間隔は前の間隔の2倍に設定されました。この決定は直感的な仮定に基づいていました。SM-0アルゴリズムを2年間使用することで、ヴォズニアックはこの仮説の妥当性を確認するのに十分なデータを収集しました。
 
-The goal of the SM-0 algorithm was clear: to extend the review interval as much as possible while minimizing the rate of memory decay. Its limitations were evident as well, namely its inability to track memory retention at a granular level.
+SM-0アルゴリズムの目標は明確でした：記憶の減衰率を最小限に抑えながら、レビュー間隔をできるだけ延ばすこと。その限界も明らかでした。つまり、記憶保持を細かいレベルで追跡することができないことです。
 
-Nonetheless, the effectiveness of the SM-0 algorithm was evident. With the acquisition of his first computer in 1986, Wozniak simulated the model and drew two key conclusions:
+それにもかかわらず、SM-0アルゴリズムの効果は明白でした。1986年に最初のコンピュータを手に入れたヴォズニアックは、モデルをシミュレートし、2つの重要な結論を引き出しました：
 
-- Over time, the total amount of knowledge increased instead of decreasing
-- In the long run, the knowledge acquisition rate remained relatively constant
+- 時間が経つにつれて、知識の総量は減少するのではなく増加する
+- 長期的には、知識の習得率は比較的一定のままである
 
-These insights proved that the algorithm can achieve a compromise between memory retention and the frequency of review. Wozniak realized that spaced repetition didn't have to drown learners in an endless sea of reviews. This realization inspired him to continue refining spaced repetition algorithms.
+これらの洞察は、アルゴリズムが記憶保持とレビューの頻度の間で妥協を達成できることを証明しました。ヴォズニアックは、間隔反復が学習者を無限のレビューの海に溺れさせる必要はないことに気づきました。この気づきは、彼が間隔反復アルゴリズムの改良を続ける動機となりました。
 
-#### Review Section
+#### レビューセクション
 
-| Questions                                                    | Answers                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Which two factors did Wozniak consider for determining optimal review intervals? | Interval length and the rate of memory decay, associated with memory retention. |
-| Why did Wozniak use new materials each time he sought to establish a new review interval in his experiments? | To ensure uniformity in the intervals of prior reviews. |
-| What is the primary limitation of the SM-0 Algorithm?        | It uses a page of notes as the unit for review, making it unsuitable for tracking memory retention at a more granular level. |
+| 質問                                                     | 答え                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------- |
+| ヴォズニアックが最適なレビュー間隔を決定するために考慮した2つの要因は何ですか？ | 間隔の長さと記憶保持に関連する記憶減衰率。               |
+| ヴォズニアックが実験で新しいレビュー間隔を確立するたびに新しい教材を使用した理由は何ですか？ | 以前のレビューの間隔の均一性を確保するため。             |
+| SM-0アルゴリズムの主な制限は何ですか？                  | ノートのページをレビューの単位として使用するため、より細かいレベルでの記憶保持の追跡には不向きであること。 |
 
 ### SM-2
 
-Though the SM-0 algorithm proved to be beneficial to Wozniak's learning, several issues prompted him to seek refinements:
+SM-0アルゴリズムはヴォズニアックの学習に有益であることが証明されましたが、いくつかの問題が彼に改良を求めさせました：
 
-1. If a word is forgotten at the first review (after 1 day), it will be more likely to be forgotten again during the subsequent reviews (after 7 and 16 days) compared to words that were not forgotten before.
-  
-2. New note pages composed of forgotten words have a higher chance of being forgotten even when the review schedule is the same.
+1. 最初のレビュー（1日後）で単語を忘れた場合、次のレビュー（7日後および16日後）でも忘れる可能性が高くなります。これは、以前に忘れなかった単語と比較してのことです。
 
-These observations made him realize that not all material is equally hard. Materials with different difficulty levels should have different review intervals.
+2. 忘れた単語で構成された新しいノートページは、レビューのスケジュールが同じであっても忘れる可能性が高くなります。
 
-Consequently, in 1987, after getting his first computer, Wozniak utilized his two-year record and insights from the SM-0 algorithm to develop the SM-2 algorithm. Anki's built-in algorithm is a variation of the SM-2 algorithm.
+これらの観察から、すべての教材が同じ難易度ではないことに気づきました。異なる難易度の教材には異なるレビュー間隔が必要です。
 
-The details about SM-2:
+その結果、1987年に最初のコンピュータを手に入れた後、ヴォズニアックは2年間の記録とSM-0アルゴリズムから得た洞察を活用して、SM-2アルゴリズムを開発しました。Ankiの内蔵アルゴリズムはSM-2アルゴリズムの変種です。
 
-- Break down the information you want to remember into small question-answer pairs.
-- Use the following intervals (in days) to review each question-answer pair:
+SM-2の詳細：
+
+- 覚えたい情報を小さな質問と回答のペアに分解します。
+- 各質問と回答のペアを次の間隔（日数）でレビューします：
   - $I(1) = 1$
   - $I(2) = 6$
-  - For $n > 2$, $I(n) = I(n-1) \times EF$
-    - $EF$—the Ease Factor, with an initial value of 2.5
-    - After each review, $\text{newEF} = EF + (0.1 - (5-q) \times (0.08 + (5-q) \times 0.02))$
-      - $\text{newEF}$—the post-review updated value of the Ease Factor
-      - $q$—the quality grades of review, ranging from 0 - 5. If it's >= 3, it means the learner remembered, and if it's < 3, the learner forgot.
+  - $n > 2$の場合、$I(n) = I(n-1) \times EF$
+    - $EF$—イーズファクター（Ease Factor）、初期値は2.5
+    - 各レビュー後、$\text{newEF} = EF + (0.1 - (5-q) \times (0.08 + (5-q) \times 0.02))$
+      - $\text{newEF}$—レビュー後に更新されたイーズファクターの値
+      - $q$—レビューの品質評価、0から5の範囲。3以上の場合、学習者は覚えており、3未満の場合、学習者は忘れています。
 
-  - If the learner forgets, the interval for the question-answer pair will be reset to $I(1)$ with the same EF.
+  - 学習者が忘れた場合、その質問と回答のペアの間隔は同じEFで$I(1)$にリセットされます。
   
-It's worth mentioning that Anki's algorithm isn't quite the same, and has some modifications.
+Ankiのアルゴリズムは完全に同じではなく、いくつかの修正が加えられていることは注目に値します。
 
-The SM-2 algorithm adds the review feedback to how often you review the question-answer pairs. The lower the EF, the smaller the interval multiplier factor; in other words, the slower the intervals grow.
+SM-2アルゴリズムは、質問と回答のペアをどのくらいの頻度でレビューするかにレビューのフィードバックを追加します。EF（Ease Factor）が低いほど、間隔の乗数係数が小さくなります。言い換えれば、間隔の成長が遅くなります。
 
-The SM-2 algorithm has three main strengths that make it a popular spaced repetition algorithm even today:
+SM-2アルゴリズムには、今日でも人気のある間隔反復アルゴリズムとなっている3つの主な強みがあります：
 
-1. It breaks the material down into small question-answer pairs. This makes it possible to create individual schedules for every single piece of material.
-  
-2. It uses an "Ease Factor" and grades. This allows the algorithm to separate easy and difficult material and schedule them differently.
+1. 教材を小さな質問と回答のペアに分解します。これにより、各教材に対して個別のスケジュールを作成することが可能になります。
 
-3. It's relatively simple and computationally inexpensive, making it easy to implement on any device.
+2. 「Ease Factor」と評価を使用します。これにより、アルゴリズムは簡単な教材と難しい教材を区別し、それぞれを異なるスケジュールで管理できます。
 
-#### Review Section
+3. 比較的シンプルで計算コストが低いため、どのデバイスでも簡単に実装できます。
 
-| Questions                                                    | Answers                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Why shouldn't we set a longer interval for material we forgot during a review? | The speed of forgetting doesn't slow down for that material; in other words, the forgetting curve doesn't get flatter. |
-| What shows that some material is harder to remember than others? | The pages with material that was forgotten had a higher chance of being forgotten again. |
-| What is the practical purpose of incorporating an "Ease Factor" and grades into the SM-2 algorithm? | This enables the algorithm to adjust future review intervals based on user performance, separating easy and difficult material. |
-| What are the advantages of breaking material down into smaller parts? | It allows the algorithm to find the right schedule for each individual piece of information. |
+#### レビューセクション
+
+| 質問                                                        | 答え                                                         |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| なぜレビュー中に忘れた教材に対して長い間隔を設定すべきではないのですか？ | その教材の忘却速度は遅くならないためです。言い換えれば、忘却曲線は平坦になりません。 |
+| ある教材が他の教材よりも覚えにくいことを示すものは何ですか？ | 忘れた教材が含まれるページは、再度忘れる可能性が高いことです。 |
+| SM-2アルゴリズムに「Ease Factor」と評価を組み込む実際的な目的は何ですか？ | これにより、ユーザーのパフォーマンスに基づいて将来のレビュー間隔を調整し、簡単な教材と難しい教材を区別することができます。 |
+| 教材を小さな部分に分解することの利点は何ですか？ | 各個別の情報に対して適切なスケジュールを見つけることができます。 |
 
 ### SM-4
 
-The primary objective of SM-4 is to improve the adaptability of its predecessor, the SM-2 algorithm. Although SM-2 can fine-tune the review schedules for individual flashcards based on ease factors and grades, these adjustments are made in isolation, without regard to the overall learning process. 
+SM-4の主な目的は、前身であるSM-2アルゴリズムの適応性を向上させることです。SM-2は、イーズファクターや評価に基づいて個々のフラッシュカードのレビュースケジュールを微調整できますが、これらの調整は全体的な学習プロセスを考慮せずに行われます。
 
-In other words, SM-2 treats each flashcard as an independent entity. To overcome this, SM-4 introduces an Optimal Interval (OI) Matrix, replacing the existing formulas used for interval calculations:
+言い換えれば、SM-2は各フラッシュカードを独立したエンティティとして扱います。これを克服するために、SM-4は既存の間隔計算式を置き換える最適間隔（OI）マトリックスを導入します：
 
 ![](https://supermemo.guru/images/thumb/0/0c/Matrix_of_optimum_intervals_in_SuperMemo_5.jpg/746px-Matrix_of_optimum_intervals_in_SuperMemo_5.jpg)
 
-In the Optimal Interval (OI) matrix, the rows depict how easy the material is and the columns depict how many times you've seen it. Initially, the entries in the matrix are filled using the SM-2 formulas that decide how long to wait before reviewing a card again.
+最適間隔（OI）マトリックスでは、行が教材の難易度を示し、列がその教材を見た回数を示します。最初は、マトリックスのエントリはカードを再度レビューするまでの期間を決定するSM-2の式を使用して埋められます。
 
-To allow new cards to benefit from the adjustment of the old cards, the OI matrix is continuously updated during the reviews. The main idea is that if the OI matrix says to wait X days and the learner actually waits X+Y days and still remembers with a high grade, then the OI value should be changed to something between X and X+Y.
+新しいカードが古いカードの調整の恩恵を受けられるように、レビュー中にOIマトリックスは継続的に更新されます。主な考え方は、OIマトリックスがX日待つように指示し、学習者が実際にX+Y日待っても高評価を得られる場合、OI値をXとX+Yの間の何かに変更するというものです。
 
-The reason for this is simple: if the learner can remember something after waiting X+Y days and get a good score, then the old OI value was probably too short. Let's make it longer!
+理由は簡単です：学習者がX+Y日待っても高評価を得られるなら、古いOI値はおそらく短すぎたということです。もっと長くしましょう！
 
-This idea allowed SM-4 to become the first algorithm capable of making adjustments to a card's schedule based on information from other similar cards. But it didn't work as well as Wozniak had hoped, for the following reasons:
+この考え方により、SM-4は他の類似カードからの情報に基づいてカードのスケジュールを調整できる最初のアルゴリズムとなりました。しかし、以下の理由でヴォズニアックが期待したほどにはうまく機能しませんでした：
 
-1. Each review only changes one entry of the matrix, so it takes a lot of time to improve the entire OI matrix.
-2. For longer review intervals (many years or even decades), gathering enough data to fill the corresponding matrix entry takes too long.
+1. 各レビューはマトリックスの1つのエントリしか変更しないため、OIマトリックス全体を改善するには多くの時間がかかります。
+2. 長いレビュー間隔（数年または数十年）では、対応するマトリックスエントリを埋めるのに十分なデータを収集するのに時間がかかりすぎます。
 
-To address these issues, the SM-5 algorithm was designed. But I won't go into details here because of space limits.
+これらの問題に対処するために、SM-5アルゴリズムが設計されました。しかし、スペースの制限のため、ここでは詳細には触れません。
 
-#### Review Section
+#### レビューセクション
 
-| Question                                                     | Answer                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Why is the adaptability of the SM-2 algorithm limited?          | Adjustments to each flashcard's schedule are made in isolation, the algorithm doesn't "see" the user's memory as a whole. |
-| What components does SM-4 introduce to enhance adaptability? | Optimal Interval Matrix and dynamic interval-adjustment rules. |
-| What is the underlying principle for interval adjustments in SM-4? | If the learner exhibits good recall over extended intervals, the original interval should be longer, and vice versa. |
+| 質問                                                     | 答え                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------- |
+| SM-2アルゴリズムの適応性が制限されている理由は何ですか？ | 各フラッシュカードのスケジュール調整が個別に行われ、アルゴリズムはユーザーの記憶全体を「見る」ことができないためです。 |
+| SM-4が適応性を向上させるために導入した要素は何ですか？   | 最適間隔マトリックスと動的な間隔調整ルールです。           |
+| SM-4における間隔調整の基本原則は何ですか？               | 学習者が長い間隔で良い記憶を示す場合、元の間隔を長くし、逆の場合も同様です。 |
 
-### Summary
+### まとめ
 
-First discovered in 1885, the forgetting curve shows how we remember and forget. Fast-forward to 1985, when the first computer algorithm for spaced repetition aimed at finding the optimal review schedule was developed. This section has outlined the developmental progression of empirically based algorithms:
+1885年に初めて発見された忘却曲線は、私たちがどのように記憶し、忘れるかを示しています。1985年に、最初のコンピュータアルゴリズムが間隔反復のために開発され、最適なレビューのスケジュールを見つけることを目指しました。このセクションでは、経験に基づくアルゴリズムの発展の進行を概説しました：
 
-- SM-0 gathered experimental data to determine the best review intervals for a given individual and a specific type of material (Wozniak defined what "best" means here).
-- SM-2 digitalized the algorithm for computer applications, introducing a more granular card level and incorporating adaptive ease factors and grades.
-- SM-4 further enhanced the adaptability of the algorithm for a diverse range of learners, introducing the Optimal Interval Matrix along with rules for adjusting the intervals.
+- SM-0は、特定の個人と特定の種類の教材に対して最適なレビュー間隔を決定するための実験データを収集しました（ここで「最適」とは何かをヴォズニアックが定義しました）。
+- SM-2は、アルゴリズムをコンピュータアプリケーション向けにデジタル化し、より詳細なカードレベルを導入し、適応的なイーズファクターと評価を組み込みました。
+- SM-4は、最適間隔マトリックスと間隔を調整するためのルールを導入し、多様な学習者に対するアルゴリズムの適応性をさらに向上させました。
 
-Although the empirical observations offer a valuable lens through which to understand spaced repetition, it's hard to improve them without a sound theoretical understanding. Next, we'll be diving into the theoretical aspects of spaced repetition.
+経験的な観察は、間隔反復を理解するための貴重な視点を提供しますが、理論的な理解がなければそれを改善するのは難しいです。次に、間隔反復の理論的側面に飛び込んでいきます。
 
-## Day 2: Understanding Theoretical Models
+## 2日目: 理論モデルの理解
 
-Spaced repetition sounds like a theoretical field, but I've spent a lot of time discussing empirical algorithms. Why?
+間隔反復は理論的な分野のように聞こえますが、私は経験的アルゴリズムについて多くの時間を費やして話してきました。なぜでしょうか？
 
-Because without the foundational support of empirical evidence, any theoretical discourse would be without merit. Our gut feelings about the behavior of the human memory may not be accurate. So, the theories we'll discuss next will also start from what we've learned so far to ensure that they are grounded in reality.
+それは、経験的証拠の基盤がなければ、理論的な議論は価値がないからです。人間の記憶の挙動についての直感は正確でないかもしれません。したがって、次に議論する理論も、これまでに学んだことから始めて、現実に基づいていることを確認します。
 
-### Two Components of Memory
+### 記憶の2つの要素
 
-Here's a question to ponder: what factors would you consider when describing the state of a material in your memory?
+ここで考えてみてください：記憶の状態を説明する際にどのような要素を考慮しますか？
 
-Before Robert A. Bjork, many researchers used **memory strength** to talk about how well people remembered something.
+ロバート・A・ビョーク以前は、多くの研究者が**記憶の強度**を使って、人々がどれだけよく何かを覚えているかを話していました。
 
-Let's revisit the forgetting curve for a moment:
+忘却曲線をもう一度見てみましょう：
 
 ![image](https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/0bc2a613-73af-4f9a-b844-ab45018219a2)
 
-Firstly, **memory retention (recall probability)** emerges as a pivotal variable in characterizing the state of one's memory. In our everyday life, forgetting often manifests as a stochastic phenomenon. No one can unequivocally assert that a word memorized today will be recalled ten days later or forgotten twenty days later.
+まず、**記憶保持（想起確率）**が、記憶の状態を特徴づける重要な変数として浮かび上がります。日常生活では、忘却はしばしば確率的な現象として現れます。今日覚えた単語が10日後に思い出されるか、20日後に忘れられるかを誰も明確に断言することはできません。
 
-Is recall probability sufficient to describe the state of memory? Imagine drawing a horizontal line through the forgetting curves above; each curve will be intersected by the horizontal line at a point with the same probability of recall, yet the curves are different. The **rate of forgetting** should certainly be factored into the description of memory states.
+想起確率だけで記憶の状態を説明するのに十分でしょうか？上記の忘却曲線に水平線を引くことを想像してみてください。各曲線は同じ想起確率の点で水平線と交差しますが、曲線は異なります。**忘却率**も記憶状態の説明に確実に考慮されるべきです。
 
-To address this problem, we must delve into the mathematical properties of the forgetting curve — a task that requires a large amount of data for plotting the curve. The data in this tutorial is sourced from an [open dataset](https://doi.org/10.7910/DVN/VAGUL0) created by the language learning application MaiMemo.
+この問題に対処するためには、忘却曲線の数学的特性を掘り下げる必要があります。これは、曲線をプロットするための大量のデータを必要とする作業です。このチュートリアルのデータは、語学学習アプリケーションMaiMemoによって作成された[オープンデータセット](https://doi.org/10.7910/DVN/VAGUL0)から取得されています。
 
 ![](https://l-m-sherlock.github.io/thoughts-memo/311013%e9%81%97%e5%bf%98%e6%9b%b2%e7%ba%bf.png)
 
-From the figure above, we find that the forgetting curve can be approximated by a negative exponential function. The rate of forgetting can be characterized by the decay constant of this function.
+上の図から、忘却曲線は負の指数関数で近似できることがわかります。忘却の速度は、この関数の減衰定数で特徴付けることができます。
 
-We can write the following equation to obtain a fitting formula for the forgetting curve:
+忘却曲線のフィッティング式を得るために、次の方程式を書くことができます：
 
 $$
 \begin{aligned}
@@ -271,186 +271,185 @@ R = \exp\left[\frac{t \ln{0.9}}{S}\right]
 \end{aligned}
 $$
 
-In this equation, $R$ denotes the **probability of recall**, $S$ denotes the **memory stability (or memory strength)**, and $t$ denotes the time elapsed since the last review.
+この方程式では、$R$は**想起確率**、$S$は**記憶の安定性（または記憶の強度）**、$t$は最後のレビューから経過した時間を表します。
 
-The relationship between $S$ and the shape of the forgetting curve can be seen in the following figure:
+$S$と忘却曲線の形状の関係は、次の図で見ることができます：
 
 ![](https://l-m-sherlock.github.io/thoughts-memo/three_forgetting_curves.png)
 
-Memory stability, $S$, is defined as the time required for the "probability of recall," $R$, to fall from 100% to 90%. (In scientific literature, a 50% value is often used, in which case, the term "memory half-life" is used.)
+記憶の安定性$S$は、「想起確率」$R$が100%から90%に低下するまでに必要な時間として定義されます。（科学文献では、50%の値がよく使用され、その場合、「記憶の半減期」という用語が使われます。）
 
-The two components of memory proposed by Bjork — retrieval strength and storage strength — correspond precisely to recall probability and memory stability defined here.
+ビョークが提案した記憶の2つの要素 — 検索強度と保存強度 — は、ここで定義された想起確率と記憶の安定性に正確に対応します。
 
-The equation yields the following observations:
+この方程式から次の観察が得られます：
 
-1. When $t=0$, $R=100%$, meaning that immediately after successful recall, the process of forgetting has not yet begun, and the probability of recall is at its maximum value of 100%.
-  
-2. As $t$ approaches infinity, $R$ approaches zero, meaning that if you never review something, you will eventually forget it.
+1. $t=0$のとき、$R=100%$です。これは、成功した想起の直後には忘却のプロセスがまだ始まっておらず、想起の確率が最大値の100%であることを意味します。
 
-3. The first derivative of the negative exponential function is negative and its absolute value is decreasing (i.e., the second derivative is positive). This is consistent with the empirical observation that forgetting is fast initially and slows down subsequently.
+2. $t$が無限大に近づくと、$R$はゼロに近づきます。これは、何かを一度も復習しなければ、最終的にはそれを忘れてしまうことを意味します。
 
+3. 負の指数関数の一階導関数は負であり、その絶対値は減少しています（つまり、二階導関数は正です）。これは、忘却が最初は速く、その後徐々に遅くなるという経験的観察と一致します。
 
-Thus, we have defined two components of memory, but something seems to be missing.
+このようにして、記憶の2つの要素を定義しましたが、何かが欠けているようです。
 
-When the shape of the forgetting curve changes after review, the memory stability changes. This change doesn't depend only on the recall probability at the time of the review and the previous value of memory stability.
+レビュー後に忘却曲線の形状が変化すると、記憶の安定性も変化します。この変化は、レビュー時の想起確率と以前の記憶の安定性の値だけに依存するわけではありません。
 
-Is there evidence to substantiate this claim? Think about the first time you learn something: your memory stability and probability of recall are both zero. But after you learn it, your probability of recall is 100%, and the memory stability depends on a certain property of the material you just learned.
+この主張を裏付ける証拠はあるでしょうか？何かを初めて学ぶときを考えてみてください：記憶の安定性と想起確率はどちらもゼロです。しかし、それを学んだ後は、想起確率は100%になり、記憶の安定性は学んだ教材の特定の特性に依存します。
 
-The thing you're trying to remember itself has a property that can affect your memory. Intuitively, this variable is the **difficulty** of the material.
+覚えようとしているもの自体に、記憶に影響を与える特性があります。直感的には、この変数は教材の**難易度**です。
 
-After including the difficulty of the material, we have a three-component model of memory.
+教材の難易度を考慮に入れると、記憶の3要素モデルが完成します。
 
-#### Review Section
+#### レビューセクション
 
-| Question                                                     | Answer                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Why can't a single variable of memory strength adequately describe the state of memory? | A single variable is insufficient because the forgetting curve encompasses both the retention level and the rate of forgetting. |
-| What variable measures the degree of memory retention?       | Recall probability.                                           |
-| Which function can approximate the forgetting curve?         | Exponential function.                                         |
-| What variable measures the speed of forgetting?              | Decay constant.                                               |
-| What is the definition of memory stability?       | The time required for the recall probability to decline from 100% to a predetermined percentage, usually 90%. |
+| 質問                                                     | 答え                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------- |
+| なぜ記憶の強度という単一の変数では記憶の状態を十分に説明できないのですか？ | 単一の変数では不十分です。なぜなら、忘却曲線は記憶保持レベルと忘却速度の両方を包含しているからです。 |
+| 記憶保持の度合いを測定する変数は何ですか？             | 想起確率。                                                 |
+| 忘却曲線を近似できる関数は何ですか？                     | 指数関数。                                                 |
+| 忘却の速度を測定する変数は何ですか？                     | 減衰定数。                                                 |
+| 記憶の安定性の定義は何ですか？                           | 想起確率が100%から所定の割合（通常は90%）に低下するまでに必要な時間。 |
 
-### The Three-Component Model of Memory
+### 記憶の3要素モデル
 
-Let us delve into the terms:
+用語を詳しく見てみましょう：
 
-- Stability: The time required for the probability of recall for a particular memory to decline from 100% to 90%.
-- Retrievability (probability of recall): The probability of recalling a specific memory at a given moment.
-- Difficulty: The inherent complexity associated with a particular memory.
+- 安定性: 特定の記憶の想起確率が100%から90%に低下するまでに必要な時間。
+- 想起可能性（想起確率）: 特定の記憶を特定の瞬間に想起する確率。
+- 難易度: 特定の記憶に関連する固有の複雑さ。
 
-The difference between retrievability and retention is that the former refers to the probability of recalling a particular memory, whereas the latter refers to the average recall probability for a population of memories. This terminology is not universally adopted by all researchers, but I will use it in this article.
+想起可能性と保持率の違いは、前者が特定の記憶を想起する確率を指すのに対し、後者は記憶の集団に対する平均的な想起確率を指す点です。この用語はすべての研究者に普遍的に採用されているわけではありませんが、この記事ではこの用語を使用します。
 
-One can define the retrievability of any given memory at time $t$ following $n$ successful recall:
+任意の記憶の想起可能性を、$n$回の成功した想起後の時間$t$で定義することができます：
 
 $$
 R_n(t) = \exp\left[\cfrac{t\ln{0.9}}{S_n}\right]
 $$
 
-If $S_n$ is used as an interval between reviews, this equation can bridge the gap between spaced repetition algorithms and memory models:
+$S_n$がレビュー間の間隔として使用される場合、この方程式は間隔反復アルゴリズムと記憶モデルのギャップを埋めることができます：
 
 $$
 R_n(t) = \exp\left[\cfrac{t\ln{0.9}}{I_1\prod\limits_{i=2}^{n}C_i}\right]
 $$
 
-Where:
+ここで：
 
 - $I_1$ denotes the initial interval after the first review.
 - $C_i$ represents the ratio of the $i$-th interval and the preceding $i-1$-th interval.
 
-The objective of spaced repetition algorithms is to accurately compute $I_1$ and $C_i$, thereby determining the stability of memory across different students, materials, and review schedules.
+間隔反復アルゴリズムの目的は、$I_1$と$C_i$を正確に計算し、異なる学生、教材、およびレビューのスケジュールにわたる記憶の安定性を決定することです。
 
-In both SM-0 and SM-2 algorithms, $I_1$ is equal to one day. In SM-0, $C_i$ is a predetermined constant, whereas in SM-2, $C_i$ is a variable Ease Factor (EF) that adjusts in response to the ratings given to the card during each review.
+SM-0およびSM-2アルゴリズムの両方で、$I_1$は1日に等しいです。SM-0では、$C_i$は所定の定数ですが、SM-2では、$C_i$は各レビュー時にカードに与えられた評価に応じて調整される可変のイーズファクター（EF）です。
 
-A question to ponder is: what is the relationship between $C_i$ and the three components of memory?
+ここで考えるべき質問は、$C_i$と記憶の3つの要素の関係は何かということです。
 
-Below are some empirical observations from Wozniak, corroborated by data from language learning platforms like MaiMemo:
+以下は、Wozniakの経験的観察結果であり、MaiMemoのような語学学習プラットフォームのデータによって裏付けられています：
 
-- Impact of stability: A higher $S$ results in a smaller $C_i$. This means that as memory becomes more stable, its subsequent stabilization becomes increasingly hard.
-- Impact of retrievability: A lower $R$ results in a larger $C_i$. This means that a successful recall at a low probability of recall leads to a greater increase in stability.
-- Impact of difficulty: A higher $D$ results in a smaller $C_i$. This means that the higher the complexity of the material, the smaller the increase in stability after each review.
+- 安定性の影響: 高い$S$は小さい$C_i$をもたらします。これは、記憶がより安定するにつれて、その後の安定化がますます難しくなることを意味します。
+- 想起可能性の影響: 低い$R$は大きい$C_i$をもたらします。これは、想起確率が低い状態での成功した想起が、安定性の大きな増加につながることを意味します。
+- 難易度の影響: 高い$D$は小さい$C_i$をもたらします。これは、教材の複雑さが高いほど、各レビュー後の安定性の増加が小さくなることを意味します。
 
-Due to the involvement of multiple factors, $C_i$ is hard to calculate. SuperMemo employs a multi-dimensional matrix to represent $C_i$ as a multivariable function and adjusts the matrix values during the user's learning journey to approximate real-world data.
+複数の要因が関与するため、$C_i$の計算は難しいです。SuperMemoは、$C_i$を多変数関数として表現する多次元マトリックスを使用し、ユーザーの学習過程でマトリックスの値を調整して現実のデータに近づけます。
 
-In the equations above, $C_i$ denotes the ratio of subsequent intervals. In the algorithm itself, $C_i$ is an increase in stability. To disambiguate, we shall adopt SuperMemo terminology: stability increase (SInc). It represents the _relative_ increase in memory stability before and after review.
+上記の方程式では、$C_i$は次の間隔の比率を示します。アルゴリズム自体では、$C_i$は安定性の増加を意味します。混乱を避けるために、SuperMemoの用語を採用します：安定性増加（SInc）。これは、レビュー前後の記憶の安定性の_相対的な_増加を表します。
 
-Let us now delve into a more detailed discussion of stability increase.
+次に、安定性増加について詳しく説明します。
 
-#### Review Section
+#### レビューセクション
 
-| Question                                                     | Answer                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Which variables are encapsulated in the three-component model of memory? | Memory stability, memory retrievability, and memory complexity. |
-| What differentiates retrievability from retention rate? | The former pertains to individual memories, whereas the latter refers to large populations of memories. |
-| What two values connect the three-component model of memory and spaced repetition algorithms? | The initial interval $I_1$ and the ratio $C_i$ of successive intervals. |
-| What is $C_i$ called?                       | Stability increase.                                           |
+| 質問                                                     | 答え                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------- |
+| 記憶の3要素モデルに含まれる変数は何ですか？             | 記憶の安定性、記憶の想起可能性、記憶の複雑さ。             |
+| 想起可能性と保持率の違いは何ですか？                   | 前者は個々の記憶に関するものであり、後者は大規模な記憶集団に関するものです。 |
+| 記憶の3要素モデルと間隔反復アルゴリズムを結びつける2つの値は何ですか？ | 初期間隔$I_1$と連続する間隔の比率$C_i$。                  |
+| $C_i$は何と呼ばれますか？                               | 安定性増加。                                               |
 
-### Memory Stability Increase 
+### 記憶の安定性増加
 
-In this chapter, we will ignore the influence of memory difficulty and focus just on the relationship between memory stability increase (SInc), stability (S), and retrievability (R). 
+この章では、記憶の難易度の影響を無視し、記憶の安定性増加（SInc）、安定性（S）、および想起可能性（R）の関係に焦点を当てます。
 
-Data for the following analysis was collected from SuperMemo users and analyzed by Wozniak. 
+以下の分析のデータは、SuperMemoユーザーから収集され、Wozniakによって分析されました。
 
-#### Dependence of stability increase on S
+#### 安定性増加のS依存性
 
-Upon investigating the stability increase (SInc) matrix, Wozniak discovered that for a given level of retrievability (R), the function of SInc with respect to stability (S) can be approximated by a negative power function.
+安定性増加（SInc）マトリックスを調査したところ、Wozniakは、特定の想起可能性（R）のレベルに対して、安定性（S）に関するSIncの関数が負のべき関数で近似できることを発見しました。
 
-![Dynamic Image Cover](https://supermemo.guru/images/0/0e/SInc-vs-S.gif)
+![動的画像カバー](https://supermemo.guru/images/0/0e/SInc-vs-S.gif)
 
-By taking the logarithm of both stability increase (Y-axis) and stability (X-axis), the following curve is obtained:
+安定性増加（Y軸）と安定性（X軸）の両方の対数を取ると、次の曲線が得られます：
 
-![Dynamic Image Cover](https://supermemo.guru/images/4/4e/Log%28SInc%29-vs-log%28S%29.gif)
+![動的画像カバー](https://supermemo.guru/images/4/4e/Log%28SInc%29-vs-log%28S%29.gif)
 
-This supports our prior qualitative conclusion, "As S increases, $C_i$ decreases".
+これは、「Sが増加するにつれて、$C_i$は減少する」という以前の定性的な結論を支持しています。
 
-#### Dependence of stability increase on R
+#### 想起可能性に対する安定性増加の依存性
 
-As predicted by the spacing effect, stability increase (SInc) is greater for lower values of retrievability (R). After analyzing multiple datasets, it was observed that SInc demonstrates exponential growth as R diminishes.
+間隔効果が予測するように、想起可能性（R）が低いほど、安定性増加（SInc）は大きくなります。複数のデータセットを分析した結果、Rが減少するにつれてSIncが指数関数的に増加することが観察されました。
 
-![Dynamic Image Cover](https://supermemo.guru/images/2/29/SInc-vs-R.gif)
+![動的画像カバー](https://supermemo.guru/images/2/29/SInc-vs-R.gif)
 
-Upon taking the logarithm of retrievability (X-axis), the following curve is obtained:
+想起可能性（X軸）の対数を取ると、次の曲線が得られます：
 
-![Dynamic Image Cover](https://supermemo.guru/images/b/b2/SInc-vs-log%28R%29.gif)
+![動的画像カバー](https://supermemo.guru/images/b/b2/SInc-vs-log%28R%29.gif)
 
-Surprisingly, SInc may fall below 1 when R is 100%. Molecular-level research suggests that memory instability increases during review. This once again proves that reviewing material too often is not beneficial to the learner.
+驚くべきことに、Rが100%のとき、SIncは1を下回ることがあります。分子レベルの研究は、レビュー中に記憶の不安定性が増加することを示唆しています。これにより、教材を頻繁にレビューすることが学習者にとって有益ではないことが再び証明されました。
 
-##### Linear increase in the value of SInc over time
+##### 時間の経過に伴うSIncの値の線形増加
 
-![Dynamic Image Cover](https://supermemo.guru/images/d/d0/SInc-vs-time.gif)
+![動的画像カバー](https://supermemo.guru/images/d/d0/SInc-vs-time.gif)
 
-As time (t) increases, retrievability (R) decreases exponentially, while Stability Increase (SInc) increases exponentially. These two exponents counterbalance each other, yielding an approximately linear curve.
+時間（t）が増加するにつれて、想起可能性（R）は指数関数的に減少し、安定性増加（SInc）は指数関数的に増加します。これらの2つの指数は互いに相殺し、ほぼ線形の曲線を生成します。
 
-##### Expected increase in memory stability
+##### 記憶の安定性増加の予測値
 
-There are several criteria for the optimization of learning. One can target specific retention rates or aim to maximize memory stability. In either case, understanding the expected stability increase proves advantageous. 
+学習の最適化にはいくつかの基準があります。特定の保持率を目標にすることも、記憶の安定性を最大化することもできます。いずれの場合も、予測される安定性の増加を理解することは有益です。
 
-We define the expected stability increase as:
+予測される安定性増加を次のように定義します：
 
 $$
 E(SInc) = SInc \times R
 $$
 
-This equation produces an interesting result: the maximum value of expected stability increase occurs when the retention rate is between 30% and 40%.
+この方程式は興味深い結果をもたらします：予測される安定性増加の最大値は、保持率が30％から40％の間にあるときに発生します。
 
-![Dynamic Image Cover](https://supermemo.guru/images/c/ca/Consolidation_curve_E%28Sinc%29%3Df%28R%29_%282005%29.gif)
+![動的画像カバー](https://supermemo.guru/images/c/ca/Consolidation_curve_E%28Sinc%29%3Df%28R%29_%282005%29.gif)
 
-It's crucial to note that the maximum expected stability increase does not necessarily equate to the fastest learning rate. For the most efficient review schedule, refer to the forthcoming SSP-MMC algorithm.
+重要なのは、予測される安定性増加の最大値が必ずしも最速の学習速度を意味するわけではないということです。最も効率的なレビューのスケジュールについては、今後のSSP-MMCアルゴリズムを参照してください。
 
-#### Review Section
+#### レビューセクション
 
-| Question                                                     | Answer                  |
-| ------------------------------------------------------------ | ----------------------- |
-| What mathematical function describes the relationship between stability increase and memory stability? | Negative power function. |
-| What mathematical function describes the relationship between stability increase and memory retrievability? | Exponential function.    |
+| 質問                                                     | 答え                       |
+| -------------------------------------------------------- | -------------------------- |
+| 安定性増加と記憶の安定性の関係を説明する数学的関数は何ですか？ | 負のべき関数。             |
+| 安定性増加と記憶の想起可能性の関係を説明する数学的関数は何ですか？ | 指数関数。                 |
 
-### Memory Complexity
+### 記憶の複雑さ
 
-Memory stability also depends on the quality of memory, termed here as memory complexity. For efficient review sessions, knowledge associations must be simple, even if the knowledge itself is complex. Flashcards can encapsulate complex knowledge architectures, yet individual flashcards should be atomic.
+記憶の安定性は、ここでは記憶の複雑さと呼ばれる記憶の質にも依存します。効率的なレビューセッションのためには、知識の関連付けがシンプルでなければなりません。たとえ知識自体が複雑であってもです。フラッシュカードは複雑な知識構造をカプセル化できますが、個々のフラッシュカードは原子的であるべきです。
 
-In 2005, Wozniak formulated an equation to describe the review of composite memories. He observed that the stability of a composite* memory behaves similarly to resistance in a circuit.
+2005年に、Wozniakは複合記憶のレビューを説明する方程式を策定しました。彼は、複合記憶の安定性が回路の抵抗と同様に振る舞うことを観察しました。
 
-*Note: Composite is used instead of complex to emphasize that it is composed of simpler elements)
+*注: 複合という用語は、より単純な要素で構成されていることを強調するために、複雑という用語の代わりに使用されています。
 
 ![Image](https://supermemo.guru/images/thumb/f/f5/Memory_complexity.png/450px-Memory_complexity.png)
 
-Composite knowledge yields two primary conclusions:
+複合知識からは2つの主要な結論が導き出されます：
 
-- Additional information fragments lead to interference. In other words, sub-memory A destabilizes sub-memory B, and vice versa.
-- Uniformly stimulating the sub-components of the memory during review is very difficult.
+- 追加の情報断片は干渉を引き起こします。言い換えれば、サブメモリAがサブメモリBを不安定にし、その逆もまた然りです。
+- レビュー中に記憶のサブコンポーネントを均等に刺激することは非常に難しいです。
 
-Suppose we have a composite flashcard that requires the memorization of two fill-in-the-blank fields. Assume both blanks are equally challenging to remember. Hence, the retrievability of the composite memory is the product of the retrievabilities of its sub-memories:
+例えば、2つの穴埋めフィールドを記憶する必要がある複合フラッシュカードがあるとします。両方の空欄を覚えるのが同じくらい難しいと仮定します。したがって、複合記憶の想起可能性は、そのサブメモリの想起可能性の積となります：
 
 $$
 R = R_a \times R_b
 $$
 
-Plugging this into the forgetting curve equation, we get:
+これを忘却曲線の方程式に代入すると、次のようになります：
 
 $$
 R = e^{ \frac{t \ln 0.9}{S_a}} \times e^{ \frac{t \ln 0.9}{S_b}} = e^{ \frac{t \ln 0.9}{S}}
 $$
 
-Here, $S$ denotes the stability of this composite memory. We can deduce:
+ここで、$S$はこの複合記憶の安定性を示します。次のことが推測できます：
 
 $$
 \frac{t \ln 0.9}{S} = \frac{t \ln 0.9}{S_a} + \frac{t \ln 0.9}{S_b}
@@ -462,122 +461,122 @@ $$
 S = \frac{S_a \times S_b}{S_a + S_b}
 $$
 
-Remarkably, the stability of a composite memory will be lower than the stabilities of each of its constituent memories. Also, the stability of the composite memory will be closer to the stability of the more challenging sub-memory.
+驚くべきことに、複合記憶の安定性は、その構成要素の各記憶の安定性よりも低くなります。また、複合記憶の安定性は、より難しいサブ記憶の安定性に近くなります。
 
-As the complexity increases, memory stability approaches zero. This means that there is no way to memorize an entire book as a whole except by continuously rereading it. This is a futile process.
+複雑さが増すにつれて、記憶の安定性はゼロに近づきます。これは、全体として本全体を記憶する方法が、継続的に再読すること以外にないことを意味します。これは無駄なプロセスです。
 
-#### Review Section
+#### レビューセクション
 
-| Question                                                     | Answer                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| What is the relationship between the retrievability $R$ of a composite memory and the retrievabilities $R_a, R_b$ of its constituent memories? | $R = R_a \times R_b$; the retrievability of a composite memory is the product of the retrievabilities of its components. |
-| Can the stability $S$ of a composite memory be greater than the stabilities $S_a, S_b$ of its constituent memories? | The stability of a composite memory is lower than the stabilities of its components. |
-| How does the stability of a composite memory change as the number of its constituent memories increases? | It progressively diminishes, asymptotically approaching zero. |
+| 質問                                                     | 答え                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------- |
+| 複合記憶の想起可能性$R$とその構成要素の想起可能性$R_a, R_b$の関係は何ですか？ | $R = R_a \times R_b$。複合記憶の想起可能性は、その構成要素の想起可能性の積です。 |
+| 複合記憶の安定性$S$は、その構成要素の安定性$S_a, S_b$よりも大きくなりますか？ | 複合記憶の安定性は、その構成要素の安定性よりも低くなります。 |
+| 複合記憶の構成要素の数が増えると、複合記憶の安定性はどう変化しますか？ | 徐々に減少し、漸近的にゼロに近づきます。 |
 
-## Day 3: The Latest Progress
+## 3日目: 最新の進展
 
-After learning some theories of memory, it's time to put them into practice. The upcoming section will introduce how these memory theories can be used to develop spaced repetition algorithms and improve the users' learning efficiency.
+記憶の理論を学んだ後は、それを実践に移す時です。次のセクションでは、これらの記憶理論をどのように使用して間隔反復アルゴリズムを開発し、ユーザーの学習効率を向上させるかを紹介します。
 
-> There will be no review section ahead, and the difficulty will increase sharply, so be prepared!
+> ここから先はレビューセクションがなくなり、難易度が急激に上がるので、準備をしておいてください！
 
-### Data Collection
+### データ収集
 
-Data is the lifeblood of spaced repetition algorithms. Collecting appropriate, comprehensive, and accurate data will determine the limits of the capabilities of spaced repetition algorithms.
+データは間隔反復アルゴリズムの生命線です。適切で包括的かつ正確なデータを収集することが、間隔反復アルゴリズムの能力の限界を決定します。
 
-To accurately estimate a learner's memory states, we need to define the basic behavior of memory. Let's think about it: what are the important attributes of a memory event?
+学習者の記憶状態を正確に推定するためには、記憶の基本的な挙動を定義する必要があります。考えてみましょう：記憶イベントの重要な属性は何でしょうか？
 
-The most basic elements are easy to think of: who (the subject), when (time), and what (memory). For memory, we can explore further: what was remembered (content), how well it was remembered (response), and how long it took (time spent), etc. The response can be further refined by incorporating several grades into the algorithm.
+最も基本的な要素は簡単に思い浮かびます：誰（主体）、いつ（時間）、何（記憶）。記憶についてさらに探求すると、何が記憶されたか（内容）、どれだけよく記憶されたか（応答）、どれくらいの時間がかかったか（所要時間）などがあります。応答は、アルゴリズムにいくつかの評価を組み込むことでさらに精緻化できます。
 
-Taking these attributes into consideration, we can use a tuple to record a memory event:
+これらの属性を考慮に入れて、タプルを使用して記憶イベントを記録することができます：
 
 $$
 e := (\text{user}, \text{item}, \text{time}, \text{response}, \text{time spent})
 $$
 
-This event records a user's response and cost for a particular item at a certain time. For example: 
+このイベントは、特定のアイテムに対するユーザーの応答とコストを特定の時間に記録します。例えば：
 
 $$
 e := (\text{Jarrett}, \text{apple}, \text{2022-04-01 12:00:01}, \text{Forgotten}, \text{5s})
 $$
 
-That is: Jarrett reviewed the word "apple" at 12:00:01 on April 1st, 2022, forgot it, and spent 5 seconds reviewing this flashcard.
+つまり、ジャレットは2022年4月1日の12:00:01に「apple」という単語を復習し、忘れてしまい、このフラッシュカードの復習に5秒かかりました。
 
-With this basic definition of memory events, we can extract and calculate more information of interest.
+この基本的な記憶イベントの定義を使用して、興味深い情報を抽出および計算することができます。
 
-For example, in spaced repetition, the interval between two repetitions is of critical importance. Using the memory events mentioned above, we can group data by users and items, sort by time, and then subtract the time of two adjacent events to obtain the interval. Generally, to save calculation steps, the interval can be directly recorded in the event. Although this causes storage redundancy, it saves computational time.
+例えば、間隔反復では、2回の反復間の間隔が非常に重要です。上記の記憶イベントを使用して、ユーザーとアイテムごとにデータをグループ化し、時間でソートし、隣接する2つのイベントの時間を引くことで間隔を取得できます。一般的に、計算ステップを節約するために、間隔はイベントに直接記録することができます。これにより、ストレージの冗長性が発生しますが、計算時間を節約できます。
 
-In addition to intervals, the historical sequence of feedback is also important. For example, "forgot, remembered, remembered, remembered" and "1 day, 3 days, 6 days, 10 days" can reflect a memory's history more comprehensively and can be directly recorded in memory events:
+間隔に加えて、フィードバックの履歴シーケンスも重要です。例えば、「忘れた、覚えた、覚えた、覚えた」や「1日、3日、6日、10日」は、記憶の履歴をより包括的に反映し、記憶イベントに直接記録することができます：
 
 $$
 e_{i} := (\text{user}, \text{item}, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}}, \Delta t_i, r_i)
 $$
 
-> If you are interested in the data, you can download the [open-source dataset](https://doi.org/10.7910/DVN/VAGUL0) from MaiMemo and analyze it yourself.
+> データに興味がある場合は、MaiMemoから[オープンソースデータセット](https://doi.org/10.7910/DVN/VAGUL0)をダウンロードして、自分で分析することができます。
 
-### The DSR Model
+### DSRモデル
 
-Now that we have the data, how can we use it? Reviewing the three-component memory model from Day 2, what we want to know are the three attributes of memory states, which our current dataset does not include. Therefore, the goal of this section is to convert memory event data into memory states and figure out their relationships.
+データが揃ったところで、どう活用するのでしょうか？2日目の記憶の3要素モデルを振り返ると、知りたいのは記憶状態の3つの属性です。しかし、現在のデータセットにはこれが含まれていません。したがって、このセクションの目標は、記憶イベントデータを記憶状態に変換し、それらの関係を明らかにすることです。
 
-#### Memory States
+#### 記憶状態
 
-The three letters in the DSR model correspond to difficulty, stability, and retrievability. Retrievability reflects the probability of recalling a memory at a certain moment. In probabilistic terms, a memory event is a single random experiment with only two possible outcomes, and its success probability equals retrievability.
+DSRモデルの3つの文字は、難易度（Difficulty）、安定性（Stability）、想起可能性（Retrievability）を表しています。想起可能性は、特定の瞬間に記憶を想起する確率を反映しています。確率論的には、記憶イベントは2つの可能な結果しかない単一のランダム実験であり、その成功確率は想起可能性に等しいです。
 
-Therefore, the most straightforward method to measure retrievability is to perform countless independent experiments on the same memory and then count the frequency of successful recall. However, this method is infeasible in practice because experimenting with memory will change its state, we cannot act as an observer and measure memory without affecting it.
-Note: At the current level of neuroscience, it is impossible to measure the memory states at the neural level, so this approach is also unavailable.
+したがって、想起可能性を測定する最も簡単な方法は、同じ記憶に対して無数の独立した実験を行い、成功した想起の頻度を数えることです。しかし、この方法は実際には実行不可能です。なぜなら、記憶を実験することでその状態が変わってしまうため、観察者として記憶に影響を与えずに測定することはできないからです。
+注：現在の神経科学のレベルでは、神経レベルで記憶状態を測定することは不可能であるため、このアプローチも利用できません。
 
-So, are we out of options? Currently, there are two compromise measurement methods: (1) Ignore the differences in the learning material: Both SuperMemo and Anki use this approach; (2) Ignore the differences between learners: MaiMemo uses this approach.
+では、他に方法はないのでしょうか？現在、2つの妥協的な測定方法があります：（1）学習教材の違いを無視する：SuperMemoとAnkiはこのアプローチを使用しています。（2）学習者の違いを無視する：MaiMemoはこのアプローチを使用しています。
 
-Ignoring the differences in the learning material means that when measuring retrievability, we collect data with the same attributes from the same user, except for the content that the user is learning. While we can't perform multiple independent experiments on one learner and one material, we can do so with one learner and multiple materials (such as flashcards). On the other hand, ignoring the differences between learners involves collecting data from multiple learners who are studying the same material.
+学習教材の違いを無視するということは、想起可能性を測定する際に、ユーザーが学習している内容を除いて、同じ属性を持つデータを同じユーザーから収集することを意味します。1人の学習者と1つの教材に対して複数の独立した実験を行うことはできませんが、1人の学習者と複数の教材（例えばフラッシュカード）に対しては可能です。一方、学習者の違いを無視するということは、同じ教材を学習している複数の学習者からデータを収集することを意味します。
 
-Considering that the amount of data in MaiMemo is sufficient, this section will only introduce the measurement method that ignores learner differences. After ignoring them, we can obtain a new group of memory events:
+MaiMemoのデータ量が十分であることを考慮して、このセクションでは学習者の違いを無視する測定方法のみを紹介します。学習者の違いを無視した後、新しいグループの記憶イベントを取得できます：
 
 $$
 e_{i} := (item, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}}, \Delta t_i, p_i, N)
 $$
 
-Here, N is the number of learners who have memorized the same material and have the same repetition history. Retrievability $p=\frac{n_{r=1}}{N}$ is the proportion of successful recall among these learners. When $N$ is large enough, the ratio $n_{r=1}/N$ approaches the true retrievability.
+ここで、Nは同じ教材を記憶し、同じ反復履歴を持つ学習者の数です。想起可能性$p=\frac{n_{r=1}}{N}$は、これらの学習者の中で成功した想起の割合です。Nが十分に大きい場合、この比率$n_{r=1}/N$は真の想起可能性に近づきます。
 
-After the retrievability is calculated, the stability can be easily calculated. Based on the collected data, an exponential function can be used to approximate this data and calculate the stability of memory for groups with the same $(item, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}})$.
+想起可能性が計算された後、安定性を簡単に計算できます。収集されたデータに基づいて、指数関数を使用してこのデータを近似し、同じ$(item, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}})$を持つグループの記憶の安定性を計算できます。
 
 ![](https://l-m-sherlock.github.io/thoughts-memo/%e7%a8%b3%e5%ae%9a%e6%80%a7%e9%81%97%e5%bf%98%e6%9b%b2%e7%ba%bf.png)
 
-The scatter plot coordinates are $(\Delta t_i , p_i)$, with relative size as $\log N$. The curve is the fitted forgetting curve.
+散布図の座標は$(\Delta t_i , p_i)$で、相対サイズは$\log N$です。曲線はフィットされた忘却曲線です。
 
-Finally, it's time to tackle the difficulty. How can we derive the difficulty from memory event data? Let's start with a simple thought experiment. Suppose a group of learners memorizes the words "apple" and "accelerate" for the first time. How can we use memory event data to distinguish the difficulty of the two words?
+最後に、難易度に取り組む時が来ました。記憶イベントデータから難易度をどのように導き出すことができるでしょうか？簡単な思考実験から始めましょう。学習者のグループが「apple」と「accelerate」という単語を初めて覚えると仮定します。記憶イベントデータを使用して、これら2つの単語の難易度をどのように区別できるでしょうか？
 
-The simplest method is to test immediately the next day, record the memory event data, and see which word has a higher proportion of successful recalls. Then we can calculate the corresponding value of stability.
+最も簡単な方法は、翌日にすぐテストを行い、記憶イベントデータを記録し、どちらの単語がより高い成功率を持つかを確認することです。その後、対応する安定性の値を計算できます。
 
-That is to say, the stability after the first review can reflect the difficulty. However, there is no standard method for the estimation of difficulty. Since this is an introductory article, the problem of calculating difficulty will not be discussed in detail. Unlike retrievability and stability, both of which have precise definitions, difficulty is a hazy concept.
+つまり、最初のレビュー後の安定性が難易度を反映することができます。しかし、難易度の推定には標準的な方法はありません。これは入門記事なので、難易度の計算問題については詳しく説明しません。想起可能性と安定性とは異なり、難易度は明確な定義を持たない曖昧な概念です。
 
-### Beginners Stop Here
+### 初心者はここでストップ
 
-The rest of this article covers in-depth details about my research works. If you’re new to academics, you can stop here and review the content of the previous three days. If you’re interested in the following content, you can continue reading.
+この記事の残りの部分は、私の研究に関する詳細な内容を扱っています。学問に不慣れな方は、ここで止めて、これまでの3日間の内容を復習してください。以下の内容に興味がある方は、読み進めてください。
 
-#### State Transition
+#### 状態遷移
 
-So far, we can transform memory event data into memory states:
+これまでのところ、記憶イベントデータを記憶状態に変換することができます：
 
 $$
 (item, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}} , \Delta t_i , p_i, N) => (D_i, S_i, R_i)
 $$
 
-Next, we can start describing the relationship between states. What is the relationship between $(D_i, S_i, R_i)$ and $t$, $r$ after reviewing in $\Delta t$ days, with the recall result being $r$, and obtaining the new memory state $(D_{i+1}, S_{i+1}, R_{i+1})$?
+次に、状態間の関係を説明し始めることができます。レビュー後の$\Delta t$日後の記憶状態$(D_i, S_i, R_i)$と$t$、$r$の関係は何でしょうか？想起結果が$r$で、新しい記憶状態$(D_{i+1}, S_{i+1}, R_{i+1})$を得る場合です。
 
-First, we need to organize the memory state data into a form suitable for analysis:
+まず、記憶状態データを分析に適した形式に整理する必要があります：
 
 $$
 (D_i, S_i, R_i, \Delta t, r, D_{i+1}, S_{i+1}, R_{i+1})
 $$
 
-Here, $R_{i+1}$ will immediately reach 100% after review, so it can be ignored during the analysis. Also, between $R_i$, $\Delta t$, and $S_i$, knowing two of them is sufficient to determine the third, so we can ignore $\Delta t$.
+ここで、レビュー後に$R_{i+1}$はすぐに100%に達するため、分析中に無視できます。また、$R_i$、$\Delta t$、$S_i$のうち2つを知っていれば3つ目を決定できるため、$\Delta t$も無視できます。
 
-In the end, the state data we need to analyze is as follows:
+最終的に、分析する必要がある状態データは次のとおりです：
 
 $$
 (D_i, S_i, R_i, r, D_{i+1}, S_{i+1})
 $$
 
-And $\cfrac{S_{i+1}}{S_i}=SInc$, which can refer to the patterns we mentioned in the memory stability growth chapter:
+そして、$\cfrac{S_{i+1}}{S_i}=SInc$は、記憶の安定性増加の章で述べたパターンを参照することができます：
 
 $$
 SInc = a S^{-b}
@@ -587,56 +586,56 @@ $$
 SInc = c e^{-d R}
 $$
 
-We can obtain the relationship formula (the influence of difficulty D is omitted here):
+難易度$D$の影響はここでは省略して、関係式を得ることができます：
 
 $$
 S_{i+1} = S_{i} \cdot a S_{i}^{-b} e^{-c R_i}\textrm{(if r = 1)}
 $$
 
-According to the above formula, we can predict the memory state $(D_{i+1}, S_{i+1})$ of learners after each successful recall. The feedback for forgetting is the same, and it can be described by another set of state transition equations.
+上記の式に従って、各成功した想起後の学習者の記憶状態$(D_{i+1}, S_{i+1})$を予測できます。忘却に対するフィードバックも同様であり、別の状態遷移方程式セットで説明できます。
 
-### Spaced Repetition System Simulation
+### 間隔反復システムのシミュレーション
 
-With the DSR memory model, we can simulate memory states under any review schedules. So, how should we simulate it specifically? We need to start from the perspective of how people usually use spaced repetition software in the real world.
+DSR記憶モデルを使用すると、任意のレビュー計画の下で記憶状態をシミュレートできます。では、具体的にどのようにシミュレーションすればよいのでしょうか？まず、人々が現実世界で間隔反復ソフトウェアをどのように使用するかという視点から始める必要があります。
 
-Suppose Jarrett needs to prepare for the GRE in four months and needs to use spaced repetition to memorize the English words for the exam. However, time must also be allocated to prepare for other subjects.
+例えば、ジャレットが4か月後にGREの準備をする必要があり、試験のために英単語を覚えるために間隔反復を使用する必要があるとします。しかし、他の科目の準備にも時間を割かなければなりません。
 
-From the above sentence, there are two obvious constraints: the number of days before the deadline and daily learning time. The Spaced Repetition System (SRS) simulator needs to consider these two constraints. In addition, the number of words is limited, so the SRS simulation also has a finite set of cards, from which learners select materials for learning and review every day. The spaced repetition scheduling algorithm manages the arrangement of review tasks. To sum up, SRS simulation requires:
+上記の文から、2つの明らかな制約があります：締め切りまでの日数と毎日の学習時間です。間隔反復システム（SRS）シミュレーターは、これら2つの制約を考慮する必要があります。さらに、単語の数は限られているため、SRSシミュレーションには有限のカードセットも含まれ、学習者は毎日学習とレビューのための教材を選択します。間隔反復スケジューリングアルゴリズムは、レビュータスクの配置を管理します。要約すると、SRSシミュレーションには以下が必要です：
 
-1. Material set
-2. Learner
-3. Scheduler
-4. Simulation duration (within a day + total number of days)
+1. 教材セット
+2. 学習者
+3. スケジューラー
+4. シミュレーション期間（1日内 + 合計日数）
 
-The learner can be simulated using the DSR model, providing feedback and memory state for each review. The scheduler can be SM-2, Leitner System, or any other algorithm for scheduling reviews.
+学習者はDSRモデルを使用してシミュレートでき、各レビューに対してフィードバックと記憶状態を提供します。スケジューラーは、SM-2、ライトナーシステム、または他のレビューをスケジューリングするためのアルゴリズムを使用できます。
 
-Then, we will design a specific simulation process based on the two dimensions of SRS simulation. Obviously, we need to simulate day by day into the future in chronological order, and the simulation of each day is composed of feedback from cards. Therefore, the SRS simulation can consist of two loops: the outer loop represents the current simulated date, and the inner loop represents the current simulated card. In the inner loop, we must specify the time spent on each review. When the accumulated time exceeds the daily learning time limit, the loop is automatically exited, ready to enter the next day.
+次に、SRSシミュレーションの2つの次元に基づいて具体的なシミュレーションプロセスを設計します。明らかに、未来に向かって日ごとにシミュレーションする必要があり、各日のシミュレーションはカードからのフィードバックで構成されます。したがって、SRSシミュレーションは2つのループで構成できます：外側のループは現在のシミュレートされた日付を表し、内側のループは現在のシミュレートされたカードを表します。内側のループでは、各レビューに費やす時間を指定する必要があります。累積時間が1日の学習時間の制限を超えると、ループは自動的に終了し、次の日に進む準備が整います。
 
-Here is the pseudocode for SRS Simulation:
+以下はSRSシミュレーションの疑似コードです：
 
 ![SRS Simulation Pseudocode](https://l-m-sherlock.github.io/thoughts-memo/%e9%97%b4%e9%9a%94%e9%87%8d%e5%a4%8d%e6%a8%a1%e6%8b%9f%e7%8e%af%e5%a2%83.png)
 
-> The relevant Python code has been open-sourced on GitHub for readers who are interested enough to delve into the source code: [L-M-Sherlock/space_repetition_simulators: Spaced Repetition Simulators (github.com)](https://github.com/L-M-Sherlock/space_repetition_simulators)
+> 興味のある読者のために、関連するPythonコードがGitHubでオープンソース化されています：[L-M-Sherlock/space_repetition_simulators: Spaced Repetition Simulators (github.com)](https://github.com/L-M-Sherlock/space_repetition_simulators)
 
-### SSP-MMC Algorithm
+### SSP-MMCアルゴリズム
 
-Having discussed the DSR model and SRS simulation, we can now predict learners' memory states and memory situations under given review schedules, but we still haven't answered our ultimate question: What kind of review schedule is the most efficient? How to find the optimal review schedule? The SSP-MMC algorithm solves this problem from the perspective of optimal control.
+DSRモデルとSRSシミュレーションについて議論した後、与えられたレビュー計画の下で学習者の記憶状態と記憶状況を予測できるようになりましたが、最終的な質問にはまだ答えていません：最も効率的なレビュー計画はどのようなものでしょうか？最適なレビュー計画を見つけるにはどうすればよいでしょうか？SSP-MMCアルゴリズムは、最適制御の観点からこの問題を解決します。
 
-SSP-MMC is an acronym for Stochastic Shortest Path and Minimize Memorization Cost, encapsulating both the mathematical toolkit and the optimization objective underpinning the algorithm. The ensuing discourse is adapted from my graduate thesis, "Research on Review Scheduling Algorithms Based on LSTM and Spaced Repetition Models," and the conference paper *[A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition Scheduling](https://dl.acm.org/doi/10.1145/3534678.3539081)*.
+SSP-MMCは、確率的最短経路（Stochastic Shortest Path）と記憶コスト最小化（Minimize Memorization Cost）の略であり、アルゴリズムの基盤となる数学的ツールキットと最適化目標の両方をカプセル化しています。以下の議論は、私の大学院論文「LSTMと間隔反復モデルに基づくレビュー計画アルゴリズムの研究」と、会議論文「間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム」から適応されています。
 
-#### Problem Setup
+#### 問題設定
 
-The purpose of any spaced repetition algorithm is to help learners form long-term memories efficiently. Whereas memory stability measures the storage strength of long-term memory, the number of repetitions and the time spent per repetition reflect the cost of memory. Therefore, the goal of spaced repetition scheduling optimization can be formulated as either getting as much material as possible to reach the target stability within a given memory cost constraint or getting a certain amount of memorized material to reach the target stability at minimal memory cost. Among them, the latter problem can be simplified as how to make one memory material reach the target stability at the minimum memory cost (MMC).
+間隔反復アルゴリズムの目的は、学習者が効率的に長期記憶を形成するのを助けることです。記憶の安定性が長期記憶の保持強度を測定する一方で、反復の回数と反復ごとに費やされる時間は記憶のコストを反映します。したがって、間隔反復スケジューリングの最適化の目標は、与えられた記憶コストの制約内でできるだけ多くの教材を目標の安定性に到達させるか、最小の記憶コストで一定量の記憶された教材を目標の安定性に到達させることです。その中で、後者の問題は、1つの記憶教材を最小の記憶コストで目標の安定性に到達させる方法（MMC）として簡略化できます。
 
-The DSR model satisfies the Markov property. In the DSR model, the state of each memory depends only on the last stability, the difficulty, the current review interval, and the result of the recall, which follows a random distribution based on the review interval. Due to the randomness of stability state transition, the number of reviews required for memorizing material to reach the target stability is uncertain. Therefore, the spaced repetition scheduling problem can be regarded as an infinite-time stochastic dynamic programming problem. In the case of forming long-term memory, the problem has a termination state, which is the target stability. So it is a Stochastic Shortest Path (SSP) problem.
+DSRモデルはマルコフ性を満たします。DSRモデルでは、各記憶の状態は最後の安定性、難易度、現在のレビュー間隔、およびリコールの結果にのみ依存し、これはレビュー間隔に基づくランダムな分布に従います。安定性状態遷移のランダム性のため、教材を目標の安定性に到達させるために必要なレビューの回数は不確定です。したがって、間隔反復スケジューリングの問題は無限時間の確率的動的計画問題と見なすことができます。長期記憶を形成する場合、この問題には終了状態があり、それが目標の安定性です。したがって、これは確率的最短経路（SSP）問題です。
 
 ![随机最短路径问题](https://l-m-sherlock.github.io/thoughts-memo/SSP-problem.png)
 
-As shown in the above figure, circles are memory states, squares are review actions (i.e., the interval after the current review), dashed arrows indicate state transitions for a given review interval, and black edges represent review intervals available in a given memory state. The stochastic shortest path problem in spaced repetition is to find the optimal review interval to minimize the expected review cost of reaching the target state.
+上記の図に示されているように、円は記憶状態を、四角はレビューアクション（つまり、現在のレビュー後の間隔）を表し、破線の矢印は特定のレビュー間隔に対する状態遷移を示し、黒いエッジは特定の記憶状態で利用可能なレビュー間隔を表します。間隔反復における確率的最短経路問題は、目標状態に到達するための期待されるレビューコストを最小化する最適なレビュー間隔を見つけることです。
 
-#### Formulation
+#### 定式化
 
-To solve the problem, we can model the review process for each flashcard as a Markov Decision Process (MDP) with a set of states $\mathcal{S}$, actions $\mathcal{A}$, state-transition probabilities $\mathcal{P}$, and a cost function $\mathcal{J}$. The algorithm aims to find a policy $\pi$ that minimizes the expected review cost for reaching the target state $s_N$.
+この問題を解決するために、各フラッシュカードのレビュー過程を、状態集合$\mathcal{S}$、アクション集合$\mathcal{A}$、状態遷移確率$\mathcal{P}$、およびコスト関数$\mathcal{J}$を持つマルコフ決定過程（MDP）としてモデル化できます。アルゴリズムは、目標状態$s_N$に到達するための期待されるレビューコストを最小化する方策$\pi$を見つけることを目指します。
 
 $$
 \begin{aligned}
@@ -644,7 +643,7 @@ $$
 \end{aligned}
 $$
 
-The state-space $S$ depends on the state size of the memory model. In the DSR, there are merely two state variables, thus the state can be formulated as $s = (D, S)$. The action space $\mathcal{A} = \{\Delta t_1, \Delta t_2, \ldots, \Delta t_n \}$ consists of $N$ intervals that can be scheduled. The state transition probability $\mathcal{P}_{s,a}(s')$ represents the likelihood of a flashcard being recalled under state $s$ and action $a$. The cost function $\mathcal{J}$ is defined as:
+状態空間$S$は記憶モデルの状態サイズに依存します。DSRモデルでは、状態変数は2つしかないため、状態は$s = (D, S)$として定式化できます。アクション空間$\mathcal{A} = \{\Delta t_1, \Delta t_2, \ldots, \Delta t_n \}$は、スケジュール可能な$N$個の間隔で構成されます。状態遷移確率$\mathcal{P}_{s,a}(s')$は、状態$s$およびアクション$a$の下でフラッシュカードが想起される確率を表します。コスト関数$\mathcal{J}$は次のように定義されます：
 
 $$
 \begin{aligned}
@@ -653,11 +652,11 @@ r_t &\sim \text{Bernoulli}(p_t)
 \end{aligned}
 $$
 
-where the $g_t$ is the cost per stage and the $r_t$ is the result of recall which follows the Bernoulli distribution. The target state $s_N$ corresponds to the desired level of memory stability.
+ここで、$g_t$はステージごとのコストであり、$r_t$はベルヌーイ分布に従う想起の結果です。目標状態$s_N$は、望ましい記憶の安定性レベルに対応します。
 
-#### Algorithm
+#### アルゴリズム
 
-We solve the Markov Decision Process $\text{MDP}(\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{J})$, using value iteration method. The Bellman equation is:
+マルコフ決定過程$\text{MDP}(\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{J})$を値反復法を用いて解きます。ベルマン方程式は次の通りです：
 
 $$
 \begin{aligned}
@@ -666,36 +665,36 @@ s' &= \mathcal{F}(s,a,r,p)
 \end{aligned}
 $$
 
-where the $\mathcal{J}^*$ is the optimal cost function, and $\mathcal{F}$ represents the state transition function, specifically within the context of the DSR model. For the sake of simplicity, we only consider the response of recall: $g(r) = a \cdot r + b \cdot (1-r)$, where $a$ is the cost of successful recall and $b$ is the cost of failed recall.
+ここで、$\mathcal{J}^*$は最適コスト関数を表し、$\mathcal{F}$はDSRモデルの文脈内での状態遷移関数を表します。簡単のために、想起の応答のみを考慮します：$g(r) = a \cdot r + b \cdot (1-r)$、ここで$a$は成功した想起のコスト、$b$は失敗した想起のコストです。
 
-Based on the above Bellman equation, the Value Iteration algorithm uses a cost matrix to record the optimal cost and a policy matrix to save the optimal action for each state during the iteration.
+上記のベルマン方程式に基づいて、値反復アルゴリズムはコストマトリックスを使用して最適コストを記録し、ポリシーマトリックスを使用して反復中の各状態に対する最適なアクションを保存します。
 
 ![](https://l-m-sherlock.github.io/thoughts-memo/SSP-MMC.png)
 
-Continuously iterate through each optional review interval for each memory state, compare the expected memory cost after selecting the current review interval with the memory cost in the cost matrix, and if the cost of the current review interval is lower, update the corresponding cost matrix and policy matrix. Eventually, the optimal intervals and costs for all memory states will converge.
+各記憶状態に対して各オプションのレビュー間隔を連続的に反復し、現在のレビュー間隔を選択した後の期待される記憶コストをコストマトリックスの記憶コストと比較し、現在のレビュー間隔のコストが低い場合は、対応するコストマトリックスとポリシーマトリックスを更新します。最終的に、すべての記憶状態に対する最適な間隔とコストが収束します。
 
-In this way, we obtain the optimal review policy. Combined with the DSR model for predicting memory states, we can arrange the most efficient review schedule for each learner using the SSP-MMC algorithm.
+このようにして、最適なレビュー方策を得ることができます。記憶状態を予測するためのDSRモデルと組み合わせて、SSP-MMCアルゴリズムを使用して各学習者に最も効率的なレビュー計画を配置できます。
 
-> This algorithm has been open-sourced in MaiMemo's GitHub repository: [maimemo/SSP-MMC: A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition Scheduling (github.com)](https://github.com/maimemo/SSP-MMC). Readers interested in an in-depth examination are encouraged to fork a copy for local exploration.
+> このアルゴリズムはMaiMemoのGitHubリポジトリでオープンソース化されています：[maimemo/SSP-MMC: A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition Scheduling (github.com)](https://github.com/maimemo/SSP-MMC)。詳細な検討に興味のある読者は、ローカルでの探索のためにコピーをフォークすることをお勧めします。
 
-## **Conclusion**
+## **結論**
 
-Congratulations on reaching the end! If you haven't given up, you've already entered the world of spaced repetition algorithms!
+最後までお疲れ様でした！ここまで諦めずに読み進めたあなたは、すでに間隔反復アルゴリズムの世界に足を踏み入れています！
 
-You may still have many questions, some of which may have answers, but many more are unexplored areas.
+まだ多くの疑問が残っているかもしれません。その中には答えが見つかるものもあれば、まだ未開拓の領域も多くあります。
 
-My capacity to address these questions is severely limited, yet I am committed to dedicating a lifetime to advancing the frontiers of spaced repetition algorithms.
+私がこれらの疑問に答える能力は非常に限られていますが、間隔反復アルゴリズムの最前線を進めるために一生を捧げる覚悟です。
 
-I invite you to join me in unraveling the mystery of memory!
+記憶の謎を解き明かす旅に、ぜひ一緒に参加してください！
 
-## References
+## 参考文献
 
-[History of spaced repetition - supermemo.guru](https://supermemo.guru/wiki/History_of_spaced_repetition)
+[間隔反復の歴史 - supermemo.guru](https://supermemo.guru/wiki/History_of_spaced_repetition)
 
-[A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition Scheduling | Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining](https://dl.acm.org/doi/10.1145/3534678.3539081)
+[間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム | 第28回ACM SIGKDD知識発見とデータマイニング会議の議事録](https://dl.acm.org/doi/10.1145/3534678.3539081)
 
-[Optimizing Spaced Repetition Schedule by Capturing the Dynamics of Memory | IEEE Journals & Magazine | IEEE Xplore](https://ieeexplore.ieee.org/document/10059206)
+[記憶の動態を捉えて間隔反復スケジュールを最適化する | IEEEジャーナル＆マガジン | IEEE Xplore](https://ieeexplore.ieee.org/document/10059206)
 
 ***
 
-Original link: https://l-m-sherlock.github.io/thoughts-memo/post/srs_algorithm_introduction/
+オリジナルリンク: https://l-m-sherlock.github.io/thoughts-memo/post/srs_algorithm_introduction/
