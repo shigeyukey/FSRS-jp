@@ -15,11 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v4
-        with:
-          enablement: true
-
       - name: Build
         run: .github/workflows/build.sh
 
