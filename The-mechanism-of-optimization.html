@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html lang="jp" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>最適化の仕組み - FSRS Wiki 日本語版</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="Home.html"><strong aria-hidden="true">2.</strong> ようこそ</a></li><li class="chapter-item expanded "><a href="FAQ.html"><strong aria-hidden="true">3.</strong> よくある質問 (FAQ)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial.html"><strong aria-hidden="true">3.1.</strong> チュートリアル1</a></li><li class="chapter-item expanded "><a href="tutorial2.html"><strong aria-hidden="true">3.2.</strong> チュートリアル2</a></li></ol></li><li class="chapter-item expanded "><a href="ABC-of-FSRS.html"><strong aria-hidden="true">4.</strong> FSRSのABC</a></li><li class="chapter-item expanded "><a href="Advanced-methods-of-optimization.html"><strong aria-hidden="true">5.</strong> 最適化の高度な方法</a></li><li class="chapter-item expanded "><a href="Compare-Anki's-built-in-scheduler-and-FSRS.html"><strong aria-hidden="true">6.</strong> Ankiの内蔵スケジューラーとFSRSの比較</a></li><li class="chapter-item expanded "><a href="How-does-the-scheduler-work.html"><strong aria-hidden="true">7.</strong> スケジューラーの仕組み</a></li><li class="chapter-item expanded "><a href="Notebooks.html"><strong aria-hidden="true">8.</strong> ノートブック</a></li><li class="chapter-item expanded "><a href="Research-resources.html"><strong aria-hidden="true">9.</strong> 研究リソース</a></li><li class="chapter-item expanded "><a href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html"><strong aria-hidden="true">10.</strong> 間隔反復アルゴリズム - 初心者から専門家への3日間の旅</a></li><li class="chapter-item expanded "><a href="The-Algorithm.html"><strong aria-hidden="true">11.</strong> アルゴリズム</a></li><li class="chapter-item expanded "><a href="The-Benchmark.html"><strong aria-hidden="true">12.</strong> ベンチマーク</a></li><li class="chapter-item expanded "><a href="The-mechanism-of-optimization.html" class="active"><strong aria-hidden="true">13.</strong> 最適化の仕組み</a></li><li class="chapter-item expanded "><a href="The-Metric.html"><strong aria-hidden="true">14.</strong> メトリック</a></li><li class="chapter-item expanded "><a href="The-Optimal-Retention.html"><strong aria-hidden="true">15.</strong> 最適な保持率</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSRS Wiki 日本語版</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/shigeyukey/FSRS-jp" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>オプティマイザーは、*最も可能性の高い結果を見つける方法（最尤推定）<em>と</em>誤差を減らすために過去にさかのぼって調整する方法（時間逆伝播）*を適用して、メモリの安定性を推定し、時系列レビューのログからメモリの法則を学習します。次に、確率的最短経路アルゴリズムを使用して、繰り返しを最小限に抑えるための最適な保持を見つけることができます。</p>
+<p>FSRSは<strong>DSR</strong>（難易度、安定性、再現性）メモリモデルに基づいています。<strong>DSR</strong>モデルは、間隔反復練習中のメモリダイナミクスを記述するために、17のパラメーターと6つの方程式を使用します（詳細は<a href="The-Algorithm.html">アルゴリズム</a>を参照してください）。</p>
+<p>ここでは、FSRSのトレーニングプロセスの簡単な紹介をします。</p>
+<h1 id="ankiのレビューログの前処理"><a class="header" href="#ankiのレビューログの前処理">Ankiのレビューログの前処理</a></h1>
+<p>Ankiのレビューログのデータベーススキーマは以下の通りです（<a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">データベース構造</a>からコピー）：</p>
+<pre><code class="language-SQL">-- revlogはレビュー履歴です。これまでに行ったすべてのレビューに対して行が存在します！
+CREATE TABLE revlog (
+    id              integer primary key,
+       -- レビューを行った時刻のエポックミリ秒タイムスタンプ
+    cid             integer not null,
+       -- cards.id
+    usn             integer not null,
+        -- 更新シーケンス番号：同期時に差分を見つけるためのもの。
+        -- 詳細はcardsテーブルの説明を参照してください
+    ease            integer not null,
+       -- リコールを評価するために押したボタン。
+       -- レビュー:  1（間違い）、2（難しい）、3（普通）、4（簡単）
+       -- 学習/再学習:  1（間違い）、2（普通）、3（簡単）
+    ivl             integer not null,
+       -- 間隔（カードテーブルのものと同様）
+    lastIvl         integer not null,
+       -- 最後の間隔（ivlの最後の値。この値は必ずしもこのレビューと前のレビューの間の実際の間隔と等しいわけではありません）
+    factor          integer not null,
+      -- ファクター
+    time            integer not null,
+       -- レビューにかかったミリ秒数、最大60000（60秒）
+    type            integer not null
+       --  0=学習、1=レビュー、2=再学習、3=詰め込み
+);
+</code></pre>
+<p>revlogは、カードcidがidの時刻に評価easeでレビューされたことを記録します。カードの全レビュー履歴を追跡するのは簡単です。カードのメモリ状態はそのレビュー履歴に依存します。revlogをカードごとにグループ化し、時間順に並べ替え、各隣接するレビュー間の評価と間隔を連結します。これにより、各カードの評価履歴と間隔履歴を生成できます。以下は前処理後のサンプルです：</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/202617053-d9c44a82-ef85-412e-9987-a6205ba8f986.png" alt="image" /></p>
+<h1 id="時系列データを用いたトレーニング"><a class="header" href="#時系列データを用いたトレーニング">時系列データを用いたトレーニング</a></h1>
+<p>機械学習の用語では、評価と間隔の履歴は時系列データの特徴量です。この時系列データを使用して<strong>DSR</strong>モデルをトレーニングしたいと考えています。入力はr_historyとt_historyで、出力はStabilityとDifficultyです。このデータタイプを処理するために、PyTorchを使用して時系列モデルを構築しました。このモデルは、時間を通じた逆伝播（<strong>BPTT</strong>）を自動的に適用してトレーニングすることができます。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/202617068-0c4cdb04-b754-4893-9cbd-e2e0583dc159.png" alt="image" /></p>
+<h1 id="エンドツーエンドのトレーニング"><a class="header" href="#エンドツーエンドのトレーニング">エンドツーエンドのトレーニング</a></h1>
+<p>時系列データからモデルをトレーニングする際には、別の問題があります。FSRSの主な目標の一つは、一連のレビュー後のメモリ状態を予測することです。しかし、時系列データは安定性や難易度ではなく、評価のみを記録します。安定性は、同じレビュー履歴を持つレビュー群の統計変数です。生データでメモリの安定性を推定することは可能でしょうか？この場合、最尤推定（<strong>MLE</strong>）が適しています。</p>
+<p>忘却曲線の関数を $f(t,S)$ としましょう。$t$ 日後のリコールの可能性（ $r=1$ ）は $P(r=1,t|S) = f(t,S)$ であり、忘却の確率（ $r=0$ ）は $P(r=0,t|S) = 1 - f(t,S)$ です。同じ安定性 $S$ で $n$ 回のレビューを行い、$p$ 回リコールし、$n - p$ 回失敗したとします。安定性 $S$ をどのように推定するのでしょうか？</p>
+<p><strong>MLE</strong> 方法によれば、$P(r=1,t|S)^p \cdot P(r=0,t|S)^{n-p}$ は $S$ に対する尤度関数です。尤度関数の対数を取ることで、対数尤度の式を得ることができます。</p>
+<p>$$p \cdot \log P(r=1,t|S) + (n-p) \cdot \log P(r=0,t|S)$$</p>
+<p>$n = 1$ と設定し、次を得ます：</p>
+<p>$$loss = - [p \cdot \log P(r=1,t|S) + (1-p) \cdot \log P(r=0,t|S)],$$</p>
+<p>これは $S$ を更新するための損失関数です。</p>
+<p>この時点で、$S$ を <strong>DSR</strong> モデルに置き換え、複数のレビューの場合を考慮します。</p>
+<p>$$P(r=1,t,\vec{r},\vec{t}|\vec\theta) = f(t,DSR(\vec{r},\vec{t})),$$</p>
+<p>ここで、$\vec\theta$ はモデルのパラメータです。</p>
+<p><strong>MLE</strong> と <strong>BPTT</strong> を使用して、時系列データから直接 <strong>DSR</strong> のパラメータをトレーニングすることができます。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="The-Benchmark.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="The-Metric.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="The-Benchmark.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="The-Metric.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

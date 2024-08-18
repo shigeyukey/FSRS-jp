@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<html lang="jp" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>研究リソース - FSRS Wiki 日本語版</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="Home.html"><strong aria-hidden="true">2.</strong> ようこそ</a></li><li class="chapter-item expanded "><a href="FAQ.html"><strong aria-hidden="true">3.</strong> よくある質問 (FAQ)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial.html"><strong aria-hidden="true">3.1.</strong> チュートリアル1</a></li><li class="chapter-item expanded "><a href="tutorial2.html"><strong aria-hidden="true">3.2.</strong> チュートリアル2</a></li></ol></li><li class="chapter-item expanded "><a href="ABC-of-FSRS.html"><strong aria-hidden="true">4.</strong> FSRSのABC</a></li><li class="chapter-item expanded "><a href="Advanced-methods-of-optimization.html"><strong aria-hidden="true">5.</strong> 最適化の高度な方法</a></li><li class="chapter-item expanded "><a href="Compare-Anki's-built-in-scheduler-and-FSRS.html"><strong aria-hidden="true">6.</strong> Ankiの内蔵スケジューラーとFSRSの比較</a></li><li class="chapter-item expanded "><a href="How-does-the-scheduler-work.html"><strong aria-hidden="true">7.</strong> スケジューラーの仕組み</a></li><li class="chapter-item expanded "><a href="Notebooks.html"><strong aria-hidden="true">8.</strong> ノートブック</a></li><li class="chapter-item expanded "><a href="Research-resources.html" class="active"><strong aria-hidden="true">9.</strong> 研究リソース</a></li><li class="chapter-item expanded "><a href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html"><strong aria-hidden="true">10.</strong> 間隔反復アルゴリズム - 初心者から専門家への3日間の旅</a></li><li class="chapter-item expanded "><a href="The-Algorithm.html"><strong aria-hidden="true">11.</strong> アルゴリズム</a></li><li class="chapter-item expanded "><a href="The-Benchmark.html"><strong aria-hidden="true">12.</strong> ベンチマーク</a></li><li class="chapter-item expanded "><a href="The-mechanism-of-optimization.html"><strong aria-hidden="true">13.</strong> 最適化の仕組み</a></li><li class="chapter-item expanded "><a href="The-Metric.html"><strong aria-hidden="true">14.</strong> メトリック</a></li><li class="chapter-item expanded "><a href="The-Optimal-Retention.html"><strong aria-hidden="true">15.</strong> 最適な保持率</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSRS Wiki 日本語版</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/shigeyukey/FSRS-jp" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="dataset"><a class="header" href="#dataset">Dataset</a></h1>
+<h2 id="maimemo"><a class="header" href="#maimemo">MaiMemo</a></h2>
+<p>https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VAGUL0</p>
+<h2 id="duolingo"><a class="header" href="#duolingo">Duolingo</a></h2>
+<p>https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/N8XJME</p>
+<h2 id="anki"><a class="header" href="#anki">Anki</a></h2>
+<p>https://github.com/open-spaced-repetition/fsrs-benchmark</p>
+<h2 id="supermemo"><a class="header" href="#supermemo">SuperMemo</a></h2>
+<p>https://github.com/open-spaced-repetition/fsrs-vs-sm15</p>
+<p>https://github.com/open-spaced-repetition/fsrs-vs-sm17</p>
+<h2 id="mnemosyne"><a class="header" href="#mnemosyne">Mnemosyne</a></h2>
+<p>https://www.dropbox.com/sh/epx7hzezh1ok6qe/AAAh6rUIVvyt7TRmlyxuaOUMa/data</p>
+<h1 id="code"><a class="header" href="#code">Code</a></h1>
+<h2 id="fsrs"><a class="header" href="#fsrs">FSRS</a></h2>
+<p>https://github.com/open-spaced-repetition/short-term-memory-research</p>
+<p>https://github.com/open-spaced-repetition/heterogeneous-memory-research</p>
+<h2 id="ebisu"><a class="header" href="#ebisu">Ebisu</a></h2>
+<p>https://github.com/fasiha/ebisu</p>
+<h2 id="maimemo-1"><a class="header" href="#maimemo-1">MaiMemo</a></h2>
+<p>https://github.com/maimemo/SSP-MMC</p>
+<p>https://github.com/maimemo/SSP-MMC-Plus</p>
+<h2 id="duolingo-1"><a class="header" href="#duolingo-1">Duolingo</a></h2>
+<p>https://github.com/duolingo/halflife-regression</p>
+<h2 id="memorize"><a class="header" href="#memorize">Memorize</a></h2>
+<p>https://github.com/Networks-Learning/memorize</p>
+<h2 id="deep-tutor"><a class="header" href="#deep-tutor">Deep Tutor</a></h2>
+<p>https://github.com/rddy/deeptutor</p>
+<h2 id="leitner-queue-network"><a class="header" href="#leitner-queue-network">Leitner Queue Network</a></h2>
+<p>https://github.com/rddy/leitnerq</p>
+<h1 id="論文"><a class="header" href="#論文">論文</a></h1>
+<p>Su, J., Ye, J., Nie, L., Cao, Y., &amp; Chen, Y. (2023). 記憶の動態を捉えて間隔反復スケジュールを最適化する。IEEE Transactions on Knowledge and Data Engineering, 1–13. https://doi.org/10.1109/TKDE.2023.3251721</p>
+<p>Ye, J., Su, J., &amp; Cao, Y. (2022). 間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム。第28回ACM SIGKDD知識発見とデータマイニング会議の議事録, 4381–4390. https://doi.org/10.1145/3534678.3539081</p>
+<p>Upadhyay, U., Lancashire, G., Moser, C., &amp; Gomez-Rodriguez, M. (2021). 大規模なランダム化実験により、機械学習ベースの指導が人々の記憶をより効果的に助けることが明らかになった。Npj Science of Learning, 6(1), Article 1. https://doi.org/10.1038/s41539-021-00105-8</p>
+<p>Nioche, A., Murena, P.-A., de la Torre-Ortiz, C., &amp; Oulasvirta, A. (2021). 人々の学習と忘却の仕方を考慮して人工教師を改善する。第26回国際インテリジェントユーザーインターフェース会議, 445–453. https://doi.org/10.1145/3397481.3450696</p>
+<p>Randazzo, Giacomo. (2020-21). 間隔反復システムのための記憶モデル (数理工学修士論文 - 数理工学, ミラノ工科大学). 指導教員: Marco D. Santambrogio. 取得元 https://hdl.handle.net/10589/186407</p>
+<p>Zaidi, A., Caines, A., Moore, R., Buttery, P., &amp; Rice, A. (2020). 言語学習のための適応的忘却曲線。I. I. Bittencourt, M. Cukurova, K. Muldner, R. Luckin, &amp; E. Millán (編), Artificial Intelligence in Education (pp. 358–363). Springer International Publishing. https://doi.org/10.1007/978-3-030-52240-7_65</p>
+<p>Yang, Z., Shen, J., Liu, Y., Yang, Y., Zhang, W., &amp; Yu, Y. (2020). TADS: 間隔反復のための時間認識スケジューリングポリシーをダイナスタイルプランニングで学習する。第43回国際ACM SIGIR情報検索研究開発会議, 1917–1920. https://doi.org/10.1145/3397271.3401316</p>
+<p>Aydin, R., Klein, L., Miribel, A., &amp; West, R. (2020). Broccoli: 日常の情報摂取に軽量な語彙学習を散りばめる。The Web Conference 2020の議事録, 1344–1354. https://doi.org/10.1145/3366423.3380209</p>
+<p>Tabibian, B., Upadhyay, U., De, A., Zarezade, A., Schölkopf, B., &amp; Gomez-Rodriguez, M. (2019). 間隔反復最適化による人間の学習の強化。Proceedings of the National Academy of Sciences, 116(10), 3988–3993. https://doi.org/10.1073/pnas.1815156116</p>
+<p>Sinha, S. (2019). 深層強化学習を用いたeラーニングプラットフォームでの間隔反復によるレビューセッションの個別化 (2019:217; p. 82). KTH, School of Electrical Engineering and Computer Science (EECS) / KTH, School of Electrical Engineering and Computer Science (EECS). https://api.semanticscholar.org/CorpusID:196203887</p>
+<p>Hunziker, A., Chen, Y., Aodha, O. M., Rodriguez, M. G., Krause, A., Perona, P., Yue, Y., &amp; Singla, A. (2019). 忘れっぽい学習者に複数の概念を教える。H. M. Wallach, H. Larochelle, A. Beygelzimer, F. d’Alché-Buc, E. B. Fox, &amp; R. Garnett (編), Advances in neural information processing systems 32: Annual conference on neural information processing systems 2019, NeurIPS 2019, 2019年12月8-14日, バンクーバー, BC, カナダ (pp. 4050–4060). https://proceedings.neurips.cc/paper/2019/hash/2952351097998ac1240cb2ab7333a3d2-Abstract.html</p>
+<p>Choffin, B., Popineau, F., Bourda, Y., &amp; Vie, J.-J. (2019). DAS3H: スキルの分散練習を最適にスケジューリングするための学生の学習と忘却のモデリング。ArXiv:1905.06873 [Cs, Stat]. http://arxiv.org/abs/1905.06873</p>
+<p>Upadhyay, U., De, A., &amp; Gomez Rodriguez, M. (2018). マーク付き時系列ポイントプロセスの深層強化学習。Advances in Neural Information Processing Systems, 31. https://papers.nips.cc/paper/2018/hash/71a58e8cb75904f24cde464161c3e766-Abstract.html</p>
+<p>Reddy, S., Levine, S., &amp; Dragan, A. (2017). 深層強化学習による人間の学習の加速。カリフォルニア大学バークレー校, 9. https://api.semanticscholar.org/CorpusID:44144165</p>
+<p>Settles, B., &amp; Meeder, B. (2016). 訓練可能な間隔反復モデルによる言語学習。第54回計算言語学協会年次会議（第1巻：長編論文集）, 1848–1858. https://doi.org/10.18653/v1/P16-1174</p>
+<p>Reddy, S., Labutov, I., Banerjee, S., &amp; Joachims, T. (2016). 無制限の人間の学習：間隔反復のための最適なスケジューリング。第22回ACM SIGKDD国際知識発見データマイニング会議の議事録, 1815–1824. https://doi.org/10.1145/2939672.2939850</p>
+<p>Jones, M. N. (Ed.). (2016). 記憶保持の予測と改善：ビッグデータ時代における心理学理論の重要性。Big Data in Cognitive Science (0 ed., pp. 43–73). Psychology Press. https://doi.org/10.4324/9781315413570-8</p>
+<p>Lindsey, R. (2014). 学生の学習と忘却の確率モデル (博士論文, コロラド大学ボルダー校).</p>
+<p>Pashler, H., Cepeda, N., Lindsey, R. V., Vul, E., &amp; Mozer, M. C. (2009). 学習の最適な間隔を予測する：記憶のマルチスケールコンテキストモデル。Y. Bengio, D. Schuurmans, J. Lafferty, C. Williams, &amp; A. Culotta (編), Advances in neural information processing systems (Vol. 22). Curran Associates, Inc. https://proceedings.neurips.cc/paper/2009/file/6bc24fc1ab650b25b4114e93a98f1eba-Paper.pdf</p>
+<p>Pavlik, P. I., &amp; Anderson, J. R. (2008). モデルを使用して最適な練習スケジュールを計算する。Journal of Experimental Psychology: Applied, 14(2), 101–117. https://doi.org/10.1037/1076-898X.14.2.101</p>
+<p>Pavlik, P. I., &amp; Anderson, J. R. (2005). 語彙記憶における練習と忘却の効果：間隔効果の活性化ベースモデル。Cognitive Science, 29(4), 559–586. https://doi.org/10.1207/s15516709cog0000_14</p>
+<p>Woźniak, P. A., Gorzelańczyk, E. J., &amp; Murakowski, J. A. (1995). 長期記憶の2つの要素。Acta neurobiologiae experimentalis, 55(4), 301–305. https://pubmed.ncbi.nlm.nih.gov/8713361/</p>
+<p>Woźniak, P. A., &amp; Gorzelańczyk, E. J. (1994). 学習の実践における反復間隔の最適化。Acta neurobiologiae experimentalis, 54(1), 59–62. https://pubmed.ncbi.nlm.nih.gov/8023714/</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Notebooks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Notebooks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

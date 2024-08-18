@@ -1,0 +1,1708 @@
+<!DOCTYPE HTML>
+<html lang="jp" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>FSRS Wiki 日本語版</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="Home.html"><strong aria-hidden="true">2.</strong> ようこそ</a></li><li class="chapter-item expanded "><a href="FAQ.html"><strong aria-hidden="true">3.</strong> よくある質問 (FAQ)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial.html"><strong aria-hidden="true">3.1.</strong> チュートリアル1</a></li><li class="chapter-item expanded "><a href="tutorial2.html"><strong aria-hidden="true">3.2.</strong> チュートリアル2</a></li></ol></li><li class="chapter-item expanded "><a href="ABC-of-FSRS.html"><strong aria-hidden="true">4.</strong> FSRSのABC</a></li><li class="chapter-item expanded "><a href="Advanced-methods-of-optimization.html"><strong aria-hidden="true">5.</strong> 最適化の高度な方法</a></li><li class="chapter-item expanded "><a href="Compare-Anki's-built-in-scheduler-and-FSRS.html"><strong aria-hidden="true">6.</strong> Ankiの内蔵スケジューラーとFSRSの比較</a></li><li class="chapter-item expanded "><a href="How-does-the-scheduler-work.html"><strong aria-hidden="true">7.</strong> スケジューラーの仕組み</a></li><li class="chapter-item expanded "><a href="Notebooks.html"><strong aria-hidden="true">8.</strong> ノートブック</a></li><li class="chapter-item expanded "><a href="Research-resources.html"><strong aria-hidden="true">9.</strong> 研究リソース</a></li><li class="chapter-item expanded "><a href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html"><strong aria-hidden="true">10.</strong> 間隔反復アルゴリズム - 初心者から専門家への3日間の旅</a></li><li class="chapter-item expanded "><a href="The-Algorithm.html"><strong aria-hidden="true">11.</strong> アルゴリズム</a></li><li class="chapter-item expanded "><a href="The-Benchmark.html"><strong aria-hidden="true">12.</strong> ベンチマーク</a></li><li class="chapter-item expanded "><a href="The-mechanism-of-optimization.html"><strong aria-hidden="true">13.</strong> 最適化の仕組み</a></li><li class="chapter-item expanded "><a href="The-Metric.html"><strong aria-hidden="true">14.</strong> メトリック</a></li><li class="chapter-item expanded "><a href="The-Optimal-Retention.html"><strong aria-hidden="true">15.</strong> 最適な保持率</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSRS Wiki 日本語版</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/shigeyukey/FSRS-jp" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p align="center">
+  <a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki">
+    <img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/9efb2ca5-51bd-411d-9694-a77b09f51fa7" width="150" height="150" alt="FSRS4Anki">
+  </a>
+</p>
+<div align="center">
+<h1 id="fsrs4anki"><a class="header" href="#fsrs4anki">FSRS4Anki</a></h1>
+<p><em>✨ <a href="The-Algorithm.html">フリー間隔反復スケジューラーアルゴリズム</a> に基づいたAnki用の最新の間隔反復スケジューラー ✨</em></p>
+</div>
+<p align="center">
+  <a href="https://raw.githubusercontent.com/open-spaced-repetition/fsrs4anki/main/LICENSE">
+    <img src="https://img.shields.io/github/license/open-spaced-repetition/fsrs4anki" alt="license">
+  </a>
+  <a href="https://github.com/open-spaced-repetition/fsrs4anki/releases/latest">
+    <img src="https://img.shields.io/github/v/release/open-spaced-repetition/fsrs4anki?color=blueviolet" alt="release">
+  </a>
+</p>
+<h1 id="目次"><a class="header" href="#目次">目次</a></h1>
+<ul>
+<li><a href="intro.html#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">はじめに</a></li>
+<li><a href="intro.html#%E5%A7%8B%E3%82%81%E6%96%B9">始め方</a></li>
+<li><a href="intro.html#%E3%82%A2%E3%83%89%E3%82%AA%E3%83%B3%E3%81%AE%E4%BA%92%E6%8F%9B%E6%80%A7">アドオンの互換性</a></li>
+<li><a href="intro.html#%E8%B2%A2%E7%8C%AE">貢献</a>
+<ul>
+<li><a href="intro.html#%E8%B2%A2%E7%8C%AE%E8%80%85">貢献者</a></li>
+</ul>
+</li>
+<li><a href="intro.html#%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%AE%E6%8E%A8%E7%A7%BB">スターの推移</a></li>
+</ul>
+<h1 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h1>
+<p>FSRS4Ankiは、スケジューラーとオプティマイザー(最適化装置)の2つの主要な部分で構成されています。</p>
+<ul>
+<li>スケジューラーはAnkiの内蔵スケジューラーを置き換え、FSRSアルゴリズムに従ってカードをスケジュールします。</li>
+<li>オプティマイザーは機械学習を使用してあなたの記憶パターンを学習し、レビュー履歴に最適なパラメータを見つけます。オプティマイザーの動作の詳細については、<a href="The-mechanism-of-optimization.html">最適化の仕組み</a>をお読みください。</li>
+</ul>
+<p>FSRSアルゴリズムの詳細については、<a href="The-Algorithm.html">アルゴリズム</a>をお読みください。興味があれば、私の論文もご覧いただけます：</p>
+<ul>
+<li><a href="https://www.maimemo.com/paper/">間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム</a>（無料アクセス）、および</li>
+<li><a href="https://www.researchgate.net/publication/369045947_Optimizing_Spaced_Repetition_Schedule_by_Capturing_the_Dynamics_of_Memory">記憶のダイナミクスを捉えて間隔反復スケジュールを最適化する</a>（リクエストを提出）。</li>
+</ul>
+<p>FSRS4Anki Helperは、FSRS4Anki Schedulerを補完するAnkiのアドオンです。詳細はこちらをご覧ください：https://github.com/open-spaced-repetition/fsrs4anki-helper</p>
+<h1 id="始め方"><a class="header" href="#始め方">始め方</a></h1>
+<p>Anki v23.10以降を使用している場合は、<a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md">このチュートリアル</a>を参照してください。</p>
+<p>古いバージョンのAnkiを使用している場合は、<a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial2.md">このチュートリアル</a>を参照してください。</p>
+<p>Anki v23.10以降では、FSRSの設定がはるかに簡単になっています。</p>
+<h1 id="アドオンの互換性"><a class="header" href="#アドオンの互換性">アドオンの互換性</a></h1>
+<p>いくつかのアドオンはFSRSと競合する可能性があります。一般的なルールとして、カードの間隔に影響を与えるアドオンはFSRSと一緒に使用すべきではありません。</p>
+<div class="table-wrapper"><table><thead><tr><th>アドオン</th><th>互換性あり?</th><th>コメント</th></tr></thead><tbody>
+<tr><td><a href="https://ankiweb.net/shared/info/1771074083">Review Heatmap</a></td><td>はい :white_check_mark:</td><td>FSRSに関連するものには影響しません。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/874215009">Advanced Browser</a></td><td>はい :white_check_mark:</td><td>最新バージョンを使用してください。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/1136455830">Advanced Review Bottom Bar</a></td><td>はい :white_check_mark:</td><td>最新バージョンを使用してください。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/374005964">The KING of Button Add-ons</a></td><td>はい :white_check_mark:</td><td>最新バージョンを使用してください。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/876946123">Pass/Fail</a></td><td>はい :white_check_mark:</td><td><code>Pass</code>は<code>Good</code>に相当し、<code>Fail</code>は<code>Again</code>に相当します。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/1021636467">AJT Card Management</a></td><td>はい :white_check_mark:</td><td>Anki 23.12以降と互換性があります。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/999215520">Incremental Reading v4.11.3 (unofficial clone)</a></td><td>不明 :question:</td><td>スタンドアロン版のFSRSを使用している場合、Ankiの内蔵スケジューラーによって提供される間隔が表示され、カスタムスケジューラーでは表示されません。このアドオンは技術的には内蔵FSRSと互換性がありますが、FSRSはインクリメンタルリーディング用に設計されておらず、FSRSの設定はIRカードには適用されません。IRカードは他のカードタイプとは異なる方法で動作します。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/1369579727">Delay siblings</a></td><td>いいえ :x:</td><td>Delay siblingsはFSRSによって提供される間隔を変更します。ただし、FSRS4Anki HelperアドオンにはFSRSとよりよく連携する類似の機能があります。FSRS4Anki Helperアドオンを使用してください。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/1672712021">Auto Ease Factor</a></td><td>いいえ :x:</td><td>FSRSが有効な場合、Ease Factorはもはや関連性がないため、このアドオンを使用してもメリットはありません。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/372281481">autoLapseNewInterval</a></td><td>いいえ :x:</td><td>FSRSが有効な場合、<code>New Interval</code>設定はもはや関連性がないため、このアドオンを使用してもメリットはありません。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/957961234">Straight Reward</a></td><td>いいえ :x:</td><td>FSRSが有効な場合、Ease Factorはもはや関連性がないため、このアドオンを使用してもメリットはありません。</td></tr>
+</tbody></table>
+</div>
+<p>FSRSと他のアドオンの互換性を確認してほしい場合は、<a href="https://github.com/open-spaced-repetition/fsrs4anki/issues">issues</a>でお知らせください。</p>
+<h1 id="貢献"><a class="header" href="#貢献">貢献</a></h1>
+<p>FSRS4Ankiに貢献する方法として、ベータテスト、コードの提出、データの共有があります。データを共有したい場合は、こちらのフォームにご記入ください：https://forms.gle/KaojsBbhMCytaA7h8</p>
+<h2 id="貢献者"><a class="header" href="#貢献者">貢献者</a></h2>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<p><a href="intro.html#%E8%B2%A2%E7%8C%AE%E8%80%85-"><img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square" alt="All Contributors" /></a></p>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Expertium"><img src="https://avatars.githubusercontent.com/u/83031600?v=4?s=100" width="100px;" alt="Expertium"/><br /><sub><b>Expertium</b></sub></a><br /><a href="https://github.com/open-spaced-repetition/fsrs4anki/commits?author=Expertium" title="テスト">⚠️</a> <a href="https://github.com/open-spaced-repetition/fsrs4anki/commits?author=Expertium" title="ドキュメント">📖</a> <a href="intro.html#data-Expertium" title="データ">🔣</a> <a href="intro.html#ideas-Expertium" title="アイデア、計画、フィードバック">🤔</a> <a href="https://github.com/open-spaced-repetition/fsrs4anki/issues?q=author%3AExpertium" title="バグ報告">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/user1823"><img src="https://avatars.githubusercontent.com/u/92206575?v=4?s=100" width="100px;" alt="user1823"/><br /><sub><b>user1823</b></sub></a><br /><a href="https://github.com/open-spaced-repetition/fsrs4anki/commits?author=user1823" title="テスト">⚠️</a> <a href="https://github.com/open-spaced-repetition/fsrs4anki/commits?author=user1823" title="ドキュメント">📖</a> <a href="intro.html#data-user1823" title="データ">🔣</a> <a href="intro.html#ideas-user1823" title="アイデア、計画、フィードバック">🤔</a> <a href="https://github.com/open-spaced-repetition/fsrs4anki/issues?q=author%3Auser1823" title="バグ報告">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://chrislongros.com"><img src="https://avatars.githubusercontent.com/u/98426896?v=4?s=100" width="100px;" alt="Christos Longros"/><br /><sub><b>Christos Longros</b></sub></a><br /><a href="intro.html#data-chrislongros" title="データ">🔣</a> <a href="intro.html#content-chrislongros" title="コンテンツ">🖋</a></td>
+    </tr>
+  </tbody>
+</table>
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<h1 id="スターの推移"><a class="header" href="#スターの推移">スターの推移</a></h1>
+<p><a href="https://star-history.com/#open-spaced-repetition/fsrs4anki&amp;Date"><img src="https://api.star-history.com/svg?repos=open-spaced-repetition/fsrs4anki&amp;type=Date" alt="スター履歴チャート" /></a></p>
+<div style="break-before: page; page-break-before: always;"></div><p align="center"><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/9efb2ca5-51bd-411d-9694-a77b09f51fa7" width="150" height="150" alt="FSRS4Anki"></p>
+<h1 id="fsrs4anki-wikiへようこそ"><a class="header" href="#fsrs4anki-wikiへようこそ">FSRS4Anki Wikiへようこそ！</a></h1>
+<p>FSRSの概要: <a href="ABC-of-FSRS.html">FSRSのABC</a></p>
+<p>FSRSに関するよくある質問: <a href="FAQ.html">FAQ</a></p>
+<p>FSRSで使用される記憶の公式: <a href="The-Algorithm.html">アルゴリズム</a></p>
+<p>FSRSのトレーニングプロセス: <a href="The-mechanism-of-optimization.html">最適化の仕組み</a></p>
+<p>SM-2、FSRS v3、FSRS v4、および他のアルゴリズムの比較: <a href="https://github.com/open-spaced-repetition/srs-benchmark">ベンチマーク</a></p>
+<p>その他のリソース/ツール:</p>
+<ul>
+<li><a href="https://www.reddit.com/r/Anki/comments/18jvyun/some_posts_and_articles_about_fsrs/">FSRSに関する投稿や記事</a></li>
+<li><a href="https://open-spaced-repetition.github.io/anki_fsrs_visualizer/">Anki FSRS Visualizer (open-spaced-repetition.github.io)</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><p>Anki v23.10以降のネイティブバージョンのFSRSを使用している場合は、こちらの<a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md#faq">FAQ</a>を参照してください。</p>
+<p>Anki v23.10より古いバージョンでカスタムスケジューリングバージョンのFSRSを使用している場合は、こちらの<a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial2.md#faq">FAQ</a>を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>中文版请见：<a href="https://zhuanlan.zhihu.com/p/664758200">Anki 新算法 FSRS 配置指南</a></p>
+<h1 id="目次-1"><a class="header" href="#目次-1">目次</a></h1>
+<ul>
+<li><a href="tutorial.html#%E8%B6%85%E7%9F%AD%E7%B8%AE%E7%89%88">超短縮版</a></li>
+<li><a href="tutorial.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%971-fsrs%E3%82%92%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B">ステップ1: FSRSを有効にする</a></li>
+<li><a href="tutorial.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%972-fsrs%E3%81%AE%E8%A8%AD%E5%AE%9A%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B">ステップ2: FSRSの設定を構成する</a></li>
+<li><a href="tutorial.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%973-%E6%9C%80%E9%81%A9%E3%81%AA%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%82%92%E8%A6%8B%E3%81%A4%E3%81%91%E3%82%8B">ステップ3: 最適なパラメータを見つける</a></li>
+<li><a href="tutorial.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%974-%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3-%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%82%92%E8%A9%95%E4%BE%A1%E3%81%99%E3%82%8B">ステップ4: (オプション) パラメータを評価する</a></li>
+<li><a href="tutorial.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%975-%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3-%E6%9C%80%E5%B0%8F%E6%8E%A8%E5%A5%A8%E4%BF%9D%E6%8C%81%E7%8E%87%E3%82%92%E8%A8%88%E7%AE%97%E3%81%99%E3%82%8B">ステップ5: (オプション) 最小推奨保持率を計算する</a></li>
+<li><a href="tutorial.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%976-%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3-%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%B9%E3%82%B1%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0">ステップ6: (オプション) カスタムスケジューリング</a></li>
+<li><a href="tutorial.html#faq">FAQ</a></li>
+</ul>
+<h2 id="超短縮版"><a class="header" href="#超短縮版">超短縮版</a></h2>
+<p>忙しくて時間がないですか？ここにガイドの要約があります。</p>
+<ol>
+<li>デッキオプションに移動し、デッキオプションページの下部にある「FSRS」セクション（Ankiバージョン24.04以前では「高度な設定」セクションの下）でFSRSを有効にします。FSRSはグローバルにのみ有効にでき、一部のプリセットで有効にして他のプリセットで無効にすることはできません。</li>
+<li>すべての学習および再学習ステップが「1日」未満であり、同じ日に完了できることを確認します。「23時間」は1日未満ですが、最初のレビューと同じ日にこのステップを完了できないため推奨されません。「10分」や「30分」などのステップが良いです。</li>
+<li>「FSRSパラメータの最適化」セクションの「最適化」ボタンをクリックします。「現在のFSRSパラメータは最適であるようです」というメッセージが表示された場合、それで問題ありません。バージョン24.06以前では、エラーメッセージが表示されることがあります。Anki 24.04では400回、古いバージョンでは1000回のレビューが必要です。その場合、デフォルトのパラメータでFSRSを使用してください。それでも従来のSM-2アルゴリズムを使用するよりも良いです。</li>
+<li>望ましい保持率の値を選択します：カードが期限になったときに成功裏に想起される割合です。<strong>これはFSRSで最も重要な設定です。保持率が高いほど、間隔が短くなり、1日に行うレビューが増えます。</strong> 80-95%が妥当で、90%はほとんどの人にとってうまく機能するはずです。パラメータと望ましい保持率はプリセットごとに異なり、異なるパラメータと望ましい保持率を持つ複数のプリセットを作成できます。</li>
+</ol>
+<p>デッキオプションウィンドウを閉じる前に「保存」をクリックするのを忘れないでください。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/83031600/64d68d9c-23c5-46e9-970c-6b5500e0ca12" alt="image" /></p>
+<p>FSRSはほとんどの習慣に適応できますが、1つの習慣を除きます。それは、情報を忘れたときに「もう一度」ではなく「難しい」を押す習慣です。「難しい」を押すと、FSRSはあなたが情報を正しく想起したと仮定します（ただし、ためらいや多くの精神的努力を伴って）。情報を想起できなかったときに「難しい」を押すと、すべての評価に対して間隔が不合理に長くなります。したがって、この習慣がある場合は、情報を忘れたときに「もう一度」を使用するように変更してください。</p>
+<p><a href="https://github.com/open-spaced-repetition/fsrs4anki?tab=readme-ov-file#add-on-compatibility">アドオンの互換性</a>に関しては、一般的なルールとして、アドオンが何らかの形で間隔やスケジューリングに影響を与える場合、それはFSRSと一緒に使用すべきではありません。</p>
+<p>これでFSRSを使用する準備が整いました！</p>
+<h2 id="ステップ1-fsrsを有効にする"><a class="header" href="#ステップ1-fsrsを有効にする">ステップ1: FSRSを有効にする</a></h2>
+<p>FSRSを有効にするには、デッキオプションに移動し、「高度な設定」セクション（Anki 24.04では「FSRS」）までスクロールして、FSRSを切り替えます。この設定はすべてのデッキプリセットで共有されます。FSRSを有効にすると、「卒業間隔」や「簡単ボーナス」などのいくつかの設定が消えることに注意してください。これは、FSRSが有効な場合、これらの設定が無関係になるためです。</p>
+<p>以前にカスタムスケジューリング方法を使用してFSRSを使用していた場合は、ネイティブFSRSを有効にする前にカスタムスケジューリングフィールドのFSRSコードを削除してください。また、<a href="https://ankiweb.net/shared/info/759844606">FSRS4Anki Helperアドオン</a>を使用している場合は、アドオンが最新バージョンに更新されていることを確認してください。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/27c9592c-d383-45f7-bdbd-223019e9fb3e" alt="image" /></p>
+<h2 id="ステップ2-fsrsの設定を構成する"><a class="header" href="#ステップ2-fsrsの設定を構成する">ステップ2: FSRSの設定を構成する</a></h2>
+<h3 id="望ましい保持率"><a class="header" href="#望ましい保持率">望ましい保持率</a></h3>
+<p>最も重要な設定は、望ましい保持率です。これは、カードが期限になったときに成功裏に想起される割合です。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/3905329f-6941-452c-97f4-074558e6f5fd" alt="image" /></p>
+<p>望ましい保持率の許容範囲は0.70から0.97です（Anki 23.10.1以降では0.7から0.99）。保持率が高いほど、1日に行うレビューが増えます。</p>
+<p>この設定を調整する際は慎重に行ってください。値が高いと作業量が大幅に増加し、値が低いと多くの内容を忘れてしまい、やる気を失う可能性があります。</p>
+<p>以下の図は、保持率に応じた作業量の変化を示しています。<strong>曲線の正確な形状は、ユーザーのパラメータと学習習慣に依存します。</strong> 最適な保持率を見つけるには、<a href="tutorial.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%975-%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3-%E6%9C%80%E5%B0%8F%E6%8E%A8%E5%A5%A8%E4%BF%9D%E6%8C%81%E7%8E%87%E3%82%92%E8%A8%88%E7%AE%97%E3%81%99%E3%82%8B">ステップ5</a>で説明されている「最小推奨保持率を計算する（実験的）」機能を使用してください。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/83031600/e2b95037-593a-4633-8774-dd16cba5f48e" alt="作業量と保持率の関係（小）" /></p>
+<p>最初は、ユーザーが望ましい保持率を0.70-0.97の範囲外に設定することは許可されていませんでした。これは学習が非効率になるためです。Anki 23.10.1では、一部のユーザーの要望により範囲が0.70-0.99に拡大されました。しかし、望ましい保持率を0.97以上に設定することは依然として推奨されていません。主な理由は2つあります：</p>
+<ul>
+<li>そのように高い保持率を設定すると、作業量（1日あたりのカード数）が大幅に増加します。繰り返しが非常に頻繁になるため、間隔反復の力を実感する前にレビューを嫌がるようになります。</li>
+<li>そのように高い保持率では、各レビューが全体の学習に対して最小限の貢献しかできません。これにより、間隔反復システムが大量反復システムに変わり、間隔効果の利点が損なわれます。</li>
+</ul>
+<h3 id="最大間隔"><a class="header" href="#最大間隔">最大間隔</a></h3>
+<p>最大間隔設定は、デフォルトのアルゴリズムを使用する場合と同じように機能します。これは、カードが再び表示されるまでの最大日数です。詳細については、Ankiマニュアルの<a href="https://docs.ankiweb.net/deck-options.html#maximum-interval">最大間隔</a>を参照してください。</p>
+<h3 id="過去の保持率sm-2保持率"><a class="header" href="#過去の保持率sm-2保持率">過去の保持率（SM-2保持率）</a></h3>
+<p>「過去の保持率」（Anki 24.04以前では「SM-2保持率」と呼ばれていました）は、過去の平均保持率です。</p>
+<p>レビュー履歴の一部が欠けている場合、FSRSはそのギャップを埋める必要があります。デフォルトでは、過去のレビュー時に90%の内容を覚えていたと仮定します。過去の保持率が90%よりも著しく高いまたは低い場合、このオプションを調整することで、FSRSが欠けているレビューをより正確に推定できるようになります。レビュー履歴が不完全である理由は2つあります：</p>
+<ol>
+<li>「以前のレビューを無視する」オプションを使用して、レビュー履歴の一部を省略（削除ではなく）したため。</li>
+<li>スペースを空けるために以前のレビュー履歴を削除したり、レビュー履歴を変更するアドオンを使用したり、別のSRSプログラムからデータをインポートしたため。</li>
+</ol>
+<p>後者は非常に稀ですので、「以前のレビューを無視する」オプションを使用していない限り、この設定を調整する必要はないでしょう。
+Anki 24.04でも、この設定は「FSRS」セクションではなく「高度な設定」セクションにあります。</p>
+<h3 id="学習および再学習ステップ"><a class="header" href="#学習および再学習ステップ">学習および再学習ステップ</a></h3>
+<p>FSRSが有効な場合、学習および再学習ステップはすべて同じ日に完了できるように選択する必要があります。一般的に、12-14時間以上のステップは推奨されません。ほとんどの人は最初のステップと同じ日にそのようなステップを完了できないためです。<em>単一の</em>合理的な学習ステップは10分、15分、20分、または30分です。</p>
+<p>理由は、FSRSがより最適な間隔を決定できるためですが、長い（再）学習ステップを使用すると、FSRSがレビューをスケジュールできず、スケジューリングが最適でなくなるためです。さらに、長いステップを使用すると、「難しい」間隔が「良い」間隔を超える場合があります。</p>
+<p>「5分 10分 15分 30分」のような<em>複数の</em>短い（再）学習ステップの使用も推奨されません。しかし、若いカードの保持率が望ましいよりもはるかに低い場合、2時間や4時間などのより多くの日内学習ステップを追加することが役立つかもしれません。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/a5780dca-4d0d-4382-9323-26e45cb6f002" alt="image" /></p>
+<h3 id="変更時にカードを再スケジュール"><a class="header" href="#変更時にカードを再スケジュール">変更時にカードを再スケジュール</a></h3>
+<p>このオプションは、FSRSを有効にしたり、パラメータや望ましい保持率を変更したときにカードの期限日が変更されるかどうかを制御します。デフォルトでは、カードは再スケジュールされません。これは、将来のレビューが新しいスケジューリングを使用することを意味しますが、作業量に即時の変化はありません。これにより、SM-2からFSRSへのスムーズで段階的な移行が可能になります。</p>
+<p>再スケジュールが有効になっている場合、カードの期限日は即座に変更されます。これにより、多くのカードが一度に期限になることが多いため、SM-2から初めて切り替える際には推奨されません。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/fe61aaa6-cecb-4476-9ed2-9db05b63c7de" alt="image" /></p>
+<h3 id="指定日以前のレビューを無視"><a class="header" href="#指定日以前のレビューを無視">指定日以前のレビューを無視</a></h3>
+<p>これはAnki 24.04で追加された新機能です。設定すると、指定日以前にレビューされたカードは、FSRSパラメータの最適化および評価時に無視されます。技術的に言えば、指定日以降に学習ステップがないカードは、そのレビューが最適化および評価に使用されません。この機能はレビュー履歴を永久に削除するものではありません。<strong>重要</strong>: すべてのカードが指定日以前にレビューされており、新しいカードを追加しない場合、オプティマイザーは常にデータがゼロになります。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/83031600/d5675c4c-c65d-4d7b-a47a-10a2cda68176" alt="image" /></p>
+<p>この機能は、他人のスケジューリングデータをインポートした場合や、「難しい」を誤用していた場合に役立ちます。「難しい」は不合格ではなく合格として使用するべきです。また、学習や評価の習慣が時間とともに大きく変わった場合にも役立ちます。この機能を使用する場合は、過去の保持率を正確に選択することが重要です。</p>
+<h2 id="ステップ3-最適なパラメータを見つける"><a class="header" href="#ステップ3-最適なパラメータを見つける">ステップ3: 最適なパラメータを見つける</a></h2>
+<p>FSRSオプティマイザーは機械学習を使用して、あなたの記憶パターンを学習し、レビュー履歴に最適なパラメータを見つけます。そのため、オプティマイザーはパラメータを微調整するためにいくつかのレビューを必要とします。</p>
+<p>「FSRSパラメータの最適化」セクションの「最適化」ボタンを使用して、カードの最適なパラメータを見つけることができます。最適なパラメータは自動的にデフォルトのパラメータに置き換えられます。</p>
+<p>Anki 24.06以降では、最適化に必要なレビューの最小数はありません。利用可能なレビューの数に基づいて、Ankiは最適化するパラメータを決定します。Anki 24.04では、少なくとも400回のレビューが必要です。古いバージョンでは、少なくとも1000回のレビューが必要です。これらのバージョンを使用していて、このプリセットが適用されるすべてのカードに対して十分なレビューがない場合は、「FSRSパラメータ」フィールドに既に入力されているデフォルトのパラメータを使用してください。デフォルトのパラメータでも、FSRSはデフォルトのAnkiアルゴリズム（SM-2）よりも優れています。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/072c42fc-41fa-4ff0-841b-3a55dd23c8a1" alt="image" /></p>
+<p>パラメータはプリセットごとに異なります。主観的な難易度が大きく異なるデッキがある場合（FSRSの難易度ではなく）、それらのデッキには別々のプリセットを使用することをお勧めします。簡単なデッキと難しいデッキのパラメータは異なるためです。パラメータと望ましい保持率は独立しているため、望ましい保持率を変更してもパラメータを再最適化する必要はありません。</p>
+<p>アルゴリズムに自信があり、追加の作業をいとわない場合は、デッキが独自のプリセットを持つことの利点を確認する方法があります。</p>
+<ol>
+<li>新しいプリセットを作成したいデッキのデッキオプションに移動します。<code>FSRSパラメータ</code>フィールドからパラメータをコピーします。これを後で評価に使用します。</li>
+<li>新しいプリセットを作成し、このデッキに保存します。</li>
+<li>先ほどコピーしたパラメータを、新しく作成したプリセットの<code>FSRSパラメータ</code>フィールドに貼り付けます。</li>
+<li><code>評価</code>をクリックし、RMSEとログ損失の値を書き留めます。</li>
+<li><code>最適化</code>をクリックして新しいパラメータセットを取得します。<code>評価</code>をクリックし、RMSEとログ損失の値を書き留めます。</li>
+<li>この新しいパラメータセットがより低いRMSEとログ損失の値をもたらす場合、新しいパラメータとともにプリセットを保存します。</li>
+</ol>
+<p>心配しないでください、上記の手順を行わなくてもFSRSは十分に機能します。この方法はオプションです。</p>
+<p>パラメータは現在のプリセットを使用するすべてのデッキのレビュー履歴から計算されます。パラメータを最適化するために使用するカードを変更したい場合（例えば、保留中のカードを除外するなど）、パラメータを計算する前に検索を調整できます。検索はブラウザでの動作と同じです。詳細については、Ankiマニュアルの<a href="https://docs.ankiweb.net/searching.html">検索</a>を参照してください。最適化は自動的に行われないため、「最適化」または「すべてのプリセットを最適化」を手動でクリックする必要があります。</p>
+<p>Anki 23.12では、すべてのプリセットを最適化するオプションが追加されました。プリセットが多い場合に便利です。設定を変更した後は「保存」をクリックするのを忘れないでください。そうしないと、変更が保存されません。また、サブデッキに適用されるプリセットの設定は、親デッキに適用されるプリセットの設定よりも優先されることを覚えておいてください。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/83031600/a5b930b9-2284-46c6-b98d-43c50215f6b3" alt="image" /></p>
+<p>パラメータをデフォルト値にリセットしたい場合は、パラメータフィールドの右下にある反時計回りの開いた円矢印をクリックしてください。</p>
+<p><img src="https://github.com/user-attachments/assets/80832f4a-12c3-4e8b-adf3-898d9ab7a586" alt="パラメータのリセット" /></p>
+<h2 id="ステップ4-オプション-パラメータを評価する"><a class="header" href="#ステップ4-オプション-パラメータを評価する">ステップ4: (オプション) パラメータを評価する</a></h2>
+<p>「FSRSパラメータの最適化」セクションの「評価」ボタンを使用して、「FSRSパラメータ」フィールドのパラメータがレビュー履歴にどれだけ適合しているかを示すメトリクスを確認できます。数値が小さいほど、レビュー履歴に対する適合度が高いことを示します。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/871bbe4d-8b05-4439-ab38-cf5c4e9f6fdf" alt="image" /></p>
+<p>ログ損失には直感的な解釈はありません。RMSE（ビン）は、カードを想起する確率（R）の予測値と測定値（レビュー履歴から得られた確率）の平均差として解釈できます。例えば、RMSE=0.05は、平均してFSRSの予測がRに対して5%ずれていることを意味します。</p>
+<p>ログ損失とRMSE（ビン）は完全には相関していないことに注意してください。そのため、2つのデッキが似たようなRMSE値を持っていても、ログ損失値が大きく異なる場合やその逆もあります。</p>
+<h2 id="ステップ5-オプション-最小推奨保持率を計算する"><a class="header" href="#ステップ5-オプション-最小推奨保持率を計算する">ステップ5: (オプション) 最小推奨保持率を計算する</a></h2>
+<p>これは、学習に費やす時間と取得する知識の総量の比率を最小化する望ましい保持率の値を計算しようとする実験的なツールです。簡単に言うと、最も効率的な学習プランを提供する望ましい保持率の値を見つけようとします。これは、カードに費やす時間やHard/Good/Easyを押す習慣を分析し、シミュレーションを作成することで行います。</p>
+<p><img src="https://github.com/user-attachments/assets/1e4550ca-9db9-40fa-8103-3167982c9f1c" alt="image" /></p>
+<p>「シミュレーションする日数」を調整して、ニーズに合わせることができます。例えば、12ヶ月後に試験を控えている場合は、「シミュレーションする日数」を365日に設定します。言語学習者であれば、5年（1825日）が妥当な期間です。</p>
+<p>推奨値は、望ましい保持率が何であるか分からない場合の参考として役立ちます。しかし、このツールは実験的なものであるため、望ましい保持率を選択する際には自分の直感も使用するべきです。</p>
+<p>Anki 24.04では、この機能が再設計されました。「デッキサイズ」や「1日あたりの学習時間」を入力する必要はなく、「シミュレーションする日数」だけを入力します。結果は最大間隔設定にも依存します。以前は、与えられた時間制約内でできるだけ多くのことを覚えるための望ましい保持率の値を見つけることが目標でした。現在の目標は、作業量/取得知識比を最小化する望ましい保持率の値を見つけることです。詳細については、こちらをお読みください: <a href="The-Optimal-Retention.html">最適な保持率</a>。より多くのことを覚えるために<strong>より多く</strong>の作業（1日あたりの学習時間）を行いたい場合は、推奨値よりも高い望ましい保持率を設定することができますが、推奨値よりも低い望ましい保持率を設定するべきではありません。なぜなら、<strong>より少ない</strong>ことを覚えるために<strong>より多く</strong>の作業を行う必要があるからです。</p>
+<p>Anki 24.04.1では、この機能が「最小推奨保持率を計算する」に改名され、ユーザーが推奨値以下の望ましい保持率を設定しないようにすることが明確になりました。</p>
+<h2 id="ステップ6-オプション-カスタムスケジューリング"><a class="header" href="#ステップ6-オプション-カスタムスケジューリング">ステップ6: (オプション) カスタムスケジューリング</a></h2>
+<p>「カスタムスケジューリング」を使用すると、FSRSの上に新しいスケジューリングルールを導入できます。この機能は上級ユーザーや開発者向けです。</p>
+<h1 id="faq"><a class="header" href="#faq">FAQ</a></h1>
+<p>Q1: v2、v3、FSRS v4などについて混乱しています。違いを説明してもらえますか？</p>
+<p>A1: v2スケジューラ（アルゴリズム: SM-2）：これは古いAnkiスケジューラで、Anki 23.10以降ではサポートされていません。</p>
+<p>v3スケジューラ（アルゴリズム: SM-2またはFSRS）：これはAnkiの新しいスケジューラです。カードの順序、タイムゾーン、およびいくつかのデッキオプションを異なる方法で処理します。間隔の長さを計算するために使用される数式は変更されません。</p>
+<p>SM-2：Piotr Wozniak（SuperMemoの創設者）によって開発された30年前のシンプルなアルゴリズムです。そのシンプルさゆえに非常に人気があり、現在でもフラッシュカードアプリで使用されています。これはAnkiのデフォルトアルゴリズムです。</p>
+<p>FSRS（Free Spaced Repetition Scheduler）：機械学習技術と普遍的な記憶数式を組み合わせたオープンソースのアルゴリズムです。最近、SM-2の代替としてAnkiに統合されました。FSRSを使用するには、v3スケジューラを有効にする必要があります。FSRSにはFSRS v4とFSRS-4.5の2つのバージョンがあります。これらは同じ数のパラメータを持っていますが、忘却曲線の形状が変更されています。すべての<em>最新</em>バージョンのAnkiはFSRS-4.5を使用していますが、Anki 23.10などの古いバージョンではFSRS v4を使用しています。</p>
+<hr />
+<p>Q2: どのプラットフォームがFSRSをサポートしていますか？</p>
+<p>A2: 2024年2月現在、FSRSはすべてのプラットフォームでサポートされています：デスクトップ版Anki（Windows、Mac、Linux）、AnkiWeb（ブラウザ）、AnkiMobile（iOS）、AnkiDroid（Android）。最新バージョンのAnkiDroidは年.月.パッチの命名規則を使用していないことに注意してくださいが、AnkiとAnkiMobileは使用しています。</p>
+<p>AnkiDroid 2.17に更新したばかりで、他のデバイスでFSRSを有効にしていた場合、AnkiDroidでFSRSが正しく動作するようにするために、AnkiWebからフル同期を強制する必要があるかもしれません。</p>
+<hr />
+<p>Q3: FSRSはカードのイーズ（容易さ）の変化方法を変更しますか？</p>
+<p>A3: FSRSが有効になると、Ankiの内蔵イーズファクターは何も影響しません。このため、FSRSが有効になると、Starting Easeなどの多くの設定が非表示になります。</p>
+<hr />
+<p>Q4: 既存のデッキでFSRSを使用し始めた後、同じデッキでAnkiの内蔵アルゴリズムに戻すことは可能ですか？</p>
+<p>A4: はい、FSRSをオフにするだけです。ただし、FSRSをオフにした後も間隔は変わりません。</p>
+<hr />
+<p>Q5: 私は1000回以上のレビュー（Anki 24.04では400回以上）を行っているはずですが、プリセットのパラメータを最適化しようとすると、レビューが足りないというエラーが表示されます。これはバグですか？</p>
+<p>A5: FSRSは1日に1回のレビューしか考慮しません。1日に複数回カードをレビューした場合、オプティマイザーは時間的に最初のレビューのみを使用します。また、デッキにサブデッキがある場合、プリセットが親デッキだけでなくサブデッキにも適用されていることを確認してください。Anki 24.06以降では、「最適化」を使用するためのレビューの最小数はありません。</p>
+<hr />
+<p>Q6: 最初の間隔が長すぎます！これは正常ですか？</p>
+<p>A6: 簡単に言うと、長い最初の間隔を与えることはFSRSの強みの一つです。「良い」の最初の間隔が1週間近く、「簡単」の最初の間隔が数週間になることに驚かないでください。詳しい説明は以下をお読みください：</p>
+<p>多くのユーザーにとって、デフォルトのアルゴリズム（SM-2）は新しいカードを不必要に短い間隔で表示する傾向があります。そのため、ユーザーがFSRSに切り替えると、新しいカードに与えられる間隔が大きすぎると感じることがあります。しかし、これらの大きな間隔は望ましい保持率により適しています。これらの大きな間隔を使用することで、FSRSはSM-2を使用した場合に発生する多くの不必要なレビューを防ぐことができます。したがって、これらの大きな最初の間隔を数日間試してみることをお勧めします。成熟したカードに関しては、逆にFSRSはSM-2よりも保守的です。</p>
+<p>それでも間隔を短くしたい場合は、望ましい保持率を上げることができます。ただし、これにより最初の間隔だけでなく、すべての間隔が短くなることに注意してください。</p>
+<hr />
+<p>Q7: 親デッキに独自のプリセットがあり、各サブデッキに異なるプリセットがあるとします。サブデッキから来たカードをレビューするために親デッキをクリックした場合、そのカードには親デッキのプリセットのパラメータが適用されるのでしょうか、それともそのカードが元々属していたサブデッキのプリセットのパラメータが適用されるのでしょうか？</p>
+<p>A7: 後者です。簡単に言うと、ParentDeck::SubDeckのような構造があり、カードがサブデッキから来た場合、そのカードにはサブデッキに対応するプリセットのパラメータが適用されます。</p>
+<hr />
+<p>Q8: 「もう一度」と「良い」だけを使用していますが、FSRSは正常に動作しますか？</p>
+<p>A8: はい。私たちの研究によると、FSRSは主に「もう一度」と「良い」を使用する人々に対して、4つのボタンすべてを多用する人々よりも少し正確です。しかし、この結論は今後の調査によって変わる可能性があります。</p>
+<p>また、SM-2とは異なり、FSRSは「イーズヘル」の問題に悩まされることはありません。この問題は難易度の平均回帰によって解決されます。もし「良い」を連続して押すと、難易度は$D_0(3)$に収束します。詳細については、<a href="The-Algorithm.html">アルゴリズム</a>をお読みください。</p>
+<p>ただし、評価の習慣を変えるべきではないことに注意してください。これは、FSRSが過去の評価履歴を使用して、将来のレビューの最適な間隔を決定するためです。</p>
+<hr />
+<p>Q9: FSRSをより効果的にするためにカードをどのように評価すればよいですか？</p>
+<p>A9: 評価は、カードに答えるのがどれだけ簡単だったかに基づいて選択するべきであり、次にそのカードを見るまでの期間の長さに基づいて選択するべきではありません。例えば、長い間隔が表示されるために「簡単」ボタンを避ける習慣がある場合、負のサイクルに陥る可能性があります。「簡単」な状況をますます稀にし、「簡単」な間隔がますます長くなります。これは、答えのボタンの上に表示される間隔を無視し、情報をどれだけよく思い出せたかに集中するべきであることを意味します。</p>
+<p>また、カードを忘れたときに「難しい」を押さないことも非常に重要です。忘れた場合は「もう一度」を押し、たくさんのためらいの後に思い出した場合にのみ「難しい」を押してください。</p>
+<p>それでもデッキを早く見たい場合、例えば試験が近づいているために、HelperアドオンのAdvance機能を使用できます。Advanceはカードの評価履歴を歪めないため、好ましい方法です。</p>
+<hr />
+<p>Q10: FSRSが動作していることを確認するにはどうすればよいですか？</p>
+<p>A10: 新しいカードをレビューし、答えのボタンの上に表示される間隔を覚えておいてください。レビューを元に戻します。次に、望ましい保持率を0.99（最大）または0.7（最小）に設定し、再度カードをレビューします。異なる間隔が表示されるはずです。あるいは、<a href="https://ankiweb.net/shared/info/759844606">Helperアドオン</a>をダウンロードし、「答えの後に記憶状態を表示」を有効にします。間隔が変わらない場合は、プリセットが正しいデッキに適用されていることを確認してください。サブデッキに適用されるプリセットの設定が親デッキに適用されるプリセットの設定よりも優先されることを忘れないでください。</p>
+<hr />
+<p>Q11: すべてのカードに同じパラメータを使用するのと、異なるパラメータを持つ異なるプリセットを使用するのとではどちらが良いですか？</p>
+<p>A11: この質問の答えは、あなたの教材がどれだけ似ているかに完全に依存します。例えば、日本語と地理を学んでいる場合、異なるパラメータを持つ2つの異なるプリセットを使用することをお勧めします。日本語の語彙を含む2つのデッキがある場合、両方に同じプリセットを使用するべきです。一般的に言えば、異なるプリセットを持つ方が良いことが多いです。</p>
+<hr />
+<p>Q12: パラメータを再最適化する頻度はどれくらいですか？</p>
+<p>A12: 月に一度で十分です。より洗練されたルールとしては、2^n回のレビューごとに最適化することです：512回後、次に1024回後、次に2048回後、など。しかし、「1ヶ月に1回」というルールの方が簡単です。</p>
+<hr />
+<p>Q13: FSRSがサポートされていない（または無効にされている）デバイスでカードをレビューし、その後FSRSが有効になっている別のデバイスでレビューした場合、どうなりますか？</p>
+<p>A13: 間隔が不正確になりますが、カードが破損して使えなくなることはありません。ただし、FSRSが本来の目的である保持率を指定されたレベルで維持することが難しくなります。</p>
+<hr />
+<p>Q14: FSRSは遅延を考慮しますか？</p>
+<p>A14: はい、考慮します。FSRSでは、レビューの遅延（すなわち、期限切れのレビュー）は次の間隔に以下のように影響します：</p>
+<p>遅延が増加すると、想起率（R）は低下します。レビューが成功した場合、次の安定性（S）は高くなります。しかし、SM-2/Ankiアルゴリズムのように遅延とともに線形に増加するのではなく、次の安定性はFSRSパラメータに依存する上限に収束します。詳細については、<a href="The-Algorithm.html">アルゴリズム</a>を参照してください。</p>
+<hr />
+<p>Q15: FSRSはカードをレビューするのに費やした時間を考慮しますか？</p>
+<p>A15: いいえ、FSRSは間隔の長さと評価のみを必要とします。ただし、レビューに費やした時間は、「最小推奨保持率を計算する（実験的）」機能を使用して最適な保持率を計算する際に使用されます。</p>
+<hr />
+<p>Q16: ログ損失とRMSEが非常に高いのですが、どうすれば修正できますか？</p>
+<p>A16: 修正する方法はありません。唯一できることは、レビューを続けることです。FSRSはデータが多い人に対してより正確です。</p>
+<hr />
+<p>Q17: 若いカードの保持率が成熟したカードの保持率よりも著しく低いのはなぜですか？</p>
+<p>A17: カードの安定性が非常に低い場合、最適な間隔は1日より短くなるべきです。しかし、Ankiでは「レビュー」フェーズにあるカードが1日より短い間隔を持つことは許可されていません。「学習」または「再学習」フェーズにあるカードのみがそのような短い間隔を持つことができます。その結果、FSRSは最適でない長すぎる間隔を与えることになります。</p>
+<p>詳細については、この投稿をお読みください: https://www.reddit.com/r/Anki/comments/193x8kn/a_specific_case_where_fsrs_couldnt_ensure_the/</p>
+<hr />
+<p>Q18: デフォルトのパラメータでは保持率が低く、最初の間隔が私には明らかに長すぎます。どうすれば解決できますか？</p>
+<p>A18: デフォルトのパラメータは20,000のコレクションから生成されています。これらは20,000セットのパラメータの中央値です。そのため、必然的に新しいユーザーの半数は望ましい保持率よりも低い保持率を見つけ、他の半数は望ましい保持率を超えることになります。</p>
+<p>実際の保持率が望ましい保持率よりも著しく低い場合は、望ましい保持率を上げて補正してみてください。FSRS4Anki Helperアドオンを使用して実際の保持率を確認できます。Shift + 左クリックで統計を表示します。もちろん、多くのレビューがある場合は、デフォルトのパラメータよりも最適化されたパラメータを使用することをお勧めします。</p>
+<hr />
+<p>Q19: FSRSに切り替えた後、作業量が大幅に増減するのはなぜですか？</p>
+<p>A19: 作業量はあなたの保持率に依存します：</p>
+<ul>
+<li>FSRSに切り替える前の実際の保持率が現在の望ましい保持率よりも著しく低かった場合、FSRSは以前よりも頻繁にレビューを行うようにします。</li>
+<li>以前の実際の保持率が現在の望ましい保持率よりも著しく高かった場合、FSRSは以前よりも少ない頻度でレビューを行うようにします。</li>
+</ul>
+<hr />
+<p>質問の答えが見つかりませんでしたか？他のユーザーが尋ねた質問をいくつか参照できます: https://github.com/open-spaced-repetition/fsrs4anki/issues?q=is%3Aissue+label%3Aquestion+</p>
+<p>問題がまだ解決しない場合は、新しい問題を開いて詳細を提供してください: https://github.com/open-spaced-repetition/fsrs4anki/issues/new/choose</p>
+<div style="break-before: page; page-break-before: always;"></div><p>中文版请见：<a href="https://zhuanlan.zhihu.com/p/636564830">FSRS4Anki 使用指北</a></p>
+<h1 id="目次-2"><a class="header" href="#目次-2">目次</a></h1>
+<ul>
+<li><a href="tutorial2.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%971-fsrs%E3%82%B9%E3%82%B1%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%A9%E3%82%92%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B">ステップ1: FSRSスケジューラを有効にする</a></li>
+<li><a href="tutorial2.html#%E3%82%B9%E3%83%86%E3%83%83%E3%83%972-fsrs%E3%82%92%E3%83%91%E3%83%BC%E3%82%BD%E3%83%8A%E3%83%A9%E3%82%A4%E3%82%BA%E3%81%99%E3%82%8B">ステップ2: FSRSをパーソナライズする</a></li>
+<li><a href="tutorial2.html#%E7%95%B0%E3%81%AA%E3%82%8B%E3%83%87%E3%83%83%E3%82%AD%E3%81%AB%E7%95%B0%E3%81%AA%E3%82%8B%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B">異なるデッキに異なるパラメータを設定する</a></li>
+<li><a href="tutorial2.html#faq">FAQ</a></li>
+</ul>
+<p>FSRSを始めるには、2つのステップを踏む必要があります。</p>
+<ul>
+<li>まず、AnkiアプリケーションでFSRSスケジューラを有効にする必要があります。</li>
+<li>次に、FSRSをあなたの学習パターンに合わせてパーソナライズする必要があります。</li>
+</ul>
+<p>それでは、これらのステップについて詳しく説明します。</p>
+<h2 id="ステップ1-fsrsスケジューラを有効にする"><a class="header" href="#ステップ1-fsrsスケジューラを有効にする">ステップ1: FSRSスケジューラを有効にする</a></h2>
+<h3 id="11-ankiのv3スケジューラを有効にする"><a class="header" href="#11-ankiのv3スケジューラを有効にする">1.1 AnkiのV3スケジューラを有効にする</a></h3>
+<p>ツール &gt; 設定 &gt; レビュー &gt; V3スケジューラを有効にする。</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/8f91fba8-9b8b-405c-8aa9-42123ba5faeb"></p>
+<h3 id="12-fsrsスケジューラのコードを貼り付ける"><a class="header" href="#12-fsrsスケジューラのコードを貼り付ける">1.2 FSRSスケジューラのコードを貼り付ける</a></h3>
+<ul>
+<li>以下のページにアクセスし、すべてのコードをコピーします。 https://github.com/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_scheduler.js</li>
+<li>Ankiで、任意のデッキのデッキオプションを開きます（どのデッキでも構いません）。「高度な設定」列を見つけ、コピーしたコードを「カスタムスケジューリング」フィールドに貼り付けます：</li>
+</ul>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/5c292f91-8845-4f8c-ac42-55f9a0f2946e"></p>
+<ul>
+<li>FSRSを使用するデッキでは、学習および再学習のステップが1日未満であることを確認してください。「卒業間隔」や「簡単間隔」などの他の設定は重要ではありません。どのAnki設定が重要で、どの設定が不要かについての詳細は、<a href="FAQ.html">よくある質問 (FAQ)</a>を参照してください。</li>
+</ul>
+<p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/ba36847d-28f5-4df3-b4b3-4ff425609c04"></p>
+<p>上記の手順を実行すると、FSRS4Ankiスケジューラが正常にアクティブになるはずです。これを確認したい場合は、コードのこの部分を変更できます：</p>
+<pre><code class="language-javascript">const display_memory_state = false;
+</code></pre>
+<p>を次のように変更します：</p>
+<pre><code class="language-javascript">const display_memory_state = true;
+</code></pre>
+<p>次に、任意のデッキを開いてレビューを開始すると、以下のメッセージが表示されます：</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/0a5d4561-6052-45f3-91a5-5f21dd6497b9"></p>
+<p>これはFSRSスケジューラが正常に動作していることを示しています。D、S、Rが表示されず、「FSRS enabled」のみが表示される場合、そのカードは「学習」または「再学習」段階にあり、「レビュー」段階にはないことを意味します。</p>
+<p>その後、コードを元に戻すと、メッセージは表示されなくなります。</p>
+<h2 id="ステップ2-fsrsをパーソナライズする"><a class="header" href="#ステップ2-fsrsをパーソナライズする">ステップ2: FSRSをパーソナライズする</a></h2>
+<p>FSRSをあなたの学習ニーズに合わせてパーソナライズするには、2つのステップが必要です。</p>
+<ul>
+<li>まず、FSRSオプティマイザーを使用してコレクションのFSRSパラメータをトレーニングし、アルゴリズムをあなたの学習パターンに合わせます。</li>
+<li>次に、望ましい保持率と最大間隔を選択します。</li>
+</ul>
+<p>それでは、これらのステップについて詳しく説明します。</p>
+<h3 id="ステップ21-fsrsパラメータのトレーニング"><a class="header" href="#ステップ21-fsrsパラメータのトレーニング">ステップ2.1 FSRSパラメータのトレーニング</a></h3>
+<p>ほとんどのユーザーにとって、パラメータをトレーニングするためには、以下の2つの方法（Google ColabとHugging Face）のいずれかを使用することをお勧めします。上級ユーザーは、<a href="Advanced-methods-of-optimization.html">こちら</a>に記載されている他のオプションを探索することもできます。</p>
+<p>FSRSオプティマイザーは、正確な結果を得るために最低2,000回のレビューが必要であることに注意してください。データが十分でない場合は、このステップをスキップして、スケジューラコードに既に入力されているデフォルトのパラメータを使用することができます。</p>
+<details>
+  <summary>方法1: Google Colabを使用したトレーニング</summary>
+<p><a href="https://colab.research.google.com/github/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_optimizer.ipynb">オプティマイザーのノートブック</a>を開きます。コーディング環境を自分で設定する必要はなく、Googleのマシンを無料で使用できます（Googleアカウントが必要です）：</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/5f5af21b-583d-496c-9bad-0eef0b1fb7a6"></p>
+<p>Colabのウェブサイトが開いたら、フォルダタブに切り替えます。オプティマイザーがGoogleのマシンに接続されたら、右クリックしてAnkiからエクスポートしたデッキファイル/コレクションファイルをアップロードできます。</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/66f9e323-fca8-4553-bcb2-b2e511fcf559"></p>
+<p>これらのファイルをエクスポートする際は、「スケジューリング情報を含む」と「古いAnkiバージョンをサポート」を選択してください。メディアを含める必要はありません。</p>
+<details>
+  <summary>プライバシーに関する注意</summary>
+<p>オプティマイザーにアップロードするデッキは、FSRSの作者がアクセスできません。オプティマイザーのコードはオープンソースであるため、コードを理解できる人なら誰でもこれを確認できます。</p>
+<p>Googleはアップロードされたデータにアクセスできる可能性がありますが、リスクは個人のGoogleドライブフォルダにデータをアップロードするのと同様です。</p>
+<p>プライバシーが心配な場合は、以下の2つのオプションがあります。</p>
+<ul>
+<li>上級ユーザーは、<a href="Advanced-methods-of-optimization.html">こちら</a>に記載されているオプションを使用してスクリプトをローカルで実行できます。</li>
+<li>他のユーザーは、フィールドを空白にしてコレクションをエクスポートできます。これを行うには、以下の手順に従ってください：
+<ul>
+<li>万が一問題が発生した場合に備えて、<code>ファイル → バックアップを作成</code>でバックアップを取ります。</li>
+<li><code>ブラウズ &gt; ノート &gt; 検索と置換</code>に移動します。</li>
+<li>「検索」フィールドに <code>(.|\n)*</code> と入力し、「置換」フィールドは空白のままにします。</li>
+<li>「入力を正規表現として扱う」オプションにチェック（✓）を入れます。「選択されたノートのみ」のチェックを外します。これをすべてのノートに適用する場合は、チェックを外してください。<p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/eaaf818d-e0b1-486f-875a-4aa6b96e258a"></p></li>
+<li>上記の手順に従ってコレクションをエクスポートします。</li>
+<li><code>編集 → 検索と置換の元に戻す</code>に移動して、ノートの内容を復元します。</li>
+</ul>
+</li>
+</ul>
+</details>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/65da272d-7a01-4c46-a1d9-093e548f1a2d"></p>
+<ul>
+<li>ファイルをアップロードした後、<code>collection-2022-09-18@13-21-58.colpkg</code>をアップロードしたファイルの名前に置き換えます。</li>
+<li><code>Asia/Shanghai</code>をあなたのタイムゾーンに置き換えます。ノートブックにはタイムゾーンのリストへのリンクが含まれています。</li>
+<li><code>next_day_starts_at</code>の値も置き換えます。この値を見つけるには、Ankiの<code>ツール &gt; 設定 &gt; レビュー &gt; 次の日の開始時刻</code>に移動します。</li>
+</ul>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/f344064c-4ccf-4884-94d0-fc0a1d3c3c24"></p>
+<p>次に、<code>Ctrl+F9</code>を押すか、<code>ランタイム &gt; すべて実行</code>に移動してオプティマイザーを実行します。</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/77947790-6916-4a99-ba28-8da42fd5b350"></p>
+<p>コードの実行が完了するのを待ちます。その後、セクション2.2（結果）に移動し、最適化されたパラメータが利用可能になります。これらのパラメータをコピーします。</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/8df1d210-73c3-4194-9b3b-256279c4c2fd"></p>
+</details>
+<details>
+  <summary>方法2: Hugging Faceを使用したトレーニング</summary>
+<p>エクスポートしたデッキをこのウェブサイトにアップロードするだけで、最適化してくれます。<br />
+https://huggingface.co/spaces/open-spaced-repetition/fsrs4anki_app</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/Luc-mcgrady/fsrs4anki/assets/63685643/a03217f0-6627-4854-971f-f2bc9d14da5c"></p>
+</details>
+<p>上記のいずれかの方法でパラメータをトレーニングした後、以前にコピーしたFSRSコード内のパラメータを置き換えます。</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/70b3b45a-f014-4574-81eb-cad6d19f93d9"></p>
+<p>⚠️注意: これらのパラメータを置き換える際に、角括弧や閉じ括弧の後のコンマを誤って消さないようにしてください。これらがないとコードが動作しません。</p>
+<p>FSRSを使用し始めた後も、2ヶ月に一度はパラメータを再トレーニングするべきです。ただし、これはコレクションの古さによります。比較的新しいコレクションを持つユーザーは、毎月再最適化することを検討するかもしれません。再最適化により、FSRSが現在の学習パターンにうまく適応することが保証されます。</p>
+<h3 id="ステップ22-望ましい保持率と最大間隔の選択"><a class="header" href="#ステップ22-望ましい保持率と最大間隔の選択">ステップ2.2: 望ましい保持率と最大間隔の選択</a></h3>
+<p>次に、FSRSが達成しようとする保持率（つまり、カードが成功裏に想起される割合）を示す<code>requestRetention</code>を選択する必要があります。</p>
+<p>この値を決定するための補助として、Ankiの統計で過去の保持率を確認できます。例えば、過去の保持率が90%であった場合、<code>requestRetention</code>を0.90に設定できます。</p>
+<p>より高い<code>requestRetention</code>を設定することもできますが、<code>requestRetention</code>を0.90以上にすると、レビューの負荷（1日あたりのレビュー数）が非常に急速に増加することに注意してください。同じ理由で、<code>requestRetention</code>を0.97以上に設定することはお勧めしません。</p>
+<p><code>requestRetention</code>の値を決定したら、これをスケジューラコードに入力します。同時に、任意のカードが達成できる最大間隔を示す<code>maximumInterval</code>の値も決定します。FSRSスケジューラコード内の値は、Ankiのデッキオプションで設定された値を上書きします。</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/6989b282-7988-4d9e-9fbe-0b79985e9952"></p>
+<p>上記の手順を実行した後、FSRSの使用を開始する準備が整いました。レビューを開始すれば、FSRSがその役割を果たします。</p>
+<h3 id="fsrs4anki-helperアドオンを使用して既存のカードを再スケジュールする"><a class="header" href="#fsrs4anki-helperアドオンを使用して既存のカードを再スケジュールする">FSRS4Anki Helperアドオンを使用して既存のカードを再スケジュールする</a></h3>
+<p>AnkiでFSRSを設定した後、<a href="https://ankiweb.net/shared/info/759844606">FSRS4Anki Helperアドオン</a>をインストールし、既存のカードを再スケジュールするために使用できます。これは、Ankiの内蔵アルゴリズムに従って以前にスケジュールされたカードを再スケジュールするための一度限りの措置です。このアドオンは他にも多くの便利な機能を提供します。アドオンの詳細については、こちらをご覧ください: https://github.com/open-spaced-repetition/fsrs4anki-helper</p>
+<p align="center"><img width="625" alt="image" src="https://github.com/user1823/fsrs4anki/assets/32575846/92289976-8b35-44b3-b5cd-3e6f89759c8d"></p>
+<h2 id="異なるデッキに異なるパラメータを設定する"><a class="header" href="#異なるデッキに異なるパラメータを設定する">異なるデッキに異なるパラメータを設定する</a></h2>
+<p>異なるデッキに対して異なるパラメータを生成し、コード内でそれぞれを設定することもできます。デフォルトの設定では、<code>deckParams</code>にはすでに3つのパラメータグループが含まれています。</p>
+<p>「FSRS4Ankiのグローバル設定」グループは、グローバルパラメータです。</p>
+<p>「MainDeck1」グループは、デッキ「MainDeck1」とそのサブデッキに適用されるパラメータです。</p>
+<p>同様に、3番目のグループはデッキ「MainDeck2::SubDeck::SubSubDeck」とそのサブデッキに適用されるパラメータです。これらを設定したいデッキに置き換えることができます。さらに必要な場合は、自由にコピーして追加してください。</p>
+<pre><code class="language-javascript">const deckParams = [
+  {
+// FSRS4Ankiのデフォルトパラメータ（グローバル設定）
+    "deckName": "FSRS4Ankiのグローバル設定",
+    "w": [0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05, 0.34, 1.26, 0.29, 2.61],
+    // 上記のパラメータはFSRS4Ankiオプティマイザーで最適化できます。
+    // パラメータの詳細については、こちらをご覧ください: https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm
+    // ユーザーのカスタムパラメータ（グローバル設定）
+    "requestRetention": 0.9, // 推奨設定: 0.75 - 0.95
+    "maximumInterval": 36500,
+    // FSRSは長期スケジューリングのみを変更します。そのため、デッキオプションの（再）学習ステップは通常通り機能します。
+    // 1日未満のステップを設定することをお勧めします。
+  },
+  {
+    // 例1: このデッキおよびそのサブデッキに対するユーザーのカスタムパラメータ。
+    "deckName": "MainDeck1",
+    "w": [0.6, 0.9, 2.9, 6.8, 4.72, 1.02, 1, 0.04, 1.49, 0.17, 1.02, 2.15, 0.07, 0.35, 1.17, 0.32, 2.53],
+    "requestRetention": 0.9,
+    "maximumInterval": 36500,
+  },
+  {
+    // 例2: このデッキおよびそのサブデッキに対するユーザーのカスタムパラメータ。
+    // いかなるキーも省略しないでください。
+    "deckName": "MainDeck2::SubDeck::SubSubDeck",
+    "w": [0.6, 0.9, 2.9, 6.8, 4.72, 1.02, 1, 0.04, 1.49, 0.17, 1.02, 2.15, 0.07, 0.35, 1.17, 0.32, 2.53],
+    "requestRetention": 0.9,
+    "maximumInterval": 36500,
+  }
+];
+</code></pre>
+<p>FSRSを使用したくないデッキがある場合は、その名前を <code>skip_decks</code> リストに追加できます。</p>
+<pre><code class="language-javascript">const skip_decks = ["MainDeck3", "MainDeck4::SubDeck"];
+</code></pre>
+<h1 id="faq-1"><a class="header" href="#faq-1">FAQ</a></h1>
+<p>Q0: なぜFSRSでは（再）学習ステップを短く保つべきなのでしょうか？FSRSにとって長い間隔とはどのくらいですか（FAQによると1日かもしれません）？</p>
+<p>A0: Ankiのカスタムスケジューリングの制限により、FSRSスケジューラは学習または再学習ステップのレビューが同じ日に行われるか、異なる日に行われるかを判断できません。そのため、スケジューラはすべてのレビューが同じ日に行われると仮定します。これにより、最後の学習ステップが1日以上であっても、FSRSスケジューラによって設定される最初の間隔は1日と等しくなる可能性があります。この予期しない動作を防ぐために、1日以上の学習または再学習ステップを使用しないことをお勧めします。</p>
+<p>それでも1日以上の学習（または再学習）ステップを使用したい場合は、FSRSヘルパーアドオンを使用してカードを毎日再スケジュールすることをお勧めします。ヘルパーアドオンはカードの全レビュー履歴を読み取ることができるため、そのような場合により正確な次の間隔を提供できます。</p>
+<p>「各レビュー後にカードを自動再スケジュールする」オプションを有効にすると、1日以上の学習ステップを設定できます（それ以外は推奨されません）が、その場合、回答ボタンの上に表示される間隔は実際の間隔と一致しません。したがって、このオプションを無効にして1日以上の学習ステップを使用しないか、有効にして表示される間隔が実際の間隔と一致しないかを選択してください。この機能を有効にするには、ヘルパーアドオンをインストールする必要があります: https://ankiweb.net/shared/info/759844606</p>
+<hr />
+<p>Q1: AnkiDroidはこれを無効にしますか（まだv3スケジューリングを使用していないため）？</p>
+<p>A1: AnkiDroidは現在、v3スケジューラをサポートしており、高度な設定から有効にすることができます。ただし、FSRSが動作するために必要なカスタムスケジューリングはまだサポートしていません。AnkiDroidはv2.17でFSRSをサポートする予定です。詳細については、こちらをご覧ください: https://github.com/ankidroid/Anki-Android/issues/12620</p>
+<p>それまでは、FSRSヘルパーアドオンで「同期後に自動再スケジュール」オプションを有効にすることができます。これにより、AnkiDroidからデスクトップにレビューを同期すると、FSRSアルゴリズムに従って自動的に再スケジュールされます。最良の結果を得るためには、レビューを毎日同期することをお勧めします。</p>
+<p>ただし、AnkiDroidのみを使用している場合は、残念ながら対応できません。</p>
+<hr />
+<p>Q2: 使用されていない「休眠」デッキは結果に影響しますか？</p>
+<p>A2: 「休眠」デッキのカードは長い間隔を持つことになります。そのため、FSRS4Ankiはそれらを忘れる可能性が高いと予測します。もし覚えていた場合、FSRS4Ankiはより長い間隔を設定しますが、その間隔は遅延に対して線形にはなりません。</p>
+<hr />
+<p>Q3: アルゴリズムはカードのイーズの変化方法を変更しますか？「良い」と「難しい」だけを選択すると、イーズ地獄に陥りますか？</p>
+<p>A3: FSRS4Ankiはカードのイーズを難易度変数に置き換えます。難易度が低いほど、ファクターが高くなります。イーズ地獄は難易度の平均回帰によって解決されます。「良い」を連続して押すと、難易度は$D_0(3)$に収束します。アルゴリズムの詳細については、<a href="The-Algorithm.html">アルゴリズム</a>をご覧ください。</p>
+<hr />
+<p>Q4: ちゃんと動作しているかどうかを確認するにはどうすればいいですか？</p>
+<p>A4: <a href="https://ankiweb.net/shared/info/31746032">AnkiWebView Inspector</a>アドオンを使用できます。カードをレビューする前にインスペクターを開きます。すると、デバッグモードに入り、インスペクターでカスタムスケジューリングコードを見ることができます。詳細については、こちらをご覧ください: <a href="How-does-the-scheduler-work.html">スケジューラーの仕組み</a></p>
+<hr />
+<p>Q5: 過去のレビュー履歴を使用して既存のカードに対して機能しますか？それとも、将来作成される情報にのみ機能しますか？</p>
+<p>A5: スケジューラはレビュー履歴を使用しませんが、オプティマイザーは使用します。スケジューラはカードのイーズファクターと間隔を使用して、既存のカードのメモリ状態を設定します。また、<a href="https://ankiweb.net/shared/info/759844606">FSRS4Anki Helper</a>を使用して、全レビュー履歴に基づいて既存のカードを再スケジュールすることができます。</p>
+<hr />
+<p>Q6: 既存のデッキでこのFSRSアルゴリズムを使用し始めた後、同じデッキでAnkiの内蔵アルゴリズムに戻す必要がある場合、それは可能ですか？</p>
+<p>A6: イーズファクターは通常通りv3スケジューラによって変更され、FSRS4Ankiはそれに介入しません。FSRS4Ankiはカードの間隔のみを変更します。したがって、問題なく戻すことができます。</p>
+<hr />
+<p>Q7: FSRSが動作している場合、どのAnki設定が無関係になりますか（つまり、変更してもスケジューリングに影響しなくなる設定）？また、どの設定が影響を受けないままですか？</p>
+<p>A7: FSRSは長期スケジューリングのみを変更します。そのため、「学習ステップ」と「再学習ステップ」は通常通り機能します。そして、1日以上のステップを設定しないことをお勧めします。例えば、現在のステップが「10分、1時間、1日、2日」である場合、「1日、2日」をステップから削除することをお勧めします。</p>
+<p>最新バージョンのFSRS4Ankiでは、「最大間隔」がサポートされています。これを<a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_scheduler.js">fsrs4anki_scheduler.js</a>で変更できます。</p>
+<p>「卒業間隔」、「簡単間隔」、「新しい間隔」、「開始イーズ」、「間隔修正」、「簡単ボーナス」、および「難しい間隔」は無関係になります。</p>
+<hr />
+<p>Q8: 特定のデッキに異なるパラメータを設定するにはどうすればよいですか？</p>
+<p>A8:</p>
+<p>ステップ1: カードの表面テンプレートにコードを追加する（使用しているAnkiのバージョンが2.1.62以上の場合、このステップをスキップできます）</p>
+<p>以下のコード <code>&lt;div id=deck deck_name="{{Deck}}"&gt;&lt;/div&gt;</code> をコピーして、カードの表面テンプレートに貼り付けます。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/193453322-2e1220e1-3601-43c3-ad9f-fcd46fd85de6.png" alt="image" /></p>
+<p>ステップ2: 特定のデッキのパラメータを最適化する</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192762296-d7bd9b5e-d2d0-45af-b51d-95cd7774b353.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/32575846/215369494-9a14387f-14a2-4731-8d6f-87e39c23316c.png" alt="image" /></p>
+<p>ステップ3: 特定のデッキおよびそのサブデッキに異なるパラメータを設定する</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/221179126-0942a10c-5dcc-4c76-a50f-29d13b554ac0.png" alt="image" /></p>
+<hr />
+<p>Q9: Ankiのアルゴリズムを変更し、その背後の計算を変更する（アドオン名）をFSRSと一緒に使用できますか？</p>
+<p>A9: いいえ。Ankiの内蔵スケジューラに影響を与えるアルゴリズムは、FSRSを使用し始めると無効になるか、FSRSと干渉して問題を引き起こします。</p>
+<hr />
+<p>Q10: FSRSが最近学習したカードに非常に長い間隔を設定しています。どうすれば修正できますか？</p>
+<p>A10: 多くのユーザーにとって、Ankiのデフォルトスケジューラ（SM-2）は新しいカードを不必要に短い間隔で表示する傾向があります。そのため、ユーザーがFSRSに切り替えると、新しいカードに設定される間隔が長すぎると感じることがあります。しかし、これらの長い間隔はスケジューラコードで設定された目標保持率により適合しています。これらの長い間隔を使用することで、FSRSはSM-2を使用した場合に発生する多くの不必要なレビューを防ぐことができます。したがって、これらの長い最初の間隔を数日間試してみることをお勧めします。</p>
+<p>それでも間隔を短くしたい場合は、スケジューラ内のrequestRetentionを増やすことができます。ただし、これにより最初の間隔だけでなく、すべての間隔が短くなることに注意してください。</p>
+<hr />
+<p>Q11: FSRSをより効果的にするためにカードをどのように評価すればよいですか？</p>
+<p>A11: カードの評価は、カードを答えるのがどれだけ簡単だったかに基づいて選択するべきであり、次にそのカードを見るまでの期間をどれだけ長くしたいかに基づいて選択するべきではありません。</p>
+<p>例えば、長い間隔が表示されるために「簡単」ボタンを避ける習慣がある場合、負のサイクルに陥る可能性があります。「簡単」な状況をますます稀にし、「簡単」評価の間隔をますます長くしてしまいます。</p>
+<p>これは、回答ボタンの上に表示される間隔を無視し、情報をどれだけよく思い出せるかに集中するべきであることを意味します。</p>
+<p>それでもデッキを早く見たい場合、例えば試験が近づいているために早く見たい場合は、HelperアドオンのAdvance機能を使用できます。Advanceはカードの評価履歴を歪めないため、好ましい方法です。</p>
+<hr />
+<p>Q12: 「もう一度」と「良い」しか使わないのですが、FSRSは正常に動作しますか？</p>
+<p>A12: はい。FSRSは、「難しい」と「簡単」をほとんど使わない人と、4つのボタンすべてを頻繁に使う人に対して、ほぼ同じ精度で動作します。ただし、これは最終的な結論ではなく、データが増えるにつれてこの結論が変わる可能性があります。</p>
+<hr />
+<p>あなたの質問に対する答えが見つかりませんか？他の人が尋ねた多くの質問はこちらです: https://github.com/open-spaced-repetition/fsrs4anki/issues?q=is%3Aissue+label%3Aquestion+</p>
+<p>それでも問題が解決しない場合は、新しいIssueを開いて詳細を提供してください。</p>
+<p>https://github.com/open-spaced-repetition/fsrs4anki/issues/new/choose</p>
+<div style="break-before: page; page-break-before: always;"></div><p>FSRSは、Jarrett Yeによって開発された最新の<a href="https://en.wikipedia.org/wiki/Spaced_repetition">間隔反復</a>アルゴリズムです。これは、Ankiの従来のSM-2アルゴリズムよりも効率的にレビューをスケジュールし、あなたの記憶パターンを学習することを目指しています。</p>
+<p>間隔反復アルゴリズムの目標は、レビュー間の最適な間隔を計算することです。しかし、何が「最適」な間隔を決定するのでしょうか？FSRSでは、カードを思い出す確率に対応する間隔が最適と見なされます。例えば、次回カードを見たときに90%の確率で思い出せるようにしたい場合、その確率が90%になる間隔が最適な間隔です。</p>
+<p>FSRSは「記憶の三成分モデル」に基づいています。このモデルは、人間の脳内の単一の記憶の状態を説明するのに3つの変数が十分であると主張しています。これらの3つの変数には以下が含まれます：</p>
+<ul>
+<li>
+<p>再認可能性 (R): 特定の情報を特定の瞬間に成功裏に思い出せる確率。これは、最後のレビューから経過した時間と記憶の安定性 (S) に依存します。</p>
+</li>
+<li>
+<p>安定性 (S): Rが100%から90%に低下するのに必要な日数。例えば、S = 365の場合、特定のカードを思い出す確率が90%に低下するまでに1年が経過することを意味します。</p>
+</li>
+<li>
+<p>難易度 (D): 特定の情報の固有の複雑さ。これは、レビュー後に記憶の安定性を向上させるのがどれほど難しいかを表します。</p>
+</li>
+</ul>
+<p>FSRSでは、これらの3つの値をまとめて「記憶状態」と呼びます。Rの値は毎日変化しますが、DとSはカードがレビューされた後にのみ変化します。FSRSはその日の最初のレビューのみを考慮します。各カードには独自のDSR値、つまり各カードには独自の記憶状態があります。</p>
+<p>DSR値を正確に推定するために、FSRSはユーザーのレビュー履歴を分析し、レビュー履歴に最も適合するパラメータを計算するために機械学習を使用します。FSRSの最新バージョンでは、DとSの計算式に17のパラメータを使用しています（再認可能性の計算式にはパラメータは必要ありません）。詳細に興味がある場合は、次のWikiページを参照してください: <a href="The-Algorithm.html">アルゴリズム</a> および <a href="The-mechanism-of-optimization.html">最適化の仕組み</a>。ユーザーに十分なレビューがない場合は、代わりにデフォルトのパラメータが使用されます。これらのパラメータは、約2万人のユーザーからの数億回のレビューを基にFSRSオプティマイザーを実行して見つけられました。デフォルトのパラメータでも、FSRSはAnkiのデフォルトアルゴリズムよりも優れています。</p>
+<p>ユーザーはパラメータを手動で調整しないように注意してください。スケジューリングを調整したい場合は、望ましい保持率の適切な値を選択するだけで済みます。70%から97%の値が合理的と見なされます。言い換えれば、FSRSを使用すると、ユーザーは特定の保持率の値を目標にすることができ、どれだけ覚えているかと、どれだけのレビューを行う必要があるかのバランスを取ることができます。保持率が高いほど、1日に行うレビューの数が増えます。</p>
+<p>ユーザーが望む保持率を選択できることに加えて、FSRSにはAnkiのデフォルトアルゴリズムと比較していくつかの利点があります。FSRSを使用すると、同じ保持率を達成するためにAnkiのデフォルトアルゴリズムよりも20〜30％少ないレビューで済みます。また、FSRSは遅延してレビューされたカードのスケジューリングが非常に得意です。例えば、ユーザーが数週間Ankiを休んだ場合などです。さらに、<a href="https://github.com/open-spaced-repetition/fsrs4anki-helper">FSRS4Anki Helperアドオン</a>は、他では利用できないいくつかの便利な機能を提供します。</p>
+<p>Ankiのバージョンが23.10以降の場合は、<a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md">このガイド</a>を読んでください。Ankiのバージョンが23.10より古い場合は、FSRSのスタンドアロンバージョンを使用できます。インストール方法については、<a href="https://github.com/open-spaced-repetition/fsrs4anki#how-to-get-started">このガイド</a>を読んでください。</p>
+<p>FSRSが他のアルゴリズムと比較してどのように機能するかを確認したい場合は、次のページを読んでください: <a href="https://github.com/open-spaced-repetition/fsrs-benchmark">ベンチマーク</a> および <a href="https://github.com/open-spaced-repetition/fsrs-vs-sm17">FSRS vs SM-17</a>（最新のSuperMemoアルゴリズムの一つ）。</p>
+<p>FSRSに関するさらなる質問がある場合は、<a href="FAQ.html">FAQ</a>を確認してください。</p>
+<p>間隔反復アルゴリズムについてもっと知りたい場合は、<a href="Spaced-Repetition-Algorithm-%E2%80%90-A-Three%E2%80%90Day-Journey-from-Novice-to-Expert.html">間隔反復アルゴリズム: 初心者から専門家までの3日間の旅</a>をチェックしてください。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コマンドライン"><a class="header" href="#コマンドライン">コマンドライン</a></h1>
+<p>オプティマイザー用のPythonパッケージがあります。このパッケージはtorchを依存関係としているため、約500MBの空き容量が必要になることに注意してください。</p>
+<h2 id="インストール"><a class="header" href="#インストール">インストール</a></h2>
+<p>次のコマンドでパッケージをインストールします：</p>
+<pre><code>python -m pip install fsrs_optimizer
+</code></pre>
+<p>定期的にアップグレードして、最新バージョンの<a href="https://github.com/open-spaced-repetition/fsrs-optimizer">FSRS-Optimizer</a>を使用するようにしてください：</p>
+<pre><code>python -m pip install fsrs_optimizer --upgrade
+</code></pre>
+<h2 id="使用方法"><a class="header" href="#使用方法">使用方法</a></h2>
+<p>デッキをエクスポートし、エクスポート先のフォルダーにcdで移動します。<br />
+その後、以下のコマンドを実行できます：</p>
+<pre><code>python -m fsrs_optimizer "package.(colpkg/apkg)"
+</code></pre>
+<p>複数のファイルをリストすることもできます。例えば：</p>
+<pre><code>python -m fsrs_optimizer "file1.akpg" "file2.apkg"
+</code></pre>
+<p>ワイルドカードがサポートされています：</p>
+<pre><code>python -m fsrs_optimizer *.apkg
+</code></pre>
+<p>いくつかのオプションがあります。以下の通りです：</p>
+<pre><code>オプション:
+  -h, --help           このヘルプメッセージを表示して終了します
+  -y, --yes, --no-yes  すべての標準入力設定で自動的にデフォルトを選択します
+  -o OUT, --out OUT    自動生成されたプロファイルを追加するファイル
+</code></pre>
+<h2 id="期待される機能"><a class="header" href="#期待される機能">期待される機能</a></h2>
+<p><img src="https://github.com/Luc-mcgrady/fsrs4anki/assets/63685643/ac2e8ae0-726c-46fd-b110-0701fa87cb66" alt="image" /></p>
+<p><img src="https://github.com/Luc-mcgrady/fsrs4anki/assets/63685643/1fe8b0bb-7ac0-4a31-b594-465239ea3a1e" alt="image" /></p>
+<h1 id="ankiアドオン-実験的-anki--2166"><a class="header" href="#ankiアドオン-実験的-anki--2166">Ankiアドオン <strong>実験的</strong> (Anki &lt;= 2.1.66)</a></h1>
+<p><a href="https://github.com/Luc-mcgrady/fsrs4anki-helper/tree/optimizer">こちら</a>のバージョンのAnkiヘルパーアドオンをダウンロードしてインストールします。Ankiアドオンフォルダにgit cloneするか、<a href="https://github.com/Luc-mcgrady/fsrs4anki-helper/archive/refs/heads/optimizer.zip">zipとしてダウンロード</a>してAnkiアドオンフォルダに解凍します。</p>
+<p>オプティマイザーをローカルにインストールします。</p>
+<p><img src="https://user-images.githubusercontent.com/63685643/236647263-b1e57db1-4ad0-441b-9abe-91cbd36c13b0.png" alt="image" /></p>
+<p>ポップアップに注意してください。</p>
+<p><img src="https://github.com/Luc-mcgrady/fsrs4anki/assets/63685643/ebe42eb4-f63d-4e58-b593-c173891dd29c" alt="image" /></p>
+<p>ダウンロードとインストールが完了したら、Anki内からオプティマイザーを実行できるようになります。</p>
+<p>任意のデッキの横にある歯車アイコンを押し、「最適化」オプションを選択します。</p>
+<p><img src="https://user-images.githubusercontent.com/63685643/236647245-757ca803-b8cf-41cd-a1ae-8ed9af852ad8.png" alt="image" /></p>
+<p>Ankiがオプティマイザーを読み込む間、少しの間ハングすることがあります。</p>
+<p><img src="https://github.com/Luc-mcgrady/fsrs4anki/assets/63685643/e160e5ba-c51f-46a9-9813-9dceb18e47ff" alt="image" /></p>
+<p>「はい」を押して最適な保持率を見つけるか、「いいえ」を押して見つけないか、「キャンセル」を押して別のデッキを選択します。</p>
+<p>すべてが正常に動作していれば、最適化の進行状況を示すツールバーポップアップが表示されるはずです。</p>
+<p><img src="https://user-images.githubusercontent.com/63685643/236647707-38101c10-ccd2-4417-aa3f-f2e4e10bb4c3.png" alt="image" /></p>
+<p>その後、JavaScriptスケジューラに簡単にコピーできる形式で統計情報が表示されるはずです。</p>
+<p><img src="https://user-images.githubusercontent.com/63685643/236647716-bfd8099a-6e7f-46e7-bce8-e18e75e75d46.png" alt="image" /></p>
+<p>これらの値はアドオンの設定ファイルに保存され、Anki内で手動で保持率を変更する場合などに編集できます。</p>
+<p><img src="https://user-images.githubusercontent.com/63685643/236647915-7a865bb0-f057-4404-af0f-27c81be99082.png" alt="image" /></p>
+<p>何か問題がある場合は、このプルリクエストで言及してください <a href="https://github.com/open-spaced-repetition/fsrs4anki-helper/pull/91">こちら</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>簡単のため、比較は異なるレビュー順序で与えられる間隔のみに焦点を当てます。（再）学習ステップでの評価は無視し、新しいカードの最初の評価のみを考慮します。</p>
+<p>比較のためのFSRSのデフォルトパラメータ：</p>
+<pre><code class="language-javascript">var w = [0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05, 0.34, 1.26, 0.29, 2.61];
+</code></pre>
+<h1 id="ケース1-最初の評価が異なる場合に良いを連続して押す"><a class="header" href="#ケース1-最初の評価が異なる場合に良いを連続して押す">ケース1: 最初の評価が異なる場合に「良い」を連続して押す</a></h1>
+<p>レビュー順序: <code>1,3,3,3,3,3,3,3,3,3</code></p>
+<p>Ankiの間隔: <code>1日,3日,8日,20日,1.7ヶ月,4.2ヶ月,10.4ヶ月,2.1年,5.4年,13.4年</code></p>
+<p>FSRSの間隔: <code>1日,2日,6日,14日,1.1ヶ月,2.3ヶ月,4.7ヶ月,9.1ヶ月,1.4年,2.5年</code></p>
+<hr />
+<p>レビュー順序: <code>2,3,3,3,3,3,3,3,3,3</code></p>
+<p>Ankiの間隔: <code>1日,3日,8日,20日,1.7ヶ月,4.2ヶ月,10.4ヶ月,2.1年,5.4年,13.4年</code></p>
+<p>FSRSの間隔: <code>1日,3日,9日,24日,1.9ヶ月,4.4ヶ月,9.5ヶ月,1.6年,3.1年,5.7年</code></p>
+<hr />
+<p>レビュー順序: <code>3,3,3,3,3,3,3,3,3,3</code></p>
+<p>Ankiの間隔: <code>1日,3日,8日,20日,1.7ヶ月,4.2ヶ月,10.4ヶ月,2.1年,5.4年,13.4年</code></p>
+<p>FSRSの間隔: <code>2日,7日,21日,1.9ヶ月,4.8ヶ月,11.2ヶ月,2.0年,4.1年,8.1年,15.0年</code></p>
+<hr />
+<p>レビュー順序: <code>4,3,3,3,3,3,3,3,3,3</code></p>
+<p>Ankiの間隔: <code>4日,10日,25日,2.1ヶ月,5.3ヶ月,1.1年,2.7年,6.8年,16.9年,42.3年</code></p>
+<p>FSRSの間隔: <code>6日,20日,2.0ヶ月,5.5ヶ月,1.1年,2.6年,5.6年,11.5年,22.3年,41.4年</code></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="更新"><a class="header" href="#更新">更新</a></h1>
+<p>このWikiページでは、カスタムスケジューリングコードの実行プロセスについて説明していますが、FSRSがAnki 23.10+およびAnkiDroid 2.17+に統合されて以来、内容が古くなっています。</p>
+<h1 id="要件"><a class="header" href="#要件">要件</a></h1>
+<p>FSRS4Ankiスケジューラの動作プロセスをより深く理解するために、<a href="https://ankiweb.net/shared/info/31746032">AnkiWebView Inspector</a>をインストールすることをお勧めします。以下のテキストでは、<code>Inspector</code>ウィンドウのスクリーンショットを使用します。</p>
+<p>レビューを開始する前にインスペクタを開いてください。</p>
+<h1 id="スケジューラの実行を確認する方法"><a class="header" href="#スケジューラの実行を確認する方法">スケジューラの実行を確認する方法</a></h1>
+<p><code>今すぐ勉強</code>をクリックする前にインスペクタを起動し、デッキに入ると次のような画面が表示されます：</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192134957-1c058d80-984e-4420-8206-5de5b404835a.png" alt="image" /></p>
+<p>左側のウィンドウには、カスタムスケジューリングの実行中のコードが表示されます。</p>
+<p><code>F10</code>キーまたは次の図のボタンを使用して、コードを1行ずつ実行します。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192135103-0cbe2eae-4e7e-449b-a1b6-70f4fb756900.png" alt="image" /></p>
+<p>重要！: コードが最後まで実行される前に<code>答えを表示</code>をクリックしないでください。<code>F8</code>キーを使用して最後まで実行できます。</p>
+<h1 id="スケジューラの詳細"><a class="header" href="#スケジューラの詳細">スケジューラの詳細</a></h1>
+<p>スケジューラのコードは3つの部分に分かれています。</p>
+<h2 id="パラメータの設定"><a class="header" href="#パラメータの設定">パラメータの設定</a></h2>
+<p>5行目から18行目はすべてのカードに対してパラメータを設定しています。24行目から40行目は特定のデッキに対してパラメータを設定しています。</p>
+<blockquote>
+<p>関連する議論: <a href="https://github.com/open-spaced-repetition/fsrs4anki/issues/7">[質問] Ankiのカスタムスケジューリングが「デッキごと」にならない問題の回避方法</a></p>
+</blockquote>
+<p><img src="https://user-images.githubusercontent.com/32575846/192135583-713edf25-4ca5-41ea-b5fb-3f61b9b8775d.png" alt="image" /></p>
+<h2 id="スケジューリングの状態を確認"><a class="header" href="#スケジューリングの状態を確認">スケジューリングの状態を確認</a></h2>
+<p>142行目から192行目はスケジューリングの状態を確認するために使用されます。Ankiでは、カードのスケジューリングには4つの状態があります：<code>New</code>、<code>Learning</code>、<code>Review</code>、および<code>Relearning</code>です。<code>Learning</code>と<code>Relearning</code>はスケジューリングにおいて同じです。また、デッキには通常のデッキとフィルターデッキの2種類があります。通常のデッキでは、すべてのレビューがカードの間隔を変更します。しかし、フィルターデッキでは、<code>このデッキでの回答に基づいてカードを再スケジュールする</code>ボックスにチェックを入れた場合にのみ、Ankiはカードの間隔を更新します。FSRS4Ankiスケジューラはフィルターデッキもサポートしています。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192136063-a8f777b6-b79d-4a2a-9c41-d018e80f49b0.png" alt="image" /></p>
+<h2 id="記憶状態の計算"><a class="header" href="#記憶状態の計算">記憶状態の計算</a></h2>
+<p>FSRS4Ankiスケジューラは、あなたの評価とDSRモデルから記憶状態を計算します。スケジュールされた間隔は、記憶状態とカスタムパラメータに基づいています。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192137490-dba0944d-a163-469d-af2c-5e3f82efa0ce.png" alt="image" /></p>
+<p>レビュー中に記憶状態が利用できない場合、FSRS4AnkiスケジューラはAnkiの内蔵スケジューリング情報を記憶状態に変換します。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192137829-d987d748-5ff2-44a0-9aa3-d58d4cb52ebb.png" alt="image" /></p>
+<p>Ankiの内蔵スケジューリングの<code>interval</code>と<code>factor</code>（SM-2の変種）は、自動的にFSRSの記憶状態に変換されます。</p>
+<h3 id="間隔から安定性へ"><a class="header" href="#間隔から安定性へ">間隔から安定性へ</a></h3>
+<p>カードの記憶状態が空の場合、FSRSはAnkiによって与えられた$\text{Interval}$が$\text{Stability} \times \text{Interval modifier}$に等しいと仮定します。ここで、
+$\text{Interval modifier} = 9 \times \left(\frac{1}{\text{RequestRetention}} - 1 \right)$</p>
+<p>したがって、$\text{Stability} = \text{Interval} / \text{Interval modifier}$</p>
+<h3 id="イーズファクターから難易度へ"><a class="header" href="#イーズファクターから難易度へ">イーズファクターから難易度へ</a></h3>
+<p>SM-2では、リコール後、間隔（安定性）はイーズファクターによって増加します。</p>
+<p>FSRSでは、リコール後、安定性は次の係数によって増加します：$(1 + e^{w_8} \cdot (11-D) \cdot S^{-w_9} \cdot (e^{w_{10}\cdot(1-R)}-1) \cdot w_{15}(\textrm{if G = 2}) \cdot w_{16}(\textrm{if G = 4}))$。</p>
+<p>これら二つを等しくすると、難易度は次のように計算できます：</p>
+<p>$$D = 11 - \cfrac{factor - 1}{e^{w_8}\cdot S^{-w_9}\cdot(e^{w_{10}\cdot(1-R)}-1)}。$$</p>
+<p>上記のように安定性と難易度が計算された後、それらは次の安定性と次の難易度（レビュー後）の計算に使用されます。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>ここにFSRSに基づく小さな研究ノートブックがあります：</p>
+<p><a href="https://github.com/open-spaced-repetition/real-spaced-repetition-curve">実際の間隔反復曲線</a></p>
+<p><a href="https://github.com/open-spaced-repetition/7-repetitions-are-not-enough">7回の反復では不十分</a></p>
+<p><a href="https://github.com/open-spaced-repetition/review-sort-order-comparison">レビュー順序の比較</a></p>
+<p><a href="https://github.com/open-spaced-repetition/optimal-desired-retention">最適な保持率</a></p>
+<p><a href="https://github.com/open-spaced-repetition/heterogeneous-memory-research">異質な記憶の研究</a></p>
+<p><a href="https://github.com/open-spaced-repetition/fsrs-simplified-optimization">FSRSの簡略化された最適化</a></p>
+<p><a href="https://github.com/open-spaced-repetition/short-term-memory-research">短期記憶の研究</a></p>
+<p><a href="https://github.com/open-spaced-repetition/fsrs-when-to-separate-presets">FSRSのプリセットを分けるタイミング</a></p>
+<p><a href="https://github.com/open-spaced-repetition/temporal-ridgeline-of-optimal-retention">最適な保持率の時間的リッジライン</a></p>
+<p><a href="https://github.com/open-spaced-repetition/expanding-vs-uniform">拡張 vs 均一</a></p>
+<p><a href="https://github.com/open-spaced-repetition/spaced-repetition-algorithm-metric">間隔反復アルゴリズムの指標</a></p>
+<p><a href="https://github.com/open-spaced-repetition/SSP-MMC-FSRS">SSP-MMC-FSRS</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dataset"><a class="header" href="#dataset">Dataset</a></h1>
+<h2 id="maimemo"><a class="header" href="#maimemo">MaiMemo</a></h2>
+<p>https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VAGUL0</p>
+<h2 id="duolingo"><a class="header" href="#duolingo">Duolingo</a></h2>
+<p>https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/N8XJME</p>
+<h2 id="anki"><a class="header" href="#anki">Anki</a></h2>
+<p>https://github.com/open-spaced-repetition/fsrs-benchmark</p>
+<h2 id="supermemo"><a class="header" href="#supermemo">SuperMemo</a></h2>
+<p>https://github.com/open-spaced-repetition/fsrs-vs-sm15</p>
+<p>https://github.com/open-spaced-repetition/fsrs-vs-sm17</p>
+<h2 id="mnemosyne"><a class="header" href="#mnemosyne">Mnemosyne</a></h2>
+<p>https://www.dropbox.com/sh/epx7hzezh1ok6qe/AAAh6rUIVvyt7TRmlyxuaOUMa/data</p>
+<h1 id="code"><a class="header" href="#code">Code</a></h1>
+<h2 id="fsrs"><a class="header" href="#fsrs">FSRS</a></h2>
+<p>https://github.com/open-spaced-repetition/short-term-memory-research</p>
+<p>https://github.com/open-spaced-repetition/heterogeneous-memory-research</p>
+<h2 id="ebisu"><a class="header" href="#ebisu">Ebisu</a></h2>
+<p>https://github.com/fasiha/ebisu</p>
+<h2 id="maimemo-1"><a class="header" href="#maimemo-1">MaiMemo</a></h2>
+<p>https://github.com/maimemo/SSP-MMC</p>
+<p>https://github.com/maimemo/SSP-MMC-Plus</p>
+<h2 id="duolingo-1"><a class="header" href="#duolingo-1">Duolingo</a></h2>
+<p>https://github.com/duolingo/halflife-regression</p>
+<h2 id="memorize"><a class="header" href="#memorize">Memorize</a></h2>
+<p>https://github.com/Networks-Learning/memorize</p>
+<h2 id="deep-tutor"><a class="header" href="#deep-tutor">Deep Tutor</a></h2>
+<p>https://github.com/rddy/deeptutor</p>
+<h2 id="leitner-queue-network"><a class="header" href="#leitner-queue-network">Leitner Queue Network</a></h2>
+<p>https://github.com/rddy/leitnerq</p>
+<h1 id="論文"><a class="header" href="#論文">論文</a></h1>
+<p>Su, J., Ye, J., Nie, L., Cao, Y., &amp; Chen, Y. (2023). 記憶の動態を捉えて間隔反復スケジュールを最適化する。IEEE Transactions on Knowledge and Data Engineering, 1–13. https://doi.org/10.1109/TKDE.2023.3251721</p>
+<p>Ye, J., Su, J., &amp; Cao, Y. (2022). 間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム。第28回ACM SIGKDD知識発見とデータマイニング会議の議事録, 4381–4390. https://doi.org/10.1145/3534678.3539081</p>
+<p>Upadhyay, U., Lancashire, G., Moser, C., &amp; Gomez-Rodriguez, M. (2021). 大規模なランダム化実験により、機械学習ベースの指導が人々の記憶をより効果的に助けることが明らかになった。Npj Science of Learning, 6(1), Article 1. https://doi.org/10.1038/s41539-021-00105-8</p>
+<p>Nioche, A., Murena, P.-A., de la Torre-Ortiz, C., &amp; Oulasvirta, A. (2021). 人々の学習と忘却の仕方を考慮して人工教師を改善する。第26回国際インテリジェントユーザーインターフェース会議, 445–453. https://doi.org/10.1145/3397481.3450696</p>
+<p>Randazzo, Giacomo. (2020-21). 間隔反復システムのための記憶モデル (数理工学修士論文 - 数理工学, ミラノ工科大学). 指導教員: Marco D. Santambrogio. 取得元 https://hdl.handle.net/10589/186407</p>
+<p>Zaidi, A., Caines, A., Moore, R., Buttery, P., &amp; Rice, A. (2020). 言語学習のための適応的忘却曲線。I. I. Bittencourt, M. Cukurova, K. Muldner, R. Luckin, &amp; E. Millán (編), Artificial Intelligence in Education (pp. 358–363). Springer International Publishing. https://doi.org/10.1007/978-3-030-52240-7_65</p>
+<p>Yang, Z., Shen, J., Liu, Y., Yang, Y., Zhang, W., &amp; Yu, Y. (2020). TADS: 間隔反復のための時間認識スケジューリングポリシーをダイナスタイルプランニングで学習する。第43回国際ACM SIGIR情報検索研究開発会議, 1917–1920. https://doi.org/10.1145/3397271.3401316</p>
+<p>Aydin, R., Klein, L., Miribel, A., &amp; West, R. (2020). Broccoli: 日常の情報摂取に軽量な語彙学習を散りばめる。The Web Conference 2020の議事録, 1344–1354. https://doi.org/10.1145/3366423.3380209</p>
+<p>Tabibian, B., Upadhyay, U., De, A., Zarezade, A., Schölkopf, B., &amp; Gomez-Rodriguez, M. (2019). 間隔反復最適化による人間の学習の強化。Proceedings of the National Academy of Sciences, 116(10), 3988–3993. https://doi.org/10.1073/pnas.1815156116</p>
+<p>Sinha, S. (2019). 深層強化学習を用いたeラーニングプラットフォームでの間隔反復によるレビューセッションの個別化 (2019:217; p. 82). KTH, School of Electrical Engineering and Computer Science (EECS) / KTH, School of Electrical Engineering and Computer Science (EECS). https://api.semanticscholar.org/CorpusID:196203887</p>
+<p>Hunziker, A., Chen, Y., Aodha, O. M., Rodriguez, M. G., Krause, A., Perona, P., Yue, Y., &amp; Singla, A. (2019). 忘れっぽい学習者に複数の概念を教える。H. M. Wallach, H. Larochelle, A. Beygelzimer, F. d’Alché-Buc, E. B. Fox, &amp; R. Garnett (編), Advances in neural information processing systems 32: Annual conference on neural information processing systems 2019, NeurIPS 2019, 2019年12月8-14日, バンクーバー, BC, カナダ (pp. 4050–4060). https://proceedings.neurips.cc/paper/2019/hash/2952351097998ac1240cb2ab7333a3d2-Abstract.html</p>
+<p>Choffin, B., Popineau, F., Bourda, Y., &amp; Vie, J.-J. (2019). DAS3H: スキルの分散練習を最適にスケジューリングするための学生の学習と忘却のモデリング。ArXiv:1905.06873 [Cs, Stat]. http://arxiv.org/abs/1905.06873</p>
+<p>Upadhyay, U., De, A., &amp; Gomez Rodriguez, M. (2018). マーク付き時系列ポイントプロセスの深層強化学習。Advances in Neural Information Processing Systems, 31. https://papers.nips.cc/paper/2018/hash/71a58e8cb75904f24cde464161c3e766-Abstract.html</p>
+<p>Reddy, S., Levine, S., &amp; Dragan, A. (2017). 深層強化学習による人間の学習の加速。カリフォルニア大学バークレー校, 9. https://api.semanticscholar.org/CorpusID:44144165</p>
+<p>Settles, B., &amp; Meeder, B. (2016). 訓練可能な間隔反復モデルによる言語学習。第54回計算言語学協会年次会議（第1巻：長編論文集）, 1848–1858. https://doi.org/10.18653/v1/P16-1174</p>
+<p>Reddy, S., Labutov, I., Banerjee, S., &amp; Joachims, T. (2016). 無制限の人間の学習：間隔反復のための最適なスケジューリング。第22回ACM SIGKDD国際知識発見データマイニング会議の議事録, 1815–1824. https://doi.org/10.1145/2939672.2939850</p>
+<p>Jones, M. N. (Ed.). (2016). 記憶保持の予測と改善：ビッグデータ時代における心理学理論の重要性。Big Data in Cognitive Science (0 ed., pp. 43–73). Psychology Press. https://doi.org/10.4324/9781315413570-8</p>
+<p>Lindsey, R. (2014). 学生の学習と忘却の確率モデル (博士論文, コロラド大学ボルダー校).</p>
+<p>Pashler, H., Cepeda, N., Lindsey, R. V., Vul, E., &amp; Mozer, M. C. (2009). 学習の最適な間隔を予測する：記憶のマルチスケールコンテキストモデル。Y. Bengio, D. Schuurmans, J. Lafferty, C. Williams, &amp; A. Culotta (編), Advances in neural information processing systems (Vol. 22). Curran Associates, Inc. https://proceedings.neurips.cc/paper/2009/file/6bc24fc1ab650b25b4114e93a98f1eba-Paper.pdf</p>
+<p>Pavlik, P. I., &amp; Anderson, J. R. (2008). モデルを使用して最適な練習スケジュールを計算する。Journal of Experimental Psychology: Applied, 14(2), 101–117. https://doi.org/10.1037/1076-898X.14.2.101</p>
+<p>Pavlik, P. I., &amp; Anderson, J. R. (2005). 語彙記憶における練習と忘却の効果：間隔効果の活性化ベースモデル。Cognitive Science, 29(4), 559–586. https://doi.org/10.1207/s15516709cog0000_14</p>
+<p>Woźniak, P. A., Gorzelańczyk, E. J., &amp; Murakowski, J. A. (1995). 長期記憶の2つの要素。Acta neurobiologiae experimentalis, 55(4), 301–305. https://pubmed.ncbi.nlm.nih.gov/8713361/</p>
+<p>Woźniak, P. A., &amp; Gorzelańczyk, E. J. (1994). 学習の実践における反復間隔の最適化。Acta neurobiologiae experimentalis, 54(1), 59–62. https://pubmed.ncbi.nlm.nih.gov/8023714/</p>
+<div style="break-before: page; page-break-before: always;"></div><p>私はJarrett Yeです。論文「<a href="https://www.maimemo.com/paper/">間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム</a>」および「<a href="https://ieeexplore.ieee.org/document/10059206">記憶の動態を捉えて間隔反復スケジュールを最適化する</a>」の主著者です。現在、MaiMemo Inc.で働いており、MaiMemoの語学学習アプリ内の間隔反復アルゴリズムの開発を主に担当しています。これらの論文の発表に至るまでの私の学術的な旅の詳細については、「<a href="https://medium.com/@JarrettYe/how-did-i-publish-a-paper-in-acmkdd-as-an-undergraduate-c0199baddf31">学部生としてACMKDDに論文を発表するまでの道のり</a>」をご参照ください。</p>
+<p>このチュートリアル「間隔反復アルゴリズム：初心者から専門家への3日間の旅」は、もともとMaiMemoでの内部プレゼンテーションのために準備したレポートを基にしています。この記事の目的は、間隔反復アルゴリズムがどのように機能するかを詳しく説明し、新しい研究者がこの分野に貢献し、学習技術の進歩を促進することを目指しています。それでは、さっそくこの知的な旅に出発しましょう！</p>
+<h2 id="序文"><a class="header" href="#序文">序文</a></h2>
+<p>学生時代から、ほとんどの学生は次の2つの事実を直感的に知っています：</p>
+<ol>
+<li>情報を複数回復習することで、よりよく覚えられる。</li>
+<li>記憶の消失速度は異なり、すべてを一度に忘れるわけではない。</li>
+</ol>
+<p>これらの洞察はさらに次のような疑問を引き起こします：</p>
+<ol>
+<li>既にどれだけの知識を忘れてしまったかを推定できるか？</li>
+<li>それをどれくらいの速さで忘れているのか？</li>
+<li>忘却を最小限に抑えるための最適な復習スケジュールは何か？</li>
+</ol>
+<p>過去には、これらの質問に答えようとした人はほとんどいませんでした。間隔反復アルゴリズムを開発するには、これらの答えを見つける必要があります。</p>
+<p>次の3日間で、間隔反復アルゴリズムを3つの視点から掘り下げていきます：</p>
+<ol>
+<li>経験的アルゴリズム</li>
+<li>理論モデル</li>
+<li>最新の進展</li>
+</ol>
+<h2 id="1日目-経験的アルゴリズムの探求"><a class="header" href="#1日目-経験的アルゴリズムの探求">1日目: 経験的アルゴリズムの探求</a></h2>
+<p>今日は、最もシンプルでありながら影響力のある経験的アルゴリズムに飛び込むことから旅を始めます。それらの詳細とそれを導くアイデアを明らかにします。しかしまず、「間隔反復」という用語のルーツをたどってみましょう。</p>
+<h3 id="間隔反復"><a class="header" href="#間隔反復">間隔反復</a></h3>
+<p>間隔反復のテーマに初めて触れる読者のために、「忘却曲線」の概念について学びましょう。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/a10e912d-0795-4113-925e-ea48f8689c28" alt="image" /></p>
+<p>本やその他の手段で何かを学んだ後、私たちはそれを忘れ始めます。これは徐々に起こります。</p>
+<p>忘却曲線は、私たちの記憶が知識を保持する方法を示しています。それは独特の軌跡を描きます：積極的な復習がない場合、記憶の減衰は最初は急速であり、時間が経つにつれて遅くなります。</p>
+<p>この自然な忘却の傾向に対抗するにはどうすればよいでしょうか？復習の効果を考えてみましょう。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/0bc2a613-73af-4f9a-b844-ab45018219a2" alt="image" /></p>
+<p>定期的に資料を復習することで、忘却曲線が平坦になります。言い換えれば、情報を忘れる速度が減少します。</p>
+<p>ここで疑問が生じます：効率的な記憶保持のためにこれらの復習間隔をどのように最適化できるでしょうか？</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/5364fbbd-e070-4cbe-95d8-f9dc2420f9a9" alt="image" /></p>
+<p>各復習の後、特定の保持レベルに対応する間隔が増加することに気づきましたか？短い間隔は馴染みのない内容に適しており、長い間隔はより馴染みのある資料に使用されるべきです。この方法は「間隔反復」として知られ、長期記憶の形成を促進します。</p>
+<p>しかし、それはどれほど効果的でしょうか？ここに、間隔反復の利点を示すいくつかの研究があります（<a href="https://gwern.net/spaced-repetition#distributed">出典</a>）。</p>
+<ul>
+<li>Rea &amp; Modigliani 1985, <a href="https://gwern.net/doc/psychology/spaced-repetition/1985-rea.pdf">「拡張練習と集中練習が掛け算の事実とスペリングリストの保持に与える影響」</a>:</li>
+</ul>
+<blockquote>
+<p>トレーニング直後のテストでは、分散練習グループ（70%正解）が集中練習グループ（53%正解）よりも優れた成績を示しました。これらの結果は、間隔効果が学齢期の子供たちや学校で通常教えられるいくつかの種類の教材に適用されることを示しているようです。</p>
+</blockquote>
+<ul>
+<li>Donovan &amp; Radosevich 1999, <a href="https://gwern.net/doc/psychology/spaced-repetition/1999-donovan.pdf">「練習効果の分布に関するメタ分析レビュー：今見える、今見えない」</a>:</li>
+</ul>
+<blockquote>
+<p>全体の平均加重効果サイズは0.46であり、95%信頼区間は0.42から0.50まで広がっていました。...この効果サイズの95%信頼区間にはゼロが含まれていないため、間隔練習が集中練習よりもタスクパフォーマンスの点で有意に優れていたことを示しています。</p>
+</blockquote>
+<p>簡単に言えば、間隔反復を使用する人の62%から64%が、集中反復を使用する人よりも良い結果を得ることを意味します。この効果は他の研究が報告するほど大きくはありませんが、それでも統計的にも実際的にも有意です。</p>
+<p>「間隔反復がそんなに効果的なら、なぜもっと普及していないのか？」と思うかもしれません。</p>
+<p><img src="https://l-m-sherlock.github.io/thoughts-memo/%e5%a4%a7%e9%87%8f%e5%8d%a1%e7%89%87.jpg" alt="Challenges" /></p>
+<p>主な障害は、学ばなければならない知識の膨大な量です。各知識には独自の忘却曲線があり、手動での追跡とスケジューリングは不可能です。</p>
+<p>ここで間隔反復アルゴリズムの役割が重要になります。記憶状態の追跡を自動化し、効率的な復習スケジュールを見つけることです。</p>
+<p>これで、間隔反復について基本的な理解ができたと思います。しかし、最適な間隔の計算や効率的な間隔反復のベストプラクティスなど、まだ疑問が残っているかもしれません。これらの質問は、次の章で回答されます。</p>
+<h4 id="レビューセクション"><a class="header" href="#レビューセクション">レビューセクション</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>質問</th><th>答え</th></tr></thead><tbody>
+<tr><td>忘却曲線は記憶のどの側面を捉えていますか？</td><td>知識の保持が時間とともにどのように減少するかを示しています。</td></tr>
+<tr><td>復習がない場合、記憶の保持はどのように低下しますか？</td><td>最初は急速に低下し、その後ゆっくりと低下します。</td></tr>
+<tr><td>成功した復習の後、忘却曲線はどのように変化しますか？</td><td>新しい曲線はより平坦になり、忘却の速度が遅くなることを示します。</td></tr>
+<tr><td>間隔反復は異なる教材にどのように対応しますか？</td><td>馴染みのない教材には短い間隔を使用し、馴染みのある教材には長い間隔を使用します。</td></tr>
+<tr><td>間隔反復におけるアルゴリズムの役割は何ですか？</td><td>記憶状態の追跡と効率的な復習スケジュールの自動化を行います。</td></tr>
+</tbody></table>
+</div>
+<hr />
+<p>間隔反復の概念を掘り下げると、次の指針について考えることになるかもしれません：</p>
+<blockquote>
+<p>馴染みのない内容には短い間隔を使用し、馴染みのある内容には長い間隔を使用して、将来の異なるタイミングでレビューを散らします。</p>
+</blockquote>
+<p>これらの「短い」または「長い」間隔を正確に定義するものは何でしょうか？さらに、「馴染みのある」教材と「馴染みのない」教材をどのように区別するのでしょうか？</p>
+<p>直感的には、教材に馴染みがあるほど忘れる速度が遅くなるため、馴染みのある教材には長い間隔を使用できることがわかります。しかし、忘れたくないほど、間隔は短くするべきです。間隔が短いほど、レビューの頻度が高くなります。</p>
+<p>レビューの頻度と忘却の速度の間には矛盾があるように思えます。一方では、より多くのレビューを行ってより多くを覚えたいと考えます。他方では、馴染みのある教材を頻繁にレビューする必要はありません。この矛盾をどのように解決するのでしょうか？</p>
+<p>最初のコンピュータ化された間隔反復アルゴリズムの作成者が、記憶の探求の旅にどのように出発したかを見てみましょう。</p>
+<h3 id="sm-0"><a class="header" href="#sm-0">SM-0</a></h3>
+<p>1985年、若い大学生であるピョートル・ヴォズニアックは、忘却の問題に悩んでいました。</p>
+<p><img src="https://supermemo.guru/images/thumb/a/a9/English-Polish_word_pairs_%28Wozniak_1982%29.jpg/550px-English-Polish_word_pairs_%28Wozniak_1982%29.jpg" alt="Wozの辞書" /></p>
+<p>上の画像は彼の語彙ノートの1ページを示しています。このノートには2,794語が79ページにわたって記載されていました。各ページには約40組の英語-ポーランド語の単語がありました。これらのレビューを管理することはヴォズニアックにとって頭痛の種でした。最初は、彼には単語を復習するための体系的な計画がなく、時間があるときに復習するだけでした。しかし、彼は重要なことを行いました：いつ復習したか、どれだけの単語を忘れたかを記録し、進捗を測定できるようにしたのです。</p>
+<p>彼は1年分のレビューのデータをまとめ、忘却率が40%から60%の間であることを発見しました。これは彼にとって受け入れがたいものでした。彼は、レビューに圧倒されることなく忘却率を下げるための合理的な学習スケジュールが必要でした。最適なレビュー間隔を見つけるために、彼は記憶実験を開始しました。</p>
+<p>ヴォズニアックは、忘却率を5%未満に保ちながら、レビュー間隔をできるだけ長くしたいと考えていました。</p>
+<p>以下は彼の実験の詳細です：</p>
+<p><strong>教材</strong>: 40組の英語-ポーランド語の単語ペアが記載された5ページ。</p>
+<p><strong>初回学習</strong>: 5ページすべての教材を暗記する。英語の単語を見て、ポーランド語の翻訳を思い出し、答えが正しいかどうかを確認する。答えが正しければ、その単語ペアをこの段階から除外する。答えが間違っていれば、後で再度思い出すようにする。すべての答えが正しくなるまでこれを繰り返す。</p>
+<p><strong>初回レビュー</strong>: ヴォズニアックの以前のレビュー経験に基づき、初回レビューには1日の間隔を採用した。</p>
+<p>続く重要なステージ — A、B、C — では次のことが明らかになった：</p>
+<p><strong>ステージA</strong>: ヴォズニアックは2日、4日、6日、8日、10日の間隔で5ページのノートをレビューした。結果として得られた忘却率はそれぞれ0%、0%、0%、1%、17%だった。彼は2回目のレビューには7日の間隔が最適であると判断した。</p>
+<p><strong>ステージB</strong>: 新しい5ページのセットを1日後に初回レビューし、7日後に2回目のレビューを行った。3回目のレビューには6日、8日、11日、13日、16日の間隔を使用し、忘却率はそれぞれ3%、0%、0%、0%、1%だった。ヴォズニアックは3回目のレビューには16日の間隔を選択した。</p>
+<p><strong>ステージC</strong>: 別の新しい5ページのセットを1日、7日、16日の間隔で初回から3回目のレビューを行った。4回目のレビューには20日、24日、28日、33日、38日の間隔を使用し、忘却率はそれぞれ0%、3%、5%、3%、0%だった。ヴォズニアックは4回目のレビューには35日の間隔を選択した。</p>
+<p>彼の実験中、次の最適な間隔は前の間隔の約2倍であることに気づきました。最終的に、彼はSM-0アルゴリズムを紙にまとめました。</p>
+<ul>
+<li>I(1) = 1日</li>
+<li>I(2) = 7日</li>
+<li>I(3) = 16日</li>
+<li>I(4) = 35日</li>
+<li>i &gt; 4の場合: I(i) = I(i-1) * 2</li>
+<li>最初の4回のレビューで忘れた単語は新しいページに移され、新しい教材と一緒に再度繰り返されました。</li>
+</ul>
+<p>ここで、$I(i)$は$i^{th}$レビューに使用される間隔を示します。5回目の繰り返しの間隔は前の間隔の2倍に設定されました。この決定は直感的な仮定に基づいていました。SM-0アルゴリズムを2年間使用することで、ヴォズニアックはこの仮説の妥当性を確認するのに十分なデータを収集しました。</p>
+<p>SM-0アルゴリズムの目標は明確でした：記憶の減衰率を最小限に抑えながら、レビュー間隔をできるだけ延ばすこと。その限界も明らかでした。つまり、記憶保持を細かいレベルで追跡することができないことです。</p>
+<p>それにもかかわらず、SM-0アルゴリズムの効果は明白でした。1986年に最初のコンピュータを手に入れたヴォズニアックは、モデルをシミュレートし、2つの重要な結論を引き出しました：</p>
+<ul>
+<li>時間が経つにつれて、知識の総量は減少するのではなく増加する</li>
+<li>長期的には、知識の習得率は比較的一定のままである</li>
+</ul>
+<p>これらの洞察は、アルゴリズムが記憶保持とレビューの頻度の間で妥協を達成できることを証明しました。ヴォズニアックは、間隔反復が学習者を無限のレビューの海に溺れさせる必要はないことに気づきました。この気づきは、彼が間隔反復アルゴリズムの改良を続ける動機となりました。</p>
+<h4 id="レビューセクション-1"><a class="header" href="#レビューセクション-1">レビューセクション</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>質問</th><th>答え</th></tr></thead><tbody>
+<tr><td>ヴォズニアックが最適なレビュー間隔を決定するために考慮した2つの要因は何ですか？</td><td>間隔の長さと記憶保持に関連する記憶減衰率。</td></tr>
+<tr><td>ヴォズニアックが実験で新しいレビュー間隔を確立するたびに新しい教材を使用した理由は何ですか？</td><td>以前のレビューの間隔の均一性を確保するため。</td></tr>
+<tr><td>SM-0アルゴリズムの主な制限は何ですか？</td><td>ノートのページをレビューの単位として使用するため、より細かいレベルでの記憶保持の追跡には不向きであること。</td></tr>
+</tbody></table>
+</div>
+<h3 id="sm-2"><a class="header" href="#sm-2">SM-2</a></h3>
+<p>SM-0アルゴリズムはヴォズニアックの学習に有益であることが証明されましたが、いくつかの問題が彼に改良を求めさせました：</p>
+<ol>
+<li>
+<p>最初のレビュー（1日後）で単語を忘れた場合、次のレビュー（7日後および16日後）でも忘れる可能性が高くなります。これは、以前に忘れなかった単語と比較してのことです。</p>
+</li>
+<li>
+<p>忘れた単語で構成された新しいノートページは、レビューのスケジュールが同じであっても忘れる可能性が高くなります。</p>
+</li>
+</ol>
+<p>これらの観察から、すべての教材が同じ難易度ではないことに気づきました。異なる難易度の教材には異なるレビュー間隔が必要です。</p>
+<p>その結果、1987年に最初のコンピュータを手に入れた後、ヴォズニアックは2年間の記録とSM-0アルゴリズムから得た洞察を活用して、SM-2アルゴリズムを開発しました。Ankiの内蔵アルゴリズムはSM-2アルゴリズムの変種です。</p>
+<p>SM-2の詳細：</p>
+<ul>
+<li>覚えたい情報を小さな質問と回答のペアに分解します。</li>
+<li>各質問と回答のペアを次の間隔（日数）でレビューします：
+<ul>
+<li>
+<p>$I(1) = 1$</p>
+</li>
+<li>
+<p>$I(2) = 6$</p>
+</li>
+<li>
+<p>$n &gt; 2$の場合、$I(n) = I(n-1) \times EF$</p>
+<ul>
+<li>$EF$—イーズファクター（Ease Factor）、初期値は2.5</li>
+<li>各レビュー後、$\text{newEF} = EF + (0.1 - (5-q) \times (0.08 + (5-q) \times 0.02))$
+<ul>
+<li>$\text{newEF}$—レビュー後に更新されたイーズファクターの値</li>
+<li>$q$—レビューの品質評価、0から5の範囲。3以上の場合、学習者は覚えており、3未満の場合、学習者は忘れています。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>学習者が忘れた場合、その質問と回答のペアの間隔は同じEFで$I(1)$にリセットされます。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Ankiのアルゴリズムは完全に同じではなく、いくつかの修正が加えられていることは注目に値します。</p>
+<p>SM-2アルゴリズムは、質問と回答のペアをどのくらいの頻度でレビューするかにレビューのフィードバックを追加します。EF（Ease Factor）が低いほど、間隔の乗数係数が小さくなります。言い換えれば、間隔の成長が遅くなります。</p>
+<p>SM-2アルゴリズムには、今日でも人気のある間隔反復アルゴリズムとなっている3つの主な強みがあります：</p>
+<ol>
+<li>
+<p>教材を小さな質問と回答のペアに分解します。これにより、各教材に対して個別のスケジュールを作成することが可能になります。</p>
+</li>
+<li>
+<p>「Ease Factor」と評価を使用します。これにより、アルゴリズムは簡単な教材と難しい教材を区別し、それぞれを異なるスケジュールで管理できます。</p>
+</li>
+<li>
+<p>比較的シンプルで計算コストが低いため、どのデバイスでも簡単に実装できます。</p>
+</li>
+</ol>
+<h4 id="レビューセクション-2"><a class="header" href="#レビューセクション-2">レビューセクション</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>質問</th><th>答え</th></tr></thead><tbody>
+<tr><td>なぜレビュー中に忘れた教材に対して長い間隔を設定すべきではないのですか？</td><td>その教材の忘却速度は遅くならないためです。言い換えれば、忘却曲線は平坦になりません。</td></tr>
+<tr><td>ある教材が他の教材よりも覚えにくいことを示すものは何ですか？</td><td>忘れた教材が含まれるページは、再度忘れる可能性が高いことです。</td></tr>
+<tr><td>SM-2アルゴリズムに「Ease Factor」と評価を組み込む実際的な目的は何ですか？</td><td>これにより、ユーザーのパフォーマンスに基づいて将来のレビュー間隔を調整し、簡単な教材と難しい教材を区別することができます。</td></tr>
+<tr><td>教材を小さな部分に分解することの利点は何ですか？</td><td>各個別の情報に対して適切なスケジュールを見つけることができます。</td></tr>
+</tbody></table>
+</div>
+<h3 id="sm-4"><a class="header" href="#sm-4">SM-4</a></h3>
+<p>SM-4の主な目的は、前身であるSM-2アルゴリズムの適応性を向上させることです。SM-2は、イーズファクターや評価に基づいて個々のフラッシュカードのレビュースケジュールを微調整できますが、これらの調整は全体的な学習プロセスを考慮せずに行われます。</p>
+<p>言い換えれば、SM-2は各フラッシュカードを独立したエンティティとして扱います。これを克服するために、SM-4は既存の間隔計算式を置き換える最適間隔（OI）マトリックスを導入します：</p>
+<p><img src="https://supermemo.guru/images/thumb/0/0c/Matrix_of_optimum_intervals_in_SuperMemo_5.jpg/746px-Matrix_of_optimum_intervals_in_SuperMemo_5.jpg" alt="" /></p>
+<p>最適間隔（OI）マトリックスでは、行が教材の難易度を示し、列がその教材を見た回数を示します。最初は、マトリックスのエントリはカードを再度レビューするまでの期間を決定するSM-2の式を使用して埋められます。</p>
+<p>新しいカードが古いカードの調整の恩恵を受けられるように、レビュー中にOIマトリックスは継続的に更新されます。主な考え方は、OIマトリックスがX日待つように指示し、学習者が実際にX+Y日待っても高評価を得られる場合、OI値をXとX+Yの間の何かに変更するというものです。</p>
+<p>理由は簡単です：学習者がX+Y日待っても高評価を得られるなら、古いOI値はおそらく短すぎたということです。もっと長くしましょう！</p>
+<p>この考え方により、SM-4は他の類似カードからの情報に基づいてカードのスケジュールを調整できる最初のアルゴリズムとなりました。しかし、以下の理由でヴォズニアックが期待したほどにはうまく機能しませんでした：</p>
+<ol>
+<li>各レビューはマトリックスの1つのエントリしか変更しないため、OIマトリックス全体を改善するには多くの時間がかかります。</li>
+<li>長いレビュー間隔（数年または数十年）では、対応するマトリックスエントリを埋めるのに十分なデータを収集するのに時間がかかりすぎます。</li>
+</ol>
+<p>これらの問題に対処するために、SM-5アルゴリズムが設計されました。しかし、スペースの制限のため、ここでは詳細には触れません。</p>
+<h4 id="レビューセクション-3"><a class="header" href="#レビューセクション-3">レビューセクション</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>質問</th><th>答え</th></tr></thead><tbody>
+<tr><td>SM-2アルゴリズムの適応性が制限されている理由は何ですか？</td><td>各フラッシュカードのスケジュール調整が個別に行われ、アルゴリズムはユーザーの記憶全体を「見る」ことができないためです。</td></tr>
+<tr><td>SM-4が適応性を向上させるために導入した要素は何ですか？</td><td>最適間隔マトリックスと動的な間隔調整ルールです。</td></tr>
+<tr><td>SM-4における間隔調整の基本原則は何ですか？</td><td>学習者が長い間隔で良い記憶を示す場合、元の間隔を長くし、逆の場合も同様です。</td></tr>
+</tbody></table>
+</div>
+<h3 id="まとめ"><a class="header" href="#まとめ">まとめ</a></h3>
+<p>1885年に初めて発見された忘却曲線は、私たちがどのように記憶し、忘れるかを示しています。1985年に、最初のコンピュータアルゴリズムが間隔反復のために開発され、最適なレビューのスケジュールを見つけることを目指しました。このセクションでは、経験に基づくアルゴリズムの発展の進行を概説しました：</p>
+<ul>
+<li>SM-0は、特定の個人と特定の種類の教材に対して最適なレビュー間隔を決定するための実験データを収集しました（ここで「最適」とは何かをヴォズニアックが定義しました）。</li>
+<li>SM-2は、アルゴリズムをコンピュータアプリケーション向けにデジタル化し、より詳細なカードレベルを導入し、適応的なイーズファクターと評価を組み込みました。</li>
+<li>SM-4は、最適間隔マトリックスと間隔を調整するためのルールを導入し、多様な学習者に対するアルゴリズムの適応性をさらに向上させました。</li>
+</ul>
+<p>経験的な観察は、間隔反復を理解するための貴重な視点を提供しますが、理論的な理解がなければそれを改善するのは難しいです。次に、間隔反復の理論的側面に飛び込んでいきます。</p>
+<h2 id="2日目-理論モデルの理解"><a class="header" href="#2日目-理論モデルの理解">2日目: 理論モデルの理解</a></h2>
+<p>間隔反復は理論的な分野のように聞こえますが、私は経験的アルゴリズムについて多くの時間を費やして話してきました。なぜでしょうか？</p>
+<p>それは、経験的証拠の基盤がなければ、理論的な議論は価値がないからです。人間の記憶の挙動についての直感は正確でないかもしれません。したがって、次に議論する理論も、これまでに学んだことから始めて、現実に基づいていることを確認します。</p>
+<h3 id="記憶の2つの要素"><a class="header" href="#記憶の2つの要素">記憶の2つの要素</a></h3>
+<p>ここで考えてみてください：記憶の状態を説明する際にどのような要素を考慮しますか？</p>
+<p>ロバート・A・ビョーク以前は、多くの研究者が<strong>記憶の強度</strong>を使って、人々がどれだけよく何かを覚えているかを話していました。</p>
+<p>忘却曲線をもう一度見てみましょう：</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/0bc2a613-73af-4f9a-b844-ab45018219a2" alt="image" /></p>
+<p>まず、**記憶保持（想起確率）**が、記憶の状態を特徴づける重要な変数として浮かび上がります。日常生活では、忘却はしばしば確率的な現象として現れます。今日覚えた単語が10日後に思い出されるか、20日後に忘れられるかを誰も明確に断言することはできません。</p>
+<p>想起確率だけで記憶の状態を説明するのに十分でしょうか？上記の忘却曲線に水平線を引くことを想像してみてください。各曲線は同じ想起確率の点で水平線と交差しますが、曲線は異なります。<strong>忘却率</strong>も記憶状態の説明に確実に考慮されるべきです。</p>
+<p>この問題に対処するためには、忘却曲線の数学的特性を掘り下げる必要があります。これは、曲線をプロットするための大量のデータを必要とする作業です。このチュートリアルのデータは、語学学習アプリケーションMaiMemoによって作成された<a href="https://doi.org/10.7910/DVN/VAGUL0">オープンデータセット</a>から取得されています。</p>
+<p><img src="https://l-m-sherlock.github.io/thoughts-memo/311013%e9%81%97%e5%bf%98%e6%9b%b2%e7%ba%bf.png" alt="" /></p>
+<p>上の図から、忘却曲線は負の指数関数で近似できることがわかります。忘却の速度は、この関数の減衰定数で特徴付けることができます。</p>
+<p>忘却曲線のフィッティング式を得るために、次の方程式を書くことができます：</p>
+<p>$$
+\begin{aligned}
+R = \exp\left[\frac{t \ln{0.9}}{S}\right]
+\end{aligned}
+$$</p>
+<p>この方程式では、$R$は<strong>想起確率</strong>、$S$は<strong>記憶の安定性（または記憶の強度）</strong>、$t$は最後のレビューから経過した時間を表します。</p>
+<p>$S$と忘却曲線の形状の関係は、次の図で見ることができます：</p>
+<p><img src="https://l-m-sherlock.github.io/thoughts-memo/three_forgetting_curves.png" alt="" /></p>
+<p>記憶の安定性$S$は、「想起確率」$R$が100%から90%に低下するまでに必要な時間として定義されます。（科学文献では、50%の値がよく使用され、その場合、「記憶の半減期」という用語が使われます。）</p>
+<p>ビョークが提案した記憶の2つの要素 — 検索強度と保存強度 — は、ここで定義された想起確率と記憶の安定性に正確に対応します。</p>
+<p>この方程式から次の観察が得られます：</p>
+<ol>
+<li>
+<p>$t=0$のとき、$R=100%$です。これは、成功した想起の直後には忘却のプロセスがまだ始まっておらず、想起の確率が最大値の100%であることを意味します。</p>
+</li>
+<li>
+<p>$t$が無限大に近づくと、$R$はゼロに近づきます。これは、何かを一度も復習しなければ、最終的にはそれを忘れてしまうことを意味します。</p>
+</li>
+<li>
+<p>負の指数関数の一階導関数は負であり、その絶対値は減少しています（つまり、二階導関数は正です）。これは、忘却が最初は速く、その後徐々に遅くなるという経験的観察と一致します。</p>
+</li>
+</ol>
+<p>このようにして、記憶の2つの要素を定義しましたが、何かが欠けているようです。</p>
+<p>レビュー後に忘却曲線の形状が変化すると、記憶の安定性も変化します。この変化は、レビュー時の想起確率と以前の記憶の安定性の値だけに依存するわけではありません。</p>
+<p>この主張を裏付ける証拠はあるでしょうか？何かを初めて学ぶときを考えてみてください：記憶の安定性と想起確率はどちらもゼロです。しかし、それを学んだ後は、想起確率は100%になり、記憶の安定性は学んだ教材の特定の特性に依存します。</p>
+<p>覚えようとしているもの自体に、記憶に影響を与える特性があります。直感的には、この変数は教材の<strong>難易度</strong>です。</p>
+<p>教材の難易度を考慮に入れると、記憶の3要素モデルが完成します。</p>
+<h4 id="レビューセクション-4"><a class="header" href="#レビューセクション-4">レビューセクション</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>質問</th><th>答え</th></tr></thead><tbody>
+<tr><td>なぜ記憶の強度という単一の変数では記憶の状態を十分に説明できないのですか？</td><td>単一の変数では不十分です。なぜなら、忘却曲線は記憶保持レベルと忘却速度の両方を包含しているからです。</td></tr>
+<tr><td>記憶保持の度合いを測定する変数は何ですか？</td><td>想起確率。</td></tr>
+<tr><td>忘却曲線を近似できる関数は何ですか？</td><td>指数関数。</td></tr>
+<tr><td>忘却の速度を測定する変数は何ですか？</td><td>減衰定数。</td></tr>
+<tr><td>記憶の安定性の定義は何ですか？</td><td>想起確率が100%から所定の割合（通常は90%）に低下するまでに必要な時間。</td></tr>
+</tbody></table>
+</div>
+<h3 id="記憶の3要素モデル"><a class="header" href="#記憶の3要素モデル">記憶の3要素モデル</a></h3>
+<p>用語を詳しく見てみましょう：</p>
+<ul>
+<li>安定性: 特定の記憶の想起確率が100%から90%に低下するまでに必要な時間。</li>
+<li>想起可能性（想起確率）: 特定の記憶を特定の瞬間に想起する確率。</li>
+<li>難易度: 特定の記憶に関連する固有の複雑さ。</li>
+</ul>
+<p>想起可能性と保持率の違いは、前者が特定の記憶を想起する確率を指すのに対し、後者は記憶の集団に対する平均的な想起確率を指す点です。この用語はすべての研究者に普遍的に採用されているわけではありませんが、この記事ではこの用語を使用します。</p>
+<p>任意の記憶の想起可能性を、$n$回の成功した想起後の時間$t$で定義することができます：</p>
+<p>$$
+R_n(t) = \exp\left[\cfrac{t\ln{0.9}}{S_n}\right]
+$$</p>
+<p>$S_n$がレビュー間の間隔として使用される場合、この方程式は間隔反復アルゴリズムと記憶モデルのギャップを埋めることができます：</p>
+<p>$$
+R_n(t) = \exp\left[\cfrac{t\ln{0.9}}{I_1\prod\limits_{i=2}^{n}C_i}\right]
+$$</p>
+<p>ここで：</p>
+<ul>
+<li>$I_1$ denotes the initial interval after the first review.</li>
+<li>$C_i$ represents the ratio of the $i$-th interval and the preceding $i-1$-th interval.</li>
+</ul>
+<p>間隔反復アルゴリズムの目的は、$I_1$と$C_i$を正確に計算し、異なる学生、教材、およびレビューのスケジュールにわたる記憶の安定性を決定することです。</p>
+<p>SM-0およびSM-2アルゴリズムの両方で、$I_1$は1日に等しいです。SM-0では、$C_i$は所定の定数ですが、SM-2では、$C_i$は各レビュー時にカードに与えられた評価に応じて調整される可変のイーズファクター（EF）です。</p>
+<p>ここで考えるべき質問は、$C_i$と記憶の3つの要素の関係は何かということです。</p>
+<p>以下は、Wozniakの経験的観察結果であり、MaiMemoのような語学学習プラットフォームのデータによって裏付けられています：</p>
+<ul>
+<li>安定性の影響: 高い$S$は小さい$C_i$をもたらします。これは、記憶がより安定するにつれて、その後の安定化がますます難しくなることを意味します。</li>
+<li>想起可能性の影響: 低い$R$は大きい$C_i$をもたらします。これは、想起確率が低い状態での成功した想起が、安定性の大きな増加につながることを意味します。</li>
+<li>難易度の影響: 高い$D$は小さい$C_i$をもたらします。これは、教材の複雑さが高いほど、各レビュー後の安定性の増加が小さくなることを意味します。</li>
+</ul>
+<p>複数の要因が関与するため、$C_i$の計算は難しいです。SuperMemoは、$C_i$を多変数関数として表現する多次元マトリックスを使用し、ユーザーの学習過程でマトリックスの値を調整して現実のデータに近づけます。</p>
+<p>上記の方程式では、$C_i$は次の間隔の比率を示します。アルゴリズム自体では、$C_i$は安定性の増加を意味します。混乱を避けるために、SuperMemoの用語を採用します：安定性増加（SInc）。これは、レビュー前後の記憶の安定性の_相対的な_増加を表します。</p>
+<p>次に、安定性増加について詳しく説明します。</p>
+<h4 id="レビューセクション-5"><a class="header" href="#レビューセクション-5">レビューセクション</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>質問</th><th>答え</th></tr></thead><tbody>
+<tr><td>記憶の3要素モデルに含まれる変数は何ですか？</td><td>記憶の安定性、記憶の想起可能性、記憶の複雑さ。</td></tr>
+<tr><td>想起可能性と保持率の違いは何ですか？</td><td>前者は個々の記憶に関するものであり、後者は大規模な記憶集団に関するものです。</td></tr>
+<tr><td>記憶の3要素モデルと間隔反復アルゴリズムを結びつける2つの値は何ですか？</td><td>初期間隔$I_1$と連続する間隔の比率$C_i$。</td></tr>
+<tr><td>$C_i$は何と呼ばれますか？</td><td>安定性増加。</td></tr>
+</tbody></table>
+</div>
+<h3 id="記憶の安定性増加"><a class="header" href="#記憶の安定性増加">記憶の安定性増加</a></h3>
+<p>この章では、記憶の難易度の影響を無視し、記憶の安定性増加（SInc）、安定性（S）、および想起可能性（R）の関係に焦点を当てます。</p>
+<p>以下の分析のデータは、SuperMemoユーザーから収集され、Wozniakによって分析されました。</p>
+<h4 id="安定性増加のs依存性"><a class="header" href="#安定性増加のs依存性">安定性増加のS依存性</a></h4>
+<p>安定性増加（SInc）マトリックスを調査したところ、Wozniakは、特定の想起可能性（R）のレベルに対して、安定性（S）に関するSIncの関数が負のべき関数で近似できることを発見しました。</p>
+<p><img src="https://supermemo.guru/images/0/0e/SInc-vs-S.gif" alt="動的画像カバー" /></p>
+<p>安定性増加（Y軸）と安定性（X軸）の両方の対数を取ると、次の曲線が得られます：</p>
+<p><img src="https://supermemo.guru/images/4/4e/Log%28SInc%29-vs-log%28S%29.gif" alt="動的画像カバー" /></p>
+<p>これは、「Sが増加するにつれて、$C_i$は減少する」という以前の定性的な結論を支持しています。</p>
+<h4 id="想起可能性に対する安定性増加の依存性"><a class="header" href="#想起可能性に対する安定性増加の依存性">想起可能性に対する安定性増加の依存性</a></h4>
+<p>間隔効果が予測するように、想起可能性（R）が低いほど、安定性増加（SInc）は大きくなります。複数のデータセットを分析した結果、Rが減少するにつれてSIncが指数関数的に増加することが観察されました。</p>
+<p><img src="https://supermemo.guru/images/2/29/SInc-vs-R.gif" alt="動的画像カバー" /></p>
+<p>想起可能性（X軸）の対数を取ると、次の曲線が得られます：</p>
+<p><img src="https://supermemo.guru/images/b/b2/SInc-vs-log%28R%29.gif" alt="動的画像カバー" /></p>
+<p>驚くべきことに、Rが100%のとき、SIncは1を下回ることがあります。分子レベルの研究は、レビュー中に記憶の不安定性が増加することを示唆しています。これにより、教材を頻繁にレビューすることが学習者にとって有益ではないことが再び証明されました。</p>
+<h5 id="時間の経過に伴うsincの値の線形増加"><a class="header" href="#時間の経過に伴うsincの値の線形増加">時間の経過に伴うSIncの値の線形増加</a></h5>
+<p><img src="https://supermemo.guru/images/d/d0/SInc-vs-time.gif" alt="動的画像カバー" /></p>
+<p>時間（t）が増加するにつれて、想起可能性（R）は指数関数的に減少し、安定性増加（SInc）は指数関数的に増加します。これらの2つの指数は互いに相殺し、ほぼ線形の曲線を生成します。</p>
+<h5 id="記憶の安定性増加の予測値"><a class="header" href="#記憶の安定性増加の予測値">記憶の安定性増加の予測値</a></h5>
+<p>学習の最適化にはいくつかの基準があります。特定の保持率を目標にすることも、記憶の安定性を最大化することもできます。いずれの場合も、予測される安定性の増加を理解することは有益です。</p>
+<p>予測される安定性増加を次のように定義します：</p>
+<p>$$
+E(SInc) = SInc \times R
+$$</p>
+<p>この方程式は興味深い結果をもたらします：予測される安定性増加の最大値は、保持率が30％から40％の間にあるときに発生します。</p>
+<p><img src="https://supermemo.guru/images/c/ca/Consolidation_curve_E%28Sinc%29%3Df%28R%29_%282005%29.gif" alt="動的画像カバー" /></p>
+<p>重要なのは、予測される安定性増加の最大値が必ずしも最速の学習速度を意味するわけではないということです。最も効率的なレビューのスケジュールについては、今後のSSP-MMCアルゴリズムを参照してください。</p>
+<h4 id="レビューセクション-6"><a class="header" href="#レビューセクション-6">レビューセクション</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>質問</th><th>答え</th></tr></thead><tbody>
+<tr><td>安定性増加と記憶の安定性の関係を説明する数学的関数は何ですか？</td><td>負のべき関数。</td></tr>
+<tr><td>安定性増加と記憶の想起可能性の関係を説明する数学的関数は何ですか？</td><td>指数関数。</td></tr>
+</tbody></table>
+</div>
+<h3 id="記憶の複雑さ"><a class="header" href="#記憶の複雑さ">記憶の複雑さ</a></h3>
+<p>記憶の安定性は、ここでは記憶の複雑さと呼ばれる記憶の質にも依存します。効率的なレビューセッションのためには、知識の関連付けがシンプルでなければなりません。たとえ知識自体が複雑であってもです。フラッシュカードは複雑な知識構造をカプセル化できますが、個々のフラッシュカードは原子的であるべきです。</p>
+<p>2005年に、Wozniakは複合記憶のレビューを説明する方程式を策定しました。彼は、複合記憶の安定性が回路の抵抗と同様に振る舞うことを観察しました。</p>
+<p>*注: 複合という用語は、より単純な要素で構成されていることを強調するために、複雑という用語の代わりに使用されています。</p>
+<p><img src="https://supermemo.guru/images/thumb/f/f5/Memory_complexity.png/450px-Memory_complexity.png" alt="Image" /></p>
+<p>複合知識からは2つの主要な結論が導き出されます：</p>
+<ul>
+<li>追加の情報断片は干渉を引き起こします。言い換えれば、サブメモリAがサブメモリBを不安定にし、その逆もまた然りです。</li>
+<li>レビュー中に記憶のサブコンポーネントを均等に刺激することは非常に難しいです。</li>
+</ul>
+<p>例えば、2つの穴埋めフィールドを記憶する必要がある複合フラッシュカードがあるとします。両方の空欄を覚えるのが同じくらい難しいと仮定します。したがって、複合記憶の想起可能性は、そのサブメモリの想起可能性の積となります：</p>
+<p>$$
+R = R_a \times R_b
+$$</p>
+<p>これを忘却曲線の方程式に代入すると、次のようになります：</p>
+<p>$$
+R = e^{ \frac{t \ln 0.9}{S_a}} \times e^{ \frac{t \ln 0.9}{S_b}} = e^{ \frac{t \ln 0.9}{S}}
+$$</p>
+<p>ここで、$S$はこの複合記憶の安定性を示します。次のことが推測できます：</p>
+<p>$$
+\frac{t \ln 0.9}{S} = \frac{t \ln 0.9}{S_a} + \frac{t \ln 0.9}{S_b}
+$$</p>
+<p>Leading to:</p>
+<p>$$
+S = \frac{S_a \times S_b}{S_a + S_b}
+$$</p>
+<p>驚くべきことに、複合記憶の安定性は、その構成要素の各記憶の安定性よりも低くなります。また、複合記憶の安定性は、より難しいサブ記憶の安定性に近くなります。</p>
+<p>複雑さが増すにつれて、記憶の安定性はゼロに近づきます。これは、全体として本全体を記憶する方法が、継続的に再読すること以外にないことを意味します。これは無駄なプロセスです。</p>
+<h4 id="レビューセクション-7"><a class="header" href="#レビューセクション-7">レビューセクション</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>質問</th><th>答え</th></tr></thead><tbody>
+<tr><td>複合記憶の想起可能性$R$とその構成要素の想起可能性$R_a, R_b$の関係は何ですか？</td><td>$R = R_a \times R_b$。複合記憶の想起可能性は、その構成要素の想起可能性の積です。</td></tr>
+<tr><td>複合記憶の安定性$S$は、その構成要素の安定性$S_a, S_b$よりも大きくなりますか？</td><td>複合記憶の安定性は、その構成要素の安定性よりも低くなります。</td></tr>
+<tr><td>複合記憶の構成要素の数が増えると、複合記憶の安定性はどう変化しますか？</td><td>徐々に減少し、漸近的にゼロに近づきます。</td></tr>
+</tbody></table>
+</div>
+<h2 id="3日目-最新の進展"><a class="header" href="#3日目-最新の進展">3日目: 最新の進展</a></h2>
+<p>記憶の理論を学んだ後は、それを実践に移す時です。次のセクションでは、これらの記憶理論をどのように使用して間隔反復アルゴリズムを開発し、ユーザーの学習効率を向上させるかを紹介します。</p>
+<blockquote>
+<p>ここから先はレビューセクションがなくなり、難易度が急激に上がるので、準備をしておいてください！</p>
+</blockquote>
+<h3 id="データ収集"><a class="header" href="#データ収集">データ収集</a></h3>
+<p>データは間隔反復アルゴリズムの生命線です。適切で包括的かつ正確なデータを収集することが、間隔反復アルゴリズムの能力の限界を決定します。</p>
+<p>学習者の記憶状態を正確に推定するためには、記憶の基本的な挙動を定義する必要があります。考えてみましょう：記憶イベントの重要な属性は何でしょうか？</p>
+<p>最も基本的な要素は簡単に思い浮かびます：誰（主体）、いつ（時間）、何（記憶）。記憶についてさらに探求すると、何が記憶されたか（内容）、どれだけよく記憶されたか（応答）、どれくらいの時間がかかったか（所要時間）などがあります。応答は、アルゴリズムにいくつかの評価を組み込むことでさらに精緻化できます。</p>
+<p>これらの属性を考慮に入れて、タプルを使用して記憶イベントを記録することができます：</p>
+<p>$$
+e := (\text{user}, \text{item}, \text{time}, \text{response}, \text{time spent})
+$$</p>
+<p>このイベントは、特定のアイテムに対するユーザーの応答とコストを特定の時間に記録します。例えば：</p>
+<p>$$
+e := (\text{Jarrett}, \text{apple}, \text{2022-04-01 12:00:01}, \text{Forgotten}, \text{5s})
+$$</p>
+<p>つまり、ジャレットは2022年4月1日の12:00:01に「apple」という単語を復習し、忘れてしまい、このフラッシュカードの復習に5秒かかりました。</p>
+<p>この基本的な記憶イベントの定義を使用して、興味深い情報を抽出および計算することができます。</p>
+<p>例えば、間隔反復では、2回の反復間の間隔が非常に重要です。上記の記憶イベントを使用して、ユーザーとアイテムごとにデータをグループ化し、時間でソートし、隣接する2つのイベントの時間を引くことで間隔を取得できます。一般的に、計算ステップを節約するために、間隔はイベントに直接記録することができます。これにより、ストレージの冗長性が発生しますが、計算時間を節約できます。</p>
+<p>間隔に加えて、フィードバックの履歴シーケンスも重要です。例えば、「忘れた、覚えた、覚えた、覚えた」や「1日、3日、6日、10日」は、記憶の履歴をより包括的に反映し、記憶イベントに直接記録することができます：</p>
+<p>$$
+e_{i} := (\text{user}, \text{item}, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}}, \Delta t_i, r_i)
+$$</p>
+<blockquote>
+<p>データに興味がある場合は、MaiMemoから<a href="https://doi.org/10.7910/DVN/VAGUL0">オープンソースデータセット</a>をダウンロードして、自分で分析することができます。</p>
+</blockquote>
+<h3 id="dsrモデル"><a class="header" href="#dsrモデル">DSRモデル</a></h3>
+<p>データが揃ったところで、どう活用するのでしょうか？2日目の記憶の3要素モデルを振り返ると、知りたいのは記憶状態の3つの属性です。しかし、現在のデータセットにはこれが含まれていません。したがって、このセクションの目標は、記憶イベントデータを記憶状態に変換し、それらの関係を明らかにすることです。</p>
+<h4 id="記憶状態"><a class="header" href="#記憶状態">記憶状態</a></h4>
+<p>DSRモデルの3つの文字は、難易度（Difficulty）、安定性（Stability）、想起可能性（Retrievability）を表しています。想起可能性は、特定の瞬間に記憶を想起する確率を反映しています。確率論的には、記憶イベントは2つの可能な結果しかない単一のランダム実験であり、その成功確率は想起可能性に等しいです。</p>
+<p>したがって、想起可能性を測定する最も簡単な方法は、同じ記憶に対して無数の独立した実験を行い、成功した想起の頻度を数えることです。しかし、この方法は実際には実行不可能です。なぜなら、記憶を実験することでその状態が変わってしまうため、観察者として記憶に影響を与えずに測定することはできないからです。
+注：現在の神経科学のレベルでは、神経レベルで記憶状態を測定することは不可能であるため、このアプローチも利用できません。</p>
+<p>では、他に方法はないのでしょうか？現在、2つの妥協的な測定方法があります：（1）学習教材の違いを無視する：SuperMemoとAnkiはこのアプローチを使用しています。（2）学習者の違いを無視する：MaiMemoはこのアプローチを使用しています。</p>
+<p>学習教材の違いを無視するということは、想起可能性を測定する際に、ユーザーが学習している内容を除いて、同じ属性を持つデータを同じユーザーから収集することを意味します。1人の学習者と1つの教材に対して複数の独立した実験を行うことはできませんが、1人の学習者と複数の教材（例えばフラッシュカード）に対しては可能です。一方、学習者の違いを無視するということは、同じ教材を学習している複数の学習者からデータを収集することを意味します。</p>
+<p>MaiMemoのデータ量が十分であることを考慮して、このセクションでは学習者の違いを無視する測定方法のみを紹介します。学習者の違いを無視した後、新しいグループの記憶イベントを取得できます：</p>
+<p>$$
+e_{i} := (item, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}}, \Delta t_i, p_i, N)
+$$</p>
+<p>ここで、Nは同じ教材を記憶し、同じ反復履歴を持つ学習者の数です。想起可能性$p=\frac{n_{r=1}}{N}$は、これらの学習者の中で成功した想起の割合です。Nが十分に大きい場合、この比率$n_{r=1}/N$は真の想起可能性に近づきます。</p>
+<p>想起可能性が計算された後、安定性を簡単に計算できます。収集されたデータに基づいて、指数関数を使用してこのデータを近似し、同じ$(item, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}})$を持つグループの記憶の安定性を計算できます。</p>
+<p><img src="https://l-m-sherlock.github.io/thoughts-memo/%e7%a8%b3%e5%ae%9a%e6%80%a7%e9%81%97%e5%bf%98%e6%9b%b2%e7%ba%bf.png" alt="" /></p>
+<p>散布図の座標は$(\Delta t_i , p_i)$で、相対サイズは$\log N$です。曲線はフィットされた忘却曲線です。</p>
+<p>最後に、難易度に取り組む時が来ました。記憶イベントデータから難易度をどのように導き出すことができるでしょうか？簡単な思考実験から始めましょう。学習者のグループが「apple」と「accelerate」という単語を初めて覚えると仮定します。記憶イベントデータを使用して、これら2つの単語の難易度をどのように区別できるでしょうか？</p>
+<p>最も簡単な方法は、翌日にすぐテストを行い、記憶イベントデータを記録し、どちらの単語がより高い成功率を持つかを確認することです。その後、対応する安定性の値を計算できます。</p>
+<p>つまり、最初のレビュー後の安定性が難易度を反映することができます。しかし、難易度の推定には標準的な方法はありません。これは入門記事なので、難易度の計算問題については詳しく説明しません。想起可能性と安定性とは異なり、難易度は明確な定義を持たない曖昧な概念です。</p>
+<h3 id="初心者はここでストップ"><a class="header" href="#初心者はここでストップ">初心者はここでストップ</a></h3>
+<p>この記事の残りの部分は、私の研究に関する詳細な内容を扱っています。学問に不慣れな方は、ここで止めて、これまでの3日間の内容を復習してください。以下の内容に興味がある方は、読み進めてください。</p>
+<h4 id="状態遷移"><a class="header" href="#状態遷移">状態遷移</a></h4>
+<p>これまでのところ、記憶イベントデータを記憶状態に変換することができます：</p>
+<p>$$
+(item, \boldsymbol{\Delta t_{1:i-1}}, \boldsymbol{r_{1:i-1}} , \Delta t_i , p_i, N) =&gt; (D_i, S_i, R_i)
+$$</p>
+<p>次に、状態間の関係を説明し始めることができます。レビュー後の$\Delta t$日後の記憶状態$(D_i, S_i, R_i)$と$t$、$r$の関係は何でしょうか？想起結果が$r$で、新しい記憶状態$(D_{i+1}, S_{i+1}, R_{i+1})$を得る場合です。</p>
+<p>まず、記憶状態データを分析に適した形式に整理する必要があります：</p>
+<p>$$
+(D_i, S_i, R_i, \Delta t, r, D_{i+1}, S_{i+1}, R_{i+1})
+$$</p>
+<p>ここで、レビュー後に$R_{i+1}$はすぐに100%に達するため、分析中に無視できます。また、$R_i$、$\Delta t$、$S_i$のうち2つを知っていれば3つ目を決定できるため、$\Delta t$も無視できます。</p>
+<p>最終的に、分析する必要がある状態データは次のとおりです：</p>
+<p>$$
+(D_i, S_i, R_i, r, D_{i+1}, S_{i+1})
+$$</p>
+<p>そして、$\cfrac{S_{i+1}}{S_i}=SInc$は、記憶の安定性増加の章で述べたパターンを参照することができます：</p>
+<p>$$
+SInc = a S^{-b}
+$$</p>
+<p>$$
+SInc = c e^{-d R}
+$$</p>
+<p>難易度$D$の影響はここでは省略して、関係式を得ることができます：</p>
+<p>$$
+S_{i+1} = S_{i} \cdot a S_{i}^{-b} e^{-c R_i}\textrm{(if r = 1)}
+$$</p>
+<p>上記の式に従って、各成功した想起後の学習者の記憶状態$(D_{i+1}, S_{i+1})$を予測できます。忘却に対するフィードバックも同様であり、別の状態遷移方程式セットで説明できます。</p>
+<h3 id="間隔反復システムのシミュレーション"><a class="header" href="#間隔反復システムのシミュレーション">間隔反復システムのシミュレーション</a></h3>
+<p>DSR記憶モデルを使用すると、任意のレビュー計画の下で記憶状態をシミュレートできます。では、具体的にどのようにシミュレーションすればよいのでしょうか？まず、人々が現実世界で間隔反復ソフトウェアをどのように使用するかという視点から始める必要があります。</p>
+<p>例えば、ジャレットが4か月後にGREの準備をする必要があり、試験のために英単語を覚えるために間隔反復を使用する必要があるとします。しかし、他の科目の準備にも時間を割かなければなりません。</p>
+<p>上記の文から、2つの明らかな制約があります：締め切りまでの日数と毎日の学習時間です。間隔反復システム（SRS）シミュレーターは、これら2つの制約を考慮する必要があります。さらに、単語の数は限られているため、SRSシミュレーションには有限のカードセットも含まれ、学習者は毎日学習とレビューのための教材を選択します。間隔反復スケジューリングアルゴリズムは、レビュータスクの配置を管理します。要約すると、SRSシミュレーションには以下が必要です：</p>
+<ol>
+<li>教材セット</li>
+<li>学習者</li>
+<li>スケジューラー</li>
+<li>シミュレーション期間（1日内 + 合計日数）</li>
+</ol>
+<p>学習者はDSRモデルを使用してシミュレートでき、各レビューに対してフィードバックと記憶状態を提供します。スケジューラーは、SM-2、ライトナーシステム、または他のレビューをスケジューリングするためのアルゴリズムを使用できます。</p>
+<p>次に、SRSシミュレーションの2つの次元に基づいて具体的なシミュレーションプロセスを設計します。明らかに、未来に向かって日ごとにシミュレーションする必要があり、各日のシミュレーションはカードからのフィードバックで構成されます。したがって、SRSシミュレーションは2つのループで構成できます：外側のループは現在のシミュレートされた日付を表し、内側のループは現在のシミュレートされたカードを表します。内側のループでは、各レビューに費やす時間を指定する必要があります。累積時間が1日の学習時間の制限を超えると、ループは自動的に終了し、次の日に進む準備が整います。</p>
+<p>以下はSRSシミュレーションの疑似コードです：</p>
+<p><img src="https://l-m-sherlock.github.io/thoughts-memo/%e9%97%b4%e9%9a%94%e9%87%8d%e5%a4%8d%e6%a8%a1%e6%8b%9f%e7%8e%af%e5%a2%83.png" alt="SRS Simulation Pseudocode" /></p>
+<blockquote>
+<p>興味のある読者のために、関連するPythonコードがGitHubでオープンソース化されています：<a href="https://github.com/L-M-Sherlock/space_repetition_simulators">L-M-Sherlock/space_repetition_simulators: Spaced Repetition Simulators (github.com)</a></p>
+</blockquote>
+<h3 id="ssp-mmcアルゴリズム"><a class="header" href="#ssp-mmcアルゴリズム">SSP-MMCアルゴリズム</a></h3>
+<p>DSRモデルとSRSシミュレーションについて議論した後、与えられたレビュー計画の下で学習者の記憶状態と記憶状況を予測できるようになりましたが、最終的な質問にはまだ答えていません：最も効率的なレビュー計画はどのようなものでしょうか？最適なレビュー計画を見つけるにはどうすればよいでしょうか？SSP-MMCアルゴリズムは、最適制御の観点からこの問題を解決します。</p>
+<p>SSP-MMCは、確率的最短経路（Stochastic Shortest Path）と記憶コスト最小化（Minimize Memorization Cost）の略であり、アルゴリズムの基盤となる数学的ツールキットと最適化目標の両方をカプセル化しています。以下の議論は、私の大学院論文「LSTMと間隔反復モデルに基づくレビュー計画アルゴリズムの研究」と、会議論文「間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム」から適応されています。</p>
+<h4 id="問題設定"><a class="header" href="#問題設定">問題設定</a></h4>
+<p>間隔反復アルゴリズムの目的は、学習者が効率的に長期記憶を形成するのを助けることです。記憶の安定性が長期記憶の保持強度を測定する一方で、反復の回数と反復ごとに費やされる時間は記憶のコストを反映します。したがって、間隔反復スケジューリングの最適化の目標は、与えられた記憶コストの制約内でできるだけ多くの教材を目標の安定性に到達させるか、最小の記憶コストで一定量の記憶された教材を目標の安定性に到達させることです。その中で、後者の問題は、1つの記憶教材を最小の記憶コストで目標の安定性に到達させる方法（MMC）として簡略化できます。</p>
+<p>DSRモデルはマルコフ性を満たします。DSRモデルでは、各記憶の状態は最後の安定性、難易度、現在のレビュー間隔、およびリコールの結果にのみ依存し、これはレビュー間隔に基づくランダムな分布に従います。安定性状態遷移のランダム性のため、教材を目標の安定性に到達させるために必要なレビューの回数は不確定です。したがって、間隔反復スケジューリングの問題は無限時間の確率的動的計画問題と見なすことができます。長期記憶を形成する場合、この問題には終了状態があり、それが目標の安定性です。したがって、これは確率的最短経路（SSP）問題です。</p>
+<p><img src="https://l-m-sherlock.github.io/thoughts-memo/SSP-problem.png" alt="随机最短路径问题" /></p>
+<p>上記の図に示されているように、円は記憶状態を、四角はレビューアクション（つまり、現在のレビュー後の間隔）を表し、破線の矢印は特定のレビュー間隔に対する状態遷移を示し、黒いエッジは特定の記憶状態で利用可能なレビュー間隔を表します。間隔反復における確率的最短経路問題は、目標状態に到達するための期待されるレビューコストを最小化する最適なレビュー間隔を見つけることです。</p>
+<h4 id="定式化"><a class="header" href="#定式化">定式化</a></h4>
+<p>この問題を解決するために、各フラッシュカードのレビュー過程を、状態集合$\mathcal{S}$、アクション集合$\mathcal{A}$、状態遷移確率$\mathcal{P}$、およびコスト関数$\mathcal{J}$を持つマルコフ決定過程（MDP）としてモデル化できます。アルゴリズムは、目標状態$s_N$に到達するための期待されるレビューコストを最小化する方策$\pi$を見つけることを目指します。</p>
+<p>$$
+\begin{aligned}
+\pi^* = \arg\min_{\pi \in \Pi} \lim_{{N \to \infty}} \mathbb{E}_{s_{0}, a_{0}, \ldots} \left[ \sum_{t=0}^{N} \mathcal{J}(s_{t}, a_{t}) \mid \pi \right]
+\end{aligned}
+$$</p>
+<p>状態空間$S$は記憶モデルの状態サイズに依存します。DSRモデルでは、状態変数は2つしかないため、状態は$s = (D, S)$として定式化できます。アクション空間$\mathcal{A} = {\Delta t_1, \Delta t_2, \ldots, \Delta t_n }$は、スケジュール可能な$N$個の間隔で構成されます。状態遷移確率$\mathcal{P}_{s,a}(s')$は、状態$s$およびアクション$a$の下でフラッシュカードが想起される確率を表します。コスト関数$\mathcal{J}$は次のように定義されます：</p>
+<p>$$
+\begin{aligned}
+\mathcal{J}(s_0) &amp;= \lim_{{N \to \infty}} \mathbb{E} \left[ \sum_{{t=0}}^{N-1} g_t(s_t, a_t(s_t), r_t) \right] \
+r_t &amp;\sim \text{Bernoulli}(p_t)
+\end{aligned}
+$$</p>
+<p>ここで、$g_t$はステージごとのコストであり、$r_t$はベルヌーイ分布に従う想起の結果です。目標状態$s_N$は、望ましい記憶の安定性レベルに対応します。</p>
+<h4 id="アルゴリズム"><a class="header" href="#アルゴリズム">アルゴリズム</a></h4>
+<p>マルコフ決定過程$\text{MDP}(\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{J})$を値反復法を用いて解きます。ベルマン方程式は次の通りです：</p>
+<p>$$
+\begin{aligned}
+\mathcal{J}^*(s) &amp;= \min_{a \in \mathcal{A}(s)} \left[ \sum_{s'} \mathcal{P}_{s,a}(s') \left( g(r) + \mathcal{J}^*(s') \right) \right]\
+s' &amp;= \mathcal{F}(s,a,r,p)
+\end{aligned}
+$$</p>
+<p>ここで、$\mathcal{J}^*$は最適コスト関数を表し、$\mathcal{F}$はDSRモデルの文脈内での状態遷移関数を表します。簡単のために、想起の応答のみを考慮します：$g(r) = a \cdot r + b \cdot (1-r)$、ここで$a$は成功した想起のコスト、$b$は失敗した想起のコストです。</p>
+<p>上記のベルマン方程式に基づいて、値反復アルゴリズムはコストマトリックスを使用して最適コストを記録し、ポリシーマトリックスを使用して反復中の各状態に対する最適なアクションを保存します。</p>
+<p><img src="https://l-m-sherlock.github.io/thoughts-memo/SSP-MMC.png" alt="" /></p>
+<p>各記憶状態に対して各オプションのレビュー間隔を連続的に反復し、現在のレビュー間隔を選択した後の期待される記憶コストをコストマトリックスの記憶コストと比較し、現在のレビュー間隔のコストが低い場合は、対応するコストマトリックスとポリシーマトリックスを更新します。最終的に、すべての記憶状態に対する最適な間隔とコストが収束します。</p>
+<p>このようにして、最適なレビュー方策を得ることができます。記憶状態を予測するためのDSRモデルと組み合わせて、SSP-MMCアルゴリズムを使用して各学習者に最も効率的なレビュー計画を配置できます。</p>
+<blockquote>
+<p>このアルゴリズムはMaiMemoのGitHubリポジトリでオープンソース化されています：<a href="https://github.com/maimemo/SSP-MMC">maimemo/SSP-MMC: A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition Scheduling (github.com)</a>。詳細な検討に興味のある読者は、ローカルでの探索のためにコピーをフォークすることをお勧めします。</p>
+</blockquote>
+<h2 id="結論"><a class="header" href="#結論"><strong>結論</strong></a></h2>
+<p>最後までお疲れ様でした！ここまで諦めずに読み進めたあなたは、すでに間隔反復アルゴリズムの世界に足を踏み入れています！</p>
+<p>まだ多くの疑問が残っているかもしれません。その中には答えが見つかるものもあれば、まだ未開拓の領域も多くあります。</p>
+<p>私がこれらの疑問に答える能力は非常に限られていますが、間隔反復アルゴリズムの最前線を進めるために一生を捧げる覚悟です。</p>
+<p>記憶の謎を解き明かす旅に、ぜひ一緒に参加してください！</p>
+<h2 id="参考文献"><a class="header" href="#参考文献">参考文献</a></h2>
+<p><a href="https://supermemo.guru/wiki/History_of_spaced_repetition">間隔反復の歴史 - supermemo.guru</a></p>
+<p><a href="https://dl.acm.org/doi/10.1145/3534678.3539081">間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム | 第28回ACM SIGKDD知識発見とデータマイニング会議の議事録</a></p>
+<p><a href="https://ieeexplore.ieee.org/document/10059206">記憶の動態を捉えて間隔反復スケジュールを最適化する | IEEEジャーナル＆マガジン | IEEE Xplore</a></p>
+<hr />
+<p>オリジナルリンク: https://l-m-sherlock.github.io/thoughts-memo/post/srs_algorithm_introduction/</p>
+<div style="break-before: page; page-break-before: always;"></div><p>FSRS（Free Spaced Repetition Scheduler）アルゴリズムは、記憶状態を予測するために使用されるDSR（難易度、安定性、想起可能性）モデルの変種に基づいています。</p>
+<p>特定のパラメータとレビュー履歴を使用して間隔をプレビューするためのビジュアライザーはこちらです: <a href="https://open-spaced-repetition.github.io/anki_fsrs_visualizer/">Anki FSRS Visualizer (open-spaced-repetition.github.io)</a></p>
+<h1 id="記号"><a class="header" href="#記号">記号</a></h1>
+<ul>
+<li>$R$: 想起可能性（リコールの確率）</li>
+<li>$S$: 安定性（R=90%のときの間隔）
+<ul>
+<li>$S^\prime_r$: 想起後の新しい安定性</li>
+<li>$S^\prime_f$: 忘却後の新しい安定性</li>
+</ul>
+</li>
+<li>$D$: 難易度（ $D \in [1, 10]$ ）</li>
+<li>$G$: グレード（Ankiでの評価）:
+<ul>
+<li>$1$: <code>もう一回</code></li>
+<li>$2$: <code>難しい</code></li>
+<li>$3$: <code>正解</code></li>
+<li>$4$: <code>簡単</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="fsrs-5"><a class="header" href="#fsrs-5">FSRS-5</a></h1>
+<h2 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h2>
+<pre><code class="language-python">[0.4072, 1.1829, 3.1262, 15.4722, 7.2102, 0.5316, 1.0651, 0.0234, 1.616, 0.1544, 1.0824, 1.9813, 0.0953, 0.2975, 2.2042, 0.2407, 2.9466, 0.5034, 0.6567]
+</code></pre>
+<h2 id="式"><a class="header" href="#式">式</a></h2>
+<p>短期記憶の場合、安定性の式は次の通りです：</p>
+<p>$$S^\prime(S,G) = S \cdot e^{w_{17} \cdot (G - 3 + w_{18})}$$</p>
+<hr />
+<p>最初の評価後の初期難易度：</p>
+<p>$$D_0(G) = w_4 - e^{w_5 \cdot (G - 1)} + 1,$$</p>
+<p>ここで、最初の評価が「再度」の場合、$D_0(1)=w_4$です。</p>
+<hr />
+<p>平均回帰の目標は次のように更新されます：</p>
+<p>$$D^{\prime\prime} = w_7 \cdot D_0(4) + (1 - w_7) \cdot D^\prime$$</p>
+<h1 id="fsrs-45"><a class="header" href="#fsrs-45">FSRS-4.5</a></h1>
+<h2 id="デフォルトパラメータ-1"><a class="header" href="#デフォルトパラメータ-1">デフォルトパラメータ</a></h2>
+<pre><code class="language-python">[0.4872, 1.4003, 3.7145, 13.8206, 5.1618, 1.2298, 0.8975, 0.031, 1.6474, 0.1367, 1.0461, 2.1072, 0.0793, 0.3246, 1.587, 0.2272, 2.8755]
+</code></pre>
+<h2 id="方程式"><a class="header" href="#方程式">方程式</a></h2>
+<p>忘却曲線の式がこの更新で変更されました。</p>
+<p>最後のレビューから$t$日後の想起可能性は次の通りです：</p>
+<p>$$R(t,S) = \left(1 + FACTOR \cdot \cfrac{t}{S}\right)^{DECAY},$$</p>
+<p>ここで、$t=S$のとき$R(t,S)=0.9$です。</p>
+<p>次の間隔は、上記の式で$R$の代わりに要求される保持率を代入し、$t$を解くことで計算できます：</p>
+<p>$$I(r,S) = \cfrac{S}{FACTOR} \cdot \left(r^\cfrac{1}{DECAY} - 1\right),$$</p>
+<p>ここで、$r=0.9$のとき$I(r,S)=S$です。</p>
+<p>FSRS v4では、$DECAY=-1$および$FACTOR=\cfrac{1}{9}$です。</p>
+<p>FSRS-4.5では、$DECAY=-0.5$および$FACTOR=\cfrac{19}{81}$です。</p>
+<p>新しい忘却曲線は、$S$の前に急激に落ち、$S$の後に緩やかになります。</p>
+<h1 id="fsrs-v4"><a class="header" href="#fsrs-v4">FSRS v4</a></h1>
+<h2 id="デフォルトパラメータ-2"><a class="header" href="#デフォルトパラメータ-2">デフォルトパラメータ</a></h2>
+<pre><code class="language-python">[0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05, 0.34, 1.26, 0.29, 2.61]
+</code></pre>
+<h2 id="式-1"><a class="header" href="#式-1">式</a></h2>
+<blockquote>
+<p>$w_i$はw[i]を表します。</p>
+</blockquote>
+<p>最初の評価後の初期安定性：</p>
+<p>$$S_0(G) = w_{G-1}.$$</p>
+<p>例えば、最初の評価が「再度」の場合、初期安定性は$S_0(1)=w_0$です。最初の評価が「簡単」の場合、初期安定性は$S_0(4)=w_3$です。</p>
+<hr />
+<p>最初の評価後の初期難易度：</p>
+<p>$$D_0(G) = w_4 - (G-3) \cdot w_5,$$</p>
+<p>ここで、最初の評価が「正解(Good)」の場合、$D_0(3)=w_4$です。</p>
+<hr />
+<p>レビュー後の新しい難易度：</p>
+<p>$$D^\prime(D,G) = w_7 \cdot D_0(3) +(1 - w_7) \cdot (D - w_6 \cdot (G - 3)).$$</p>
+<p>これは、$D^\prime = D - w_6 \cdot (G - 3)$で新しい難易度を計算し、次に平均回帰$w_7 \cdot D_0(3) + (1 - w_7) \cdot D^\prime$を適用して「イーズヘル」を避けます。</p>
+<hr />
+<p>最後のレビューから$t$日後の想起可能性：</p>
+<p>$$R(t,S) = \left(1 + \cfrac{t}{9 \cdot S}\right)^{-1},$$</p>
+<p>ここで、$t=S$のとき$R(t,S)=0.9$です。</p>
+<p>次の間隔は、上記の式で$R$の代わりに要求される保持率を代入し、$t$を解くことで計算できます：</p>
+<p>$$I(r,S) = 9 \cdot S \cdot \left(\cfrac{1}{r} - 1\right),$$</p>
+<p>ここで、$r=0.9$のとき$I(r,S)=S$です。</p>
+<hr />
+<p>成功したレビュー後の新しい安定性（ユーザーが「難しい」、「良い」または「簡単」を押した場合）：</p>
+<p>$$S^\prime_r(D,S,R,G) = S\cdot(e^{w_8} \cdot (11-D) \cdot S^{-w_9} \cdot (e^{w_{10}\cdot(1-R)}-1) \cdot w_{15}(\textrm{G = 2の場合}) \cdot w_{16}(\textrm{G = 4の場合}) + 1).$$</p>
+<p>安定性の増加を示す$SInc$は、$\cfrac{S^\prime_r(D,S,R,G)}{S}$で表され、これはAnkiのファクターに相当します。</p>
+<ol>
+<li>$D$の値が大きいほど、$SInc$の値は小さくなります。これは、難しい教材の記憶安定性の増加が簡単な教材よりも小さいことを意味します。</li>
+<li>$S$の値が大きいほど、$SInc$の値は小さくなります。これは、記憶の安定性が高いほど、その記憶をさらに安定させることが難しくなることを意味します。</li>
+<li>$R$の値が小さいほど、$SInc$の値は大きくなります。これは、教材をレビューする最適なタイミングがほぼ忘れかけたときであることを意味します（ただし、想起に成功した場合に限ります）。</li>
+<li>レビューが成功した場合、$SInc$の値は常に1以上です。</li>
+</ol>
+<p>FSRSでは、レビューの遅延（すなわち、期限を過ぎたレビュー）が次の間隔に影響を与えます：</p>
+<p>遅延が増加すると、保持率（R）は減少します。レビューが成功した場合、上記のポイント3に従って、次の安定性（S）は高くなります。ただし、SM-2/Ankiアルゴリズムのように遅延とともに線形に増加するのではなく、次の安定性はFSRSパラメータに依存する上限に収束します。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/235642239-25de48b8-5dc6-4450-94e5-0bbf8165a559.png" alt="image" /></p>
+<p>このプレイグラウンドでパラメータを変更できます: https://www.geogebra.org/calculator/ahqmqjvx.</p>
+<hr />
+<p>忘却後の安定性（すなわち、失敗後の安定性）：</p>
+<p>$$S^\prime_f(D,S,R) = w_{11}\cdot D^{-w_{12}}\cdot ((S+1)^{w_{13}} - 1)\cdot e^{w_{14}\cdot(1-R)}.$$</p>
+<p>例えば、$D=2$および$R=0.9$の場合、デフォルトのパラメータを使用すると、$S^\prime_f(S=100) = 2\cdot 2^{-0.2} \cdot ((100+1)^{0.2}-1) \cdot e^{1(1-0.9)} \approx 3$ であり、$S^\prime_f(S=1) \approx 0.3$ となります。</p>
+<h1 id="fsrs-v3"><a class="header" href="#fsrs-v3">FSRS v3</a></h1>
+<h2 id="デフォルトパラメータ-3"><a class="header" href="#デフォルトパラメータ-3">デフォルトパラメータ</a></h2>
+<pre><code class="language-python">[0.9605, 1.7234, 4.8527, -1.1917, -1.2956, 0.0573, 1.7352, -0.1673, 1.065, 1.8907, -0.3832, 0.5867, 1.0721]
+</code></pre>
+<h2 id="式-2"><a class="header" href="#式-2">式</a></h2>
+<blockquote>
+<p>$w_i$はw[i]を表します。</p>
+</blockquote>
+<p>最初の評価後の初期安定性：</p>
+<p>$$S_0(G) = w_0 + (G-1) \cdot w_1,$$</p>
+<p>ここで、最初の評価が「再度」の場合、初期安定性は$S_0(1)=w_0$です。最初の評価が「簡単」の場合、初期安定性は$S_0(4)=w_0 + 3 \cdot w_1$です。</p>
+<hr />
+<p>最初の評価後の初期難易度：</p>
+<p>$$D_0(G) = w_2 + (G-3) \cdot w_3,$$</p>
+<p>ここで、最初の評価が「正解(Good)」の場合、$D_0(3)=w_2$です。</p>
+<hr />
+<p>レビュー後の新しい難易度：</p>
+<p>$$D^\prime(D,G) = w_5 \cdot D_0(3) +(1 - w_5) \cdot (D + w_4 \cdot (G - 3)).$$</p>
+<p>これは、$D^\prime = D + w_4 \cdot (G - 3)$で新しい難易度を計算し、次に平均回帰$w_5 \cdot D_0(3) + (1 - w_5) \cdot D^\prime$を適用して「イーズヘル」を避けます。</p>
+<hr />
+<p>最後のレビューから$t$日後の想起可能性：</p>
+<p>$$R(t,S) = 0.9^{\frac{t}{S}},$$</p>
+<p>ここで、$t=S$のとき$R(t,S)=0.9$です。</p>
+<p>次の間隔は、上記の式で$R$の代わりに要求される保持率を代入し、$t$を解くことで計算できます。</p>
+<p>$$I(r,S) = S \cdot \cfrac{\ln(r)}{\ln(0.9)},$$</p>
+<p>ここで、$r=0.9$のとき$I(r,S)=S$です。</p>
+<p>注意：<code>難しい</code>と<code>簡単</code>の評価後の間隔は異なる方法で計算されます。<code>簡単</code>の評価後の間隔は<code>easyBonus</code>を掛けます。<code>難しい</code>の評価後の間隔は<code>lastInterval</code>に<code>hardInterval</code>を掛けたものです。</p>
+<hr />
+<p>想起後の新しい安定性：</p>
+<p>$$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot S^{w_7}\cdot(e^{w_8\cdot(1-R)}-1)+1).$$</p>
+<p>$SInc$（安定性の増加）を$\cfrac{S^\prime_r(D,S,R)}{S}$とします。これはAnkiのファクターに相当します。</p>
+<ol>
+<li>$D$の値が大きいほど、$SInc$の値は小さくなります。これは、難しい教材の記憶安定性の増加が簡単な教材よりも小さいことを意味します。</li>
+<li>$S$の値が大きいほど、$SInc$の値は小さくなります。これは、記憶の安定性が高いほど、その記憶をさらに安定させることが難しくなることを意味します。</li>
+<li>$R$の値が小さいほど、$SInc$の値は大きくなります。これは、教材をレビューする最適なタイミングがほぼ忘れかけたときであることを意味します（ただし、想起に成功した場合に限ります）。</li>
+<li>レビューが成功した場合、$SInc$の値は常に1以上です。</li>
+</ol>
+<p>以下の3Dビジュアライゼーションが理解の助けになるでしょう。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192936891-1a3c4fd8-974b-4b87-ad76-8ba774500361.png" alt="image" /></p>
+<p>FSRSでは、レビューの遅延（すなわち、期限を過ぎたレビュー）が次の間隔に影響を与えます：</p>
+<p>遅延が増加すると、保持率（R）は減少します。レビューが成功した場合、上記のポイント3に従って、次の安定性（S）は高くなります。ただし、SM-2/Ankiアルゴリズムのように遅延とともに線形に増加するのではなく、次の安定性はFSRSパラメータに依存する上限に収束します。</p>
+<hr />
+<p>忘却後の安定性（すなわち、失敗後の安定性）：</p>
+<p>$$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{w_{12}\cdot(1-R)}.$$</p>
+<p>例えば、$D=2$および$R=0.9$の場合、デフォルトのパラメータを使用すると、$S^\prime_f(S=100) = 2\cdot 2^{-0.2} \cdot 100^{0.2} \cdot e^{1(1-0.9)} \approx 5$ であり、$S^\prime_f(S=1) \approx 2$ となります。</p>
+<p>この関数を<a href="https://www.geogebra.org/calculator/dzwn2zwh">post-lapse stability - GeoGebra</a>で試すことができます。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192935271-3b868490-b893-41bd-873c-2a0cf9d96bb1.png" alt="image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><p>こちら: https://github.com/open-spaced-repetition/srs-benchmark</p>
+<div style="break-before: page; page-break-before: always;"></div><p>オプティマイザーは、*最も可能性の高い結果を見つける方法（最尤推定）<em>と</em>誤差を減らすために過去にさかのぼって調整する方法（時間逆伝播）*を適用して、メモリの安定性を推定し、時系列レビューのログからメモリの法則を学習します。次に、確率的最短経路アルゴリズムを使用して、繰り返しを最小限に抑えるための最適な保持を見つけることができます。</p>
+<p>FSRSは<strong>DSR</strong>（難易度、安定性、再現性）メモリモデルに基づいています。<strong>DSR</strong>モデルは、間隔反復練習中のメモリダイナミクスを記述するために、17のパラメーターと6つの方程式を使用します（詳細は<a href="The-Algorithm.html">アルゴリズム</a>を参照してください）。</p>
+<p>ここでは、FSRSのトレーニングプロセスの簡単な紹介をします。</p>
+<h1 id="ankiのレビューログの前処理"><a class="header" href="#ankiのレビューログの前処理">Ankiのレビューログの前処理</a></h1>
+<p>Ankiのレビューログのデータベーススキーマは以下の通りです（<a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">データベース構造</a>からコピー）：</p>
+<pre><code class="language-SQL">-- revlogはレビュー履歴です。これまでに行ったすべてのレビューに対して行が存在します！
+CREATE TABLE revlog (
+    id              integer primary key,
+       -- レビューを行った時刻のエポックミリ秒タイムスタンプ
+    cid             integer not null,
+       -- cards.id
+    usn             integer not null,
+        -- 更新シーケンス番号：同期時に差分を見つけるためのもの。
+        -- 詳細はcardsテーブルの説明を参照してください
+    ease            integer not null,
+       -- リコールを評価するために押したボタン。
+       -- レビュー:  1（間違い）、2（難しい）、3（普通）、4（簡単）
+       -- 学習/再学習:  1（間違い）、2（普通）、3（簡単）
+    ivl             integer not null,
+       -- 間隔（カードテーブルのものと同様）
+    lastIvl         integer not null,
+       -- 最後の間隔（ivlの最後の値。この値は必ずしもこのレビューと前のレビューの間の実際の間隔と等しいわけではありません）
+    factor          integer not null,
+      -- ファクター
+    time            integer not null,
+       -- レビューにかかったミリ秒数、最大60000（60秒）
+    type            integer not null
+       --  0=学習、1=レビュー、2=再学習、3=詰め込み
+);
+</code></pre>
+<p>revlogは、カードcidがidの時刻に評価easeでレビューされたことを記録します。カードの全レビュー履歴を追跡するのは簡単です。カードのメモリ状態はそのレビュー履歴に依存します。revlogをカードごとにグループ化し、時間順に並べ替え、各隣接するレビュー間の評価と間隔を連結します。これにより、各カードの評価履歴と間隔履歴を生成できます。以下は前処理後のサンプルです：</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/202617053-d9c44a82-ef85-412e-9987-a6205ba8f986.png" alt="image" /></p>
+<h1 id="時系列データを用いたトレーニング"><a class="header" href="#時系列データを用いたトレーニング">時系列データを用いたトレーニング</a></h1>
+<p>機械学習の用語では、評価と間隔の履歴は時系列データの特徴量です。この時系列データを使用して<strong>DSR</strong>モデルをトレーニングしたいと考えています。入力はr_historyとt_historyで、出力はStabilityとDifficultyです。このデータタイプを処理するために、PyTorchを使用して時系列モデルを構築しました。このモデルは、時間を通じた逆伝播（<strong>BPTT</strong>）を自動的に適用してトレーニングすることができます。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/202617068-0c4cdb04-b754-4893-9cbd-e2e0583dc159.png" alt="image" /></p>
+<h1 id="エンドツーエンドのトレーニング"><a class="header" href="#エンドツーエンドのトレーニング">エンドツーエンドのトレーニング</a></h1>
+<p>時系列データからモデルをトレーニングする際には、別の問題があります。FSRSの主な目標の一つは、一連のレビュー後のメモリ状態を予測することです。しかし、時系列データは安定性や難易度ではなく、評価のみを記録します。安定性は、同じレビュー履歴を持つレビュー群の統計変数です。生データでメモリの安定性を推定することは可能でしょうか？この場合、最尤推定（<strong>MLE</strong>）が適しています。</p>
+<p>忘却曲線の関数を $f(t,S)$ としましょう。$t$ 日後のリコールの可能性（ $r=1$ ）は $P(r=1,t|S) = f(t,S)$ であり、忘却の確率（ $r=0$ ）は $P(r=0,t|S) = 1 - f(t,S)$ です。同じ安定性 $S$ で $n$ 回のレビューを行い、$p$ 回リコールし、$n - p$ 回失敗したとします。安定性 $S$ をどのように推定するのでしょうか？</p>
+<p><strong>MLE</strong> 方法によれば、$P(r=1,t|S)^p \cdot P(r=0,t|S)^{n-p}$ は $S$ に対する尤度関数です。尤度関数の対数を取ることで、対数尤度の式を得ることができます。</p>
+<p>$$p \cdot \log P(r=1,t|S) + (n-p) \cdot \log P(r=0,t|S)$$</p>
+<p>$n = 1$ と設定し、次を得ます：</p>
+<p>$$loss = - [p \cdot \log P(r=1,t|S) + (1-p) \cdot \log P(r=0,t|S)],$$</p>
+<p>これは $S$ を更新するための損失関数です。</p>
+<p>この時点で、$S$ を <strong>DSR</strong> モデルに置き換え、複数のレビューの場合を考慮します。</p>
+<p>$$P(r=1,t,\vec{r},\vec{t}|\vec\theta) = f(t,DSR(\vec{r},\vec{t})),$$</p>
+<p>ここで、$\vec\theta$ はモデルのパラメータです。</p>
+<p><strong>MLE</strong> と <strong>BPTT</strong> を使用して、時系列データから直接 <strong>DSR</strong> のパラメータをトレーニングすることができます。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="はじめに-1"><a class="header" href="#はじめに-1">はじめに</a></h1>
+<p>Bin(区間､階級)ごとの二乗平均平方根誤差（RMSE（bins））は、FSRSや他の間隔反復アルゴリズムがリコールの確率（R）をどれだけ正確に予測できるかを測定するために設計された指標です。</p>
+<p>ベンチマーク実験では、RMSE（bins）指標が時々不正に利用されることがあると判明しました。そのため、アルゴリズムが人工的に低いRMSE（bins）を取得するのを防ぐために、binning方法を修正しました。</p>
+<h2 id="rmsebinsの旧計算方法"><a class="header" href="#rmsebinsの旧計算方法">RMSE（bins）の旧計算方法</a></h2>
+<p>1) Rの予測値をbinにグループ化します。例えば、0.8から0.9の間の予測をbin 1にグループ化します：</p>
+<pre><code>Bin 1（予測値）：[0.81, 0.82, 0.83, 0.84, 0.85, 0.86]
+</code></pre>
+<p>2) 各binに対して、レビューの実際の結果を記録します。Again = 0。Hard/Good/Easy = 1。</p>
+<pre><code>Bin 1（実際の結果）：[0, 1, 1, 1, 1, 1]
+</code></pre>
+<p>3) Bin内のすべての予測値の平均を計算します。</p>
+<pre><code>Bin 1の平均（予測値） = mean([0.81, 0.82, 0.83, 0.84, 0.85, 0.86]) = 0.835
+</code></pre>
+<p>4) すべての実際の結果の平均を計算します。</p>
+<pre><code>Bin 1の平均（実際の結果） = mean([0, 1, 1, 1, 1, 1]) = 0.833
+</code></pre>
+<p>5) 予測値の平均と実際のレビュー結果の平均の二乗差を計算します。</p>
+<p>6) 各binに対してステップ2-5を繰り返します。binの数は任意です。各binのレビュー数は重み付けに使用されます。</p>
+<p>7) 次の式を使用して最終値を計算します：</p>
+<p>$$RMSE(bins)=\sqrt\frac{\sum\limits_{i=1}^{n} w_{i} \cdot ({\overline{R}_{i}}_{\text{predicted}}-{\overline{R}_{i}}_{\text{measured}})^2}{\sum\limits_{i=1}^{n} w_{i}}$$</p>
+<p>ここで、</p>
+<ul>
+<li>$\overline{R}_{\text{predicted}}$ は特定のbin内のリコールの予測確率の平均、</li>
+<li>$\overline{R}_{\text{measured}}$ は特定のbin内の実際のレビュー結果の平均、</li>
+<li>$w$ は特定のbin内のレビュー数、</li>
+<li>$n$ はbinの数です。</li>
+</ul>
+<h2 id="どのように操作cheatedされるか"><a class="header" href="#どのように操作cheatedされるか">どのように操作(cheated)されるか</a></h2>
+<p>もしアルゴリズムが各レビューでデータセットの平均保持率と正確に等しい一定の数値を予測すると、RMSE（bins）は0になります。これは極端な例ですが、露骨に操作しないアルゴリズムでも、予測の分散を減らすことで微妙に操作することができます。</p>
+<p>左のキャリブレーショングラフは操作しないアルゴリズムのもので、右のキャリブレーショングラフは操作するアルゴリズムのものです。</p>
+<p><img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/83031600/338d8d81-9389-4d91-9cca-5b9b6551d548" alt="311506217-948f32d0-a1f9-4b4e-b0be-0964105bb284" /></p>
+<h2 id="rmsebinsの新しい計算方法"><a class="header" href="#rmsebinsの新しい計算方法">RMSE（bins）の新しい計算方法</a></h2>
+<p>主な違いはbinning方法です。予測されたRに基づいてアルゴリズムの予測とレビューの結果をグループ化する代わりに、新しい方法では、間隔の長さ、レビューの回数、およびラプスの回数（ユーザーが「Again」を押した回数）の3つの特徴に基づいてグループ化します。これら3つの特徴の値は、この指標のために設計された式を使用して丸められます。これらの式は任意であり、調整可能です。その後、丸められた値に基づいてレビューがbinにグループ化されます。例えば、間隔の長さが100、レビューの回数が7、ラプスの回数が0のレビューと、間隔の長さが101、レビューの回数が7、ラプスの回数が0のレビューは、同じbinに分類されます。以前は、予測されたRの値がどのbinに入るかはその分布によって決定されていました。binningは現在、予測されたRの分布に依存しません。</p>
+<p>以下は丸め関数の疑似コードです：</p>
+<pre><code class="language-py">delta_t = round(2.48 * power(2.57, floor(log(x)/log(2.57))), 2)
+
+n_reviews = round(1.52 * power(1.58, floor(log(x)/log(1.58))), 0)
+
+n_lapses = round(1.4 * power(1.48, floor(log(x)/log(1.48))), 0) if x != 0 else 0
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><p>別名 <strong>C</strong>ompute <strong>M</strong>inimum <strong>R</strong>ecommended <strong>R</strong>etention（最小推奨保持率の計算、CMRR）</p>
+<h1 id="定義"><a class="header" href="#定義">定義</a></h1>
+<p>間隔反復について話すとき、私たちは次の2つの要素を考慮します：</p>
+<ol>
+<li>どれだけのフラッシュカードを覚えているか？（知識の習得）</li>
+<li>どれだけの時間がかかるか？（1日にかかる勉強時間の負担）</li>
+</ol>
+<p>私たちは、できるだけ多くのことを覚えながら、できるだけ少ない時間を費やしたいと考えています。FSRSでは、望ましい保持率の適切な値を選択することで、負担を最小限に抑えるか、知識の習得を最大化することができます。</p>
+<p>毎日新しいカードを追加し、時間通りにレビューを行うと想像してみてください。望ましい保持率を高く設定すれば、知識の習得は高くなります。</p>
+<p>総知識は、各カードのリコール確率の合計として考えることができます。</p>
+<p>数学的には、$\text{knowledge} = \sum\limits_{i=1}^n R_i$ で表されます。ここで、$n$ は学習したカードの数、$R_i$ はi番目のカードをリコールできる確率です。</p>
+<p>以下のグラフは、知識が望ましい保持率にどのように依存するかを示しています。この記事のすべてのグラフでは、Y軸に値がないのは、それらが多くの要素（FSRSパラメータ、カードごとに費やす時間、デッキサイズ、新しいカードの制限など）に依存しており、貴重な洞察を提供しないためです。重要なのは全体的な形状です。</p>
+<p><img src="https://github.com/user-attachments/assets/1fbaf201-6697-467e-adef-7bf5958e4184" alt="image" /></p>
+<p>望ましい保持率の値が高いと、カードをより頻繁にレビューする必要があり、作業負荷が増加します。望ましい保持率を下げると、作業負荷と知識が減少します。しかし、望ましい保持率が非常に低い場合、多くを忘れてしまい、カードを再学習する必要があり、再び作業負荷が増加します。したがって、ここには2つの「力」が働いています：</p>
+<ol>
+<li>望ましい保持率が増加すると、間隔が短くなり、1日に行うレビューの数が増加します。</li>
+<li>望ましい保持率が減少すると、より多くを忘れてしまい、学習した内容を再学習する必要が増えます。</li>
+</ol>
+<p>その結果、望ましい保持率を関数として作業負荷をプロットすると、作業負荷が最小になる点が現れます。</p>
+<p><strong>注</strong>: 以下のグラフはFSRSのデフォルトパラメータから生成されています。実際のグラフは学習者によって異なります。</p>
+<p><img src="https://github.com/user-attachments/assets/57e1c61a-c288-401c-848a-8723d81c7ac7" alt="image" /></p>
+<p>同様のグラフは、作業負荷を習得した知識で割った場合にも得られます（この記事の冒頭の式）。これは、どれだけ覚えているかに対して相対的にどれだけ勉強する必要があるかを示しています。この最小値に対応する望ましい保持率の値は若干異なります。</p>
+<p><img src="https://github.com/user-attachments/assets/b72af322-be5e-48ce-9065-7fd259779837" alt="image" /></p>
+<p>作業負荷/知識を最小化することは、作業負荷を最小化するよりも実用的であるように思われます。例えば、80%の保持率を達成するために1日30分勉強し、90%の保持率を達成するために1日31分勉強する必要がある場合、10%多く覚えるために1分多く勉強することに同意するでしょう。</p>
+<h1 id="シミュレーション"><a class="header" href="#シミュレーション">シミュレーション</a></h1>
+<p>FSRSを使用すると、Ankiでの学習プロセスをシミュレートすることができます。</p>
+<p>コード: https://github.com/open-spaced-repetition/fsrs-rs/blob/0634cb08b08fecb96b0b8a9caba4a5e6938e85bb/src/optimal_retention.rs#L107-L407</p>
+<p>シミュレーションのステップバイステップの概要は次のとおりです：</p>
+<ol>
+<li>
+<p><strong>初期化と設定の読み込み</strong>:</p>
+<ul>
+<li><code>SimulatorConfig</code>設定からデッキサイズ、学習期間、1日あたりの最大コストなどのさまざまなパラメータを抽出します。ここで以降「コスト」は勉強にかかる秒数を指します。</li>
+<li><code>card_table</code>をゼロ行列として初期化し、設定に基づいて初期値（学習期間や難易度と安定性の非常に小さい値など）で埋めます。</li>
+</ul>
+</li>
+<li>
+<p><strong>日次カウンターとコスト配列の初期化</strong>:</p>
+<ul>
+<li>日次レビュー数、学習数、記憶数、および総日次コストの配列を初期化します。</li>
+</ul>
+</li>
+<li>
+<p><strong>シミュレーションループ</strong>:</p>
+<ul>
+<li>各日（学習期間内、「シミュレートする日数」）に対して、次のステップを実行します：
+<ul>
+<li>最後のレビューから経過した日数（<code>delta_t</code>）と、カードの安定性および最後のレビュー日付に基づいて学習済みカードの再現性を計算します。</li>
+<li>どのカードをレビューする必要があるかを決定し、これらのカードに対してランダムな値を生成して、後でそれらが忘れられているかどうかを判断します。ユーザーが「Good」「Hard」「Easy」を押す確率は、ユーザーのレビュー履歴から推定されます。</li>
+<li>再現性とランダムな値に基づいて、どのカードが忘れられているかを判断し、レビューが必要なカードに評価を割り当てます。</li>
+<li>カードが忘れられているかどうか、そのレビュー評価、および設定で定義されたコストパラメータに基づいてカードのコストを更新します。コストパラメータ（ユーザーが「Good」または「Again」と答えたときにカードごとに費やす時間など）は、ユーザーのレビュー履歴から推定されます。</li>
+<li>コストの累積和を計算して、どのカードがレビューされるかを決定します。1日の最大コストとレビュー制限のため、すべてのカードを常にレビューできるわけではありません。</li>
+<li>初めてレビューする必要がある新しいカードを決定します。</li>
+<li>新しく学習したカードに対してランダムに評価を生成し、それらの安定性と難易度を更新します。</li>
+<li>カードの<code>last_date</code>、<code>stability</code>、<code>difficulty</code>、<code>interval</code>、および<code>due</code>フィールドを更新します。</li>
+<li>日次レビュー数、学習数、記憶数、および総コストを更新します。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>結果の返却</strong>:</p>
+<ul>
+<li>記憶数、レビュー数、学習数、および日次総コストの配列を返します。</li>
+</ul>
+</li>
+</ol>
+<p>記憶数は、シミュレーションの最初の日から現在の日までに習得した総知識です。レビュー数は、現在の日にレビューされたカードの数です。学習数は、現在の日に新しく学習されたカードの数です。日次総コストは、現在の日にカードをレビューし、新しいカードを学習するのに費やした時間です。</p>
+<h1 id="最適化"><a class="header" href="#最適化">最適化</a></h1>
+<p>シミュレーターを使用すると、各望ましい保持率レベルに対する作業負荷を予測することができます。オプティマイザーは<a href="https://en.wikipedia.org/wiki/Brent%27s_method">ブレント法</a>を使用して最適な保持率を見つけます。</p>
+<p>コード: https://github.com/open-spaced-repetition/fsrs-rs/blob/0634cb08b08fecb96b0b8a9caba4a5e6938e85bb/src/optimal_retention.rs#L478-L589</p>
+<p>注: Anki 24.04以前では、目標は知識の習得（すべてのリコール確率の合計）を最大化することでしたが、Anki 24.04以降では、目標は作業負荷/知識（勉強にかかる分数を前述の合計で割ったもの）を最小化することです。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

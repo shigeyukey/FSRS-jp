@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html lang="jp" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>はじめに - FSRS Wiki 日本語版</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html" class="active"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="Home.html"><strong aria-hidden="true">2.</strong> ようこそ</a></li><li class="chapter-item expanded "><a href="FAQ.html"><strong aria-hidden="true">3.</strong> よくある質問 (FAQ)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial.html"><strong aria-hidden="true">3.1.</strong> チュートリアル1</a></li><li class="chapter-item expanded "><a href="tutorial2.html"><strong aria-hidden="true">3.2.</strong> チュートリアル2</a></li></ol></li><li class="chapter-item expanded "><a href="ABC-of-FSRS.html"><strong aria-hidden="true">4.</strong> FSRSのABC</a></li><li class="chapter-item expanded "><a href="Advanced-methods-of-optimization.html"><strong aria-hidden="true">5.</strong> 最適化の高度な方法</a></li><li class="chapter-item expanded "><a href="Compare-Anki's-built-in-scheduler-and-FSRS.html"><strong aria-hidden="true">6.</strong> Ankiの内蔵スケジューラーとFSRSの比較</a></li><li class="chapter-item expanded "><a href="How-does-the-scheduler-work.html"><strong aria-hidden="true">7.</strong> スケジューラーの仕組み</a></li><li class="chapter-item expanded "><a href="Notebooks.html"><strong aria-hidden="true">8.</strong> ノートブック</a></li><li class="chapter-item expanded "><a href="Research-resources.html"><strong aria-hidden="true">9.</strong> 研究リソース</a></li><li class="chapter-item expanded "><a href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html"><strong aria-hidden="true">10.</strong> 間隔反復アルゴリズム - 初心者から専門家への3日間の旅</a></li><li class="chapter-item expanded "><a href="The-Algorithm.html"><strong aria-hidden="true">11.</strong> アルゴリズム</a></li><li class="chapter-item expanded "><a href="The-Benchmark.html"><strong aria-hidden="true">12.</strong> ベンチマーク</a></li><li class="chapter-item expanded "><a href="The-mechanism-of-optimization.html"><strong aria-hidden="true">13.</strong> 最適化の仕組み</a></li><li class="chapter-item expanded "><a href="The-Metric.html"><strong aria-hidden="true">14.</strong> メトリック</a></li><li class="chapter-item expanded "><a href="The-Optimal-Retention.html"><strong aria-hidden="true">15.</strong> 最適な保持率</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSRS Wiki 日本語版</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/shigeyukey/FSRS-jp" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p align="center">
+  <a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki">
+    <img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/9efb2ca5-51bd-411d-9694-a77b09f51fa7" width="150" height="150" alt="FSRS4Anki">
+  </a>
+</p>
+<div align="center">
+<h1 id="fsrs4anki"><a class="header" href="#fsrs4anki">FSRS4Anki</a></h1>
+<p><em>✨ <a href="The-Algorithm.html">フリー間隔反復スケジューラーアルゴリズム</a> に基づいたAnki用の最新の間隔反復スケジューラー ✨</em></p>
+</div>
+<p align="center">
+  <a href="https://raw.githubusercontent.com/open-spaced-repetition/fsrs4anki/main/LICENSE">
+    <img src="https://img.shields.io/github/license/open-spaced-repetition/fsrs4anki" alt="license">
+  </a>
+  <a href="https://github.com/open-spaced-repetition/fsrs4anki/releases/latest">
+    <img src="https://img.shields.io/github/v/release/open-spaced-repetition/fsrs4anki?color=blueviolet" alt="release">
+  </a>
+</p>
+<h1 id="目次"><a class="header" href="#目次">目次</a></h1>
+<ul>
+<li><a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">はじめに</a></li>
+<li><a href="#%E5%A7%8B%E3%82%81%E6%96%B9">始め方</a></li>
+<li><a href="#%E3%82%A2%E3%83%89%E3%82%AA%E3%83%B3%E3%81%AE%E4%BA%92%E6%8F%9B%E6%80%A7">アドオンの互換性</a></li>
+<li><a href="#%E8%B2%A2%E7%8C%AE">貢献</a>
+<ul>
+<li><a href="#%E8%B2%A2%E7%8C%AE%E8%80%85">貢献者</a></li>
+</ul>
+</li>
+<li><a href="#%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%AE%E6%8E%A8%E7%A7%BB">スターの推移</a></li>
+</ul>
+<h1 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h1>
+<p>FSRS4Ankiは、スケジューラーとオプティマイザー(最適化装置)の2つの主要な部分で構成されています。</p>
+<ul>
+<li>スケジューラーはAnkiの内蔵スケジューラーを置き換え、FSRSアルゴリズムに従ってカードをスケジュールします。</li>
+<li>オプティマイザーは機械学習を使用してあなたの記憶パターンを学習し、レビュー履歴に最適なパラメータを見つけます。オプティマイザーの動作の詳細については、<a href="The-mechanism-of-optimization.html">最適化の仕組み</a>をお読みください。</li>
+</ul>
+<p>FSRSアルゴリズムの詳細については、<a href="The-Algorithm.html">アルゴリズム</a>をお読みください。興味があれば、私の論文もご覧いただけます：</p>
+<ul>
+<li><a href="https://www.maimemo.com/paper/">間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム</a>（無料アクセス）、および</li>
+<li><a href="https://www.researchgate.net/publication/369045947_Optimizing_Spaced_Repetition_Schedule_by_Capturing_the_Dynamics_of_Memory">記憶のダイナミクスを捉えて間隔反復スケジュールを最適化する</a>（リクエストを提出）。</li>
+</ul>
+<p>FSRS4Anki Helperは、FSRS4Anki Schedulerを補完するAnkiのアドオンです。詳細はこちらをご覧ください：https://github.com/open-spaced-repetition/fsrs4anki-helper</p>
+<h1 id="始め方"><a class="header" href="#始め方">始め方</a></h1>
+<p>Anki v23.10以降を使用している場合は、<a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md">このチュートリアル</a>を参照してください。</p>
+<p>古いバージョンのAnkiを使用している場合は、<a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial2.md">このチュートリアル</a>を参照してください。</p>
+<p>Anki v23.10以降では、FSRSの設定がはるかに簡単になっています。</p>
+<h1 id="アドオンの互換性"><a class="header" href="#アドオンの互換性">アドオンの互換性</a></h1>
+<p>いくつかのアドオンはFSRSと競合する可能性があります。一般的なルールとして、カードの間隔に影響を与えるアドオンはFSRSと一緒に使用すべきではありません。</p>
+<div class="table-wrapper"><table><thead><tr><th>アドオン</th><th>互換性あり?</th><th>コメント</th></tr></thead><tbody>
+<tr><td><a href="https://ankiweb.net/shared/info/1771074083">Review Heatmap</a></td><td>はい :white_check_mark:</td><td>FSRSに関連するものには影響しません。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/874215009">Advanced Browser</a></td><td>はい :white_check_mark:</td><td>最新バージョンを使用してください。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/1136455830">Advanced Review Bottom Bar</a></td><td>はい :white_check_mark:</td><td>最新バージョンを使用してください。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/374005964">The KING of Button Add-ons</a></td><td>はい :white_check_mark:</td><td>最新バージョンを使用してください。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/876946123">Pass/Fail</a></td><td>はい :white_check_mark:</td><td><code>Pass</code>は<code>Good</code>に相当し、<code>Fail</code>は<code>Again</code>に相当します。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/1021636467">AJT Card Management</a></td><td>はい :white_check_mark:</td><td>Anki 23.12以降と互換性があります。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/999215520">Incremental Reading v4.11.3 (unofficial clone)</a></td><td>不明 :question:</td><td>スタンドアロン版のFSRSを使用している場合、Ankiの内蔵スケジューラーによって提供される間隔が表示され、カスタムスケジューラーでは表示されません。このアドオンは技術的には内蔵FSRSと互換性がありますが、FSRSはインクリメンタルリーディング用に設計されておらず、FSRSの設定はIRカードには適用されません。IRカードは他のカードタイプとは異なる方法で動作します。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/1369579727">Delay siblings</a></td><td>いいえ :x:</td><td>Delay siblingsはFSRSによって提供される間隔を変更します。ただし、FSRS4Anki HelperアドオンにはFSRSとよりよく連携する類似の機能があります。FSRS4Anki Helperアドオンを使用してください。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/1672712021">Auto Ease Factor</a></td><td>いいえ :x:</td><td>FSRSが有効な場合、Ease Factorはもはや関連性がないため、このアドオンを使用してもメリットはありません。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/372281481">autoLapseNewInterval</a></td><td>いいえ :x:</td><td>FSRSが有効な場合、<code>New Interval</code>設定はもはや関連性がないため、このアドオンを使用してもメリットはありません。</td></tr>
+<tr><td><a href="https://ankiweb.net/shared/info/957961234">Straight Reward</a></td><td>いいえ :x:</td><td>FSRSが有効な場合、Ease Factorはもはや関連性がないため、このアドオンを使用してもメリットはありません。</td></tr>
+</tbody></table>
+</div>
+<p>FSRSと他のアドオンの互換性を確認してほしい場合は、<a href="https://github.com/open-spaced-repetition/fsrs4anki/issues">issues</a>でお知らせください。</p>
+<h1 id="貢献"><a class="header" href="#貢献">貢献</a></h1>
+<p>FSRS4Ankiに貢献する方法として、ベータテスト、コードの提出、データの共有があります。データを共有したい場合は、こちらのフォームにご記入ください：https://forms.gle/KaojsBbhMCytaA7h8</p>
+<h2 id="貢献者"><a class="header" href="#貢献者">貢献者</a></h2>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<p><a href="#%E8%B2%A2%E7%8C%AE%E8%80%85-"><img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square" alt="All Contributors" /></a></p>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Expertium"><img src="https://avatars.githubusercontent.com/u/83031600?v=4?s=100" width="100px;" alt="Expertium"/><br /><sub><b>Expertium</b></sub></a><br /><a href="https://github.com/open-spaced-repetition/fsrs4anki/commits?author=Expertium" title="テスト">⚠️</a> <a href="https://github.com/open-spaced-repetition/fsrs4anki/commits?author=Expertium" title="ドキュメント">📖</a> <a href="#data-Expertium" title="データ">🔣</a> <a href="#ideas-Expertium" title="アイデア、計画、フィードバック">🤔</a> <a href="https://github.com/open-spaced-repetition/fsrs4anki/issues?q=author%3AExpertium" title="バグ報告">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/user1823"><img src="https://avatars.githubusercontent.com/u/92206575?v=4?s=100" width="100px;" alt="user1823"/><br /><sub><b>user1823</b></sub></a><br /><a href="https://github.com/open-spaced-repetition/fsrs4anki/commits?author=user1823" title="テスト">⚠️</a> <a href="https://github.com/open-spaced-repetition/fsrs4anki/commits?author=user1823" title="ドキュメント">📖</a> <a href="#data-user1823" title="データ">🔣</a> <a href="#ideas-user1823" title="アイデア、計画、フィードバック">🤔</a> <a href="https://github.com/open-spaced-repetition/fsrs4anki/issues?q=author%3Auser1823" title="バグ報告">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://chrislongros.com"><img src="https://avatars.githubusercontent.com/u/98426896?v=4?s=100" width="100px;" alt="Christos Longros"/><br /><sub><b>Christos Longros</b></sub></a><br /><a href="#data-chrislongros" title="データ">🔣</a> <a href="#content-chrislongros" title="コンテンツ">🖋</a></td>
+    </tr>
+  </tbody>
+</table>
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<h1 id="スターの推移"><a class="header" href="#スターの推移">スターの推移</a></h1>
+<p><a href="https://star-history.com/#open-spaced-repetition/fsrs4anki&amp;Date"><img src="https://api.star-history.com/svg?repos=open-spaced-repetition/fsrs4anki&amp;type=Date" alt="スター履歴チャート" /></a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next prefetch" href="Home.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next prefetch" href="Home.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

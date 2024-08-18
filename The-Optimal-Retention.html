@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html lang="jp" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>最適な保持率 - FSRS Wiki 日本語版</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="Home.html"><strong aria-hidden="true">2.</strong> ようこそ</a></li><li class="chapter-item expanded "><a href="FAQ.html"><strong aria-hidden="true">3.</strong> よくある質問 (FAQ)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial.html"><strong aria-hidden="true">3.1.</strong> チュートリアル1</a></li><li class="chapter-item expanded "><a href="tutorial2.html"><strong aria-hidden="true">3.2.</strong> チュートリアル2</a></li></ol></li><li class="chapter-item expanded "><a href="ABC-of-FSRS.html"><strong aria-hidden="true">4.</strong> FSRSのABC</a></li><li class="chapter-item expanded "><a href="Advanced-methods-of-optimization.html"><strong aria-hidden="true">5.</strong> 最適化の高度な方法</a></li><li class="chapter-item expanded "><a href="Compare-Anki's-built-in-scheduler-and-FSRS.html"><strong aria-hidden="true">6.</strong> Ankiの内蔵スケジューラーとFSRSの比較</a></li><li class="chapter-item expanded "><a href="How-does-the-scheduler-work.html"><strong aria-hidden="true">7.</strong> スケジューラーの仕組み</a></li><li class="chapter-item expanded "><a href="Notebooks.html"><strong aria-hidden="true">8.</strong> ノートブック</a></li><li class="chapter-item expanded "><a href="Research-resources.html"><strong aria-hidden="true">9.</strong> 研究リソース</a></li><li class="chapter-item expanded "><a href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html"><strong aria-hidden="true">10.</strong> 間隔反復アルゴリズム - 初心者から専門家への3日間の旅</a></li><li class="chapter-item expanded "><a href="The-Algorithm.html"><strong aria-hidden="true">11.</strong> アルゴリズム</a></li><li class="chapter-item expanded "><a href="The-Benchmark.html"><strong aria-hidden="true">12.</strong> ベンチマーク</a></li><li class="chapter-item expanded "><a href="The-mechanism-of-optimization.html"><strong aria-hidden="true">13.</strong> 最適化の仕組み</a></li><li class="chapter-item expanded "><a href="The-Metric.html"><strong aria-hidden="true">14.</strong> メトリック</a></li><li class="chapter-item expanded "><a href="The-Optimal-Retention.html" class="active"><strong aria-hidden="true">15.</strong> 最適な保持率</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSRS Wiki 日本語版</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/shigeyukey/FSRS-jp" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>別名 <strong>C</strong>ompute <strong>M</strong>inimum <strong>R</strong>ecommended <strong>R</strong>etention（最小推奨保持率の計算、CMRR）</p>
+<h1 id="定義"><a class="header" href="#定義">定義</a></h1>
+<p>間隔反復について話すとき、私たちは次の2つの要素を考慮します：</p>
+<ol>
+<li>どれだけのフラッシュカードを覚えているか？（知識の習得）</li>
+<li>どれだけの時間がかかるか？（1日にかかる勉強時間の負担）</li>
+</ol>
+<p>私たちは、できるだけ多くのことを覚えながら、できるだけ少ない時間を費やしたいと考えています。FSRSでは、望ましい保持率の適切な値を選択することで、負担を最小限に抑えるか、知識の習得を最大化することができます。</p>
+<p>毎日新しいカードを追加し、時間通りにレビューを行うと想像してみてください。望ましい保持率を高く設定すれば、知識の習得は高くなります。</p>
+<p>総知識は、各カードのリコール確率の合計として考えることができます。</p>
+<p>数学的には、$\text{knowledge} = \sum\limits_{i=1}^n R_i$ で表されます。ここで、$n$ は学習したカードの数、$R_i$ はi番目のカードをリコールできる確率です。</p>
+<p>以下のグラフは、知識が望ましい保持率にどのように依存するかを示しています。この記事のすべてのグラフでは、Y軸に値がないのは、それらが多くの要素（FSRSパラメータ、カードごとに費やす時間、デッキサイズ、新しいカードの制限など）に依存しており、貴重な洞察を提供しないためです。重要なのは全体的な形状です。</p>
+<p><img src="https://github.com/user-attachments/assets/1fbaf201-6697-467e-adef-7bf5958e4184" alt="image" /></p>
+<p>望ましい保持率の値が高いと、カードをより頻繁にレビューする必要があり、作業負荷が増加します。望ましい保持率を下げると、作業負荷と知識が減少します。しかし、望ましい保持率が非常に低い場合、多くを忘れてしまい、カードを再学習する必要があり、再び作業負荷が増加します。したがって、ここには2つの「力」が働いています：</p>
+<ol>
+<li>望ましい保持率が増加すると、間隔が短くなり、1日に行うレビューの数が増加します。</li>
+<li>望ましい保持率が減少すると、より多くを忘れてしまい、学習した内容を再学習する必要が増えます。</li>
+</ol>
+<p>その結果、望ましい保持率を関数として作業負荷をプロットすると、作業負荷が最小になる点が現れます。</p>
+<p><strong>注</strong>: 以下のグラフはFSRSのデフォルトパラメータから生成されています。実際のグラフは学習者によって異なります。</p>
+<p><img src="https://github.com/user-attachments/assets/57e1c61a-c288-401c-848a-8723d81c7ac7" alt="image" /></p>
+<p>同様のグラフは、作業負荷を習得した知識で割った場合にも得られます（この記事の冒頭の式）。これは、どれだけ覚えているかに対して相対的にどれだけ勉強する必要があるかを示しています。この最小値に対応する望ましい保持率の値は若干異なります。</p>
+<p><img src="https://github.com/user-attachments/assets/b72af322-be5e-48ce-9065-7fd259779837" alt="image" /></p>
+<p>作業負荷/知識を最小化することは、作業負荷を最小化するよりも実用的であるように思われます。例えば、80%の保持率を達成するために1日30分勉強し、90%の保持率を達成するために1日31分勉強する必要がある場合、10%多く覚えるために1分多く勉強することに同意するでしょう。</p>
+<h1 id="シミュレーション"><a class="header" href="#シミュレーション">シミュレーション</a></h1>
+<p>FSRSを使用すると、Ankiでの学習プロセスをシミュレートすることができます。</p>
+<p>コード: https://github.com/open-spaced-repetition/fsrs-rs/blob/0634cb08b08fecb96b0b8a9caba4a5e6938e85bb/src/optimal_retention.rs#L107-L407</p>
+<p>シミュレーションのステップバイステップの概要は次のとおりです：</p>
+<ol>
+<li>
+<p><strong>初期化と設定の読み込み</strong>:</p>
+<ul>
+<li><code>SimulatorConfig</code>設定からデッキサイズ、学習期間、1日あたりの最大コストなどのさまざまなパラメータを抽出します。ここで以降「コスト」は勉強にかかる秒数を指します。</li>
+<li><code>card_table</code>をゼロ行列として初期化し、設定に基づいて初期値（学習期間や難易度と安定性の非常に小さい値など）で埋めます。</li>
+</ul>
+</li>
+<li>
+<p><strong>日次カウンターとコスト配列の初期化</strong>:</p>
+<ul>
+<li>日次レビュー数、学習数、記憶数、および総日次コストの配列を初期化します。</li>
+</ul>
+</li>
+<li>
+<p><strong>シミュレーションループ</strong>:</p>
+<ul>
+<li>各日（学習期間内、「シミュレートする日数」）に対して、次のステップを実行します：
+<ul>
+<li>最後のレビューから経過した日数（<code>delta_t</code>）と、カードの安定性および最後のレビュー日付に基づいて学習済みカードの再現性を計算します。</li>
+<li>どのカードをレビューする必要があるかを決定し、これらのカードに対してランダムな値を生成して、後でそれらが忘れられているかどうかを判断します。ユーザーが「Good」「Hard」「Easy」を押す確率は、ユーザーのレビュー履歴から推定されます。</li>
+<li>再現性とランダムな値に基づいて、どのカードが忘れられているかを判断し、レビューが必要なカードに評価を割り当てます。</li>
+<li>カードが忘れられているかどうか、そのレビュー評価、および設定で定義されたコストパラメータに基づいてカードのコストを更新します。コストパラメータ（ユーザーが「Good」または「Again」と答えたときにカードごとに費やす時間など）は、ユーザーのレビュー履歴から推定されます。</li>
+<li>コストの累積和を計算して、どのカードがレビューされるかを決定します。1日の最大コストとレビュー制限のため、すべてのカードを常にレビューできるわけではありません。</li>
+<li>初めてレビューする必要がある新しいカードを決定します。</li>
+<li>新しく学習したカードに対してランダムに評価を生成し、それらの安定性と難易度を更新します。</li>
+<li>カードの<code>last_date</code>、<code>stability</code>、<code>difficulty</code>、<code>interval</code>、および<code>due</code>フィールドを更新します。</li>
+<li>日次レビュー数、学習数、記憶数、および総コストを更新します。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>結果の返却</strong>:</p>
+<ul>
+<li>記憶数、レビュー数、学習数、および日次総コストの配列を返します。</li>
+</ul>
+</li>
+</ol>
+<p>記憶数は、シミュレーションの最初の日から現在の日までに習得した総知識です。レビュー数は、現在の日にレビューされたカードの数です。学習数は、現在の日に新しく学習されたカードの数です。日次総コストは、現在の日にカードをレビューし、新しいカードを学習するのに費やした時間です。</p>
+<h1 id="最適化"><a class="header" href="#最適化">最適化</a></h1>
+<p>シミュレーターを使用すると、各望ましい保持率レベルに対する作業負荷を予測することができます。オプティマイザーは<a href="https://en.wikipedia.org/wiki/Brent%27s_method">ブレント法</a>を使用して最適な保持率を見つけます。</p>
+<p>コード: https://github.com/open-spaced-repetition/fsrs-rs/blob/0634cb08b08fecb96b0b8a9caba4a5e6938e85bb/src/optimal_retention.rs#L478-L589</p>
+<p>注: Anki 24.04以前では、目標は知識の習得（すべてのリコール確率の合計）を最大化することでしたが、Anki 24.04以降では、目標は作業負荷/知識（勉強にかかる分数を前述の合計で割ったもの）を最小化することです。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="The-Metric.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="The-Metric.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

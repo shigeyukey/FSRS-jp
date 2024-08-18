@@ -1,0 +1,371 @@
+<!DOCTYPE HTML>
+<html lang="jp" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>アルゴリズム - FSRS Wiki 日本語版</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="Home.html"><strong aria-hidden="true">2.</strong> ようこそ</a></li><li class="chapter-item expanded "><a href="FAQ.html"><strong aria-hidden="true">3.</strong> よくある質問 (FAQ)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial.html"><strong aria-hidden="true">3.1.</strong> チュートリアル1</a></li><li class="chapter-item expanded "><a href="tutorial2.html"><strong aria-hidden="true">3.2.</strong> チュートリアル2</a></li></ol></li><li class="chapter-item expanded "><a href="ABC-of-FSRS.html"><strong aria-hidden="true">4.</strong> FSRSのABC</a></li><li class="chapter-item expanded "><a href="Advanced-methods-of-optimization.html"><strong aria-hidden="true">5.</strong> 最適化の高度な方法</a></li><li class="chapter-item expanded "><a href="Compare-Anki's-built-in-scheduler-and-FSRS.html"><strong aria-hidden="true">6.</strong> Ankiの内蔵スケジューラーとFSRSの比較</a></li><li class="chapter-item expanded "><a href="How-does-the-scheduler-work.html"><strong aria-hidden="true">7.</strong> スケジューラーの仕組み</a></li><li class="chapter-item expanded "><a href="Notebooks.html"><strong aria-hidden="true">8.</strong> ノートブック</a></li><li class="chapter-item expanded "><a href="Research-resources.html"><strong aria-hidden="true">9.</strong> 研究リソース</a></li><li class="chapter-item expanded "><a href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html"><strong aria-hidden="true">10.</strong> 間隔反復アルゴリズム - 初心者から専門家への3日間の旅</a></li><li class="chapter-item expanded "><a href="The-Algorithm.html" class="active"><strong aria-hidden="true">11.</strong> アルゴリズム</a></li><li class="chapter-item expanded "><a href="The-Benchmark.html"><strong aria-hidden="true">12.</strong> ベンチマーク</a></li><li class="chapter-item expanded "><a href="The-mechanism-of-optimization.html"><strong aria-hidden="true">13.</strong> 最適化の仕組み</a></li><li class="chapter-item expanded "><a href="The-Metric.html"><strong aria-hidden="true">14.</strong> メトリック</a></li><li class="chapter-item expanded "><a href="The-Optimal-Retention.html"><strong aria-hidden="true">15.</strong> 最適な保持率</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSRS Wiki 日本語版</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/shigeyukey/FSRS-jp" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>FSRS（Free Spaced Repetition Scheduler）アルゴリズムは、記憶状態を予測するために使用されるDSR（難易度、安定性、想起可能性）モデルの変種に基づいています。</p>
+<p>特定のパラメータとレビュー履歴を使用して間隔をプレビューするためのビジュアライザーはこちらです: <a href="https://open-spaced-repetition.github.io/anki_fsrs_visualizer/">Anki FSRS Visualizer (open-spaced-repetition.github.io)</a></p>
+<h1 id="記号"><a class="header" href="#記号">記号</a></h1>
+<ul>
+<li>$R$: 想起可能性（リコールの確率）</li>
+<li>$S$: 安定性（R=90%のときの間隔）
+<ul>
+<li>$S^\prime_r$: 想起後の新しい安定性</li>
+<li>$S^\prime_f$: 忘却後の新しい安定性</li>
+</ul>
+</li>
+<li>$D$: 難易度（ $D \in [1, 10]$ ）</li>
+<li>$G$: グレード（Ankiでの評価）:
+<ul>
+<li>$1$: <code>もう一回</code></li>
+<li>$2$: <code>難しい</code></li>
+<li>$3$: <code>正解</code></li>
+<li>$4$: <code>簡単</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="fsrs-5"><a class="header" href="#fsrs-5">FSRS-5</a></h1>
+<h2 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h2>
+<pre><code class="language-python">[0.4072, 1.1829, 3.1262, 15.4722, 7.2102, 0.5316, 1.0651, 0.0234, 1.616, 0.1544, 1.0824, 1.9813, 0.0953, 0.2975, 2.2042, 0.2407, 2.9466, 0.5034, 0.6567]
+</code></pre>
+<h2 id="式"><a class="header" href="#式">式</a></h2>
+<p>短期記憶の場合、安定性の式は次の通りです：</p>
+<p>$$S^\prime(S,G) = S \cdot e^{w_{17} \cdot (G - 3 + w_{18})}$$</p>
+<hr />
+<p>最初の評価後の初期難易度：</p>
+<p>$$D_0(G) = w_4 - e^{w_5 \cdot (G - 1)} + 1,$$</p>
+<p>ここで、最初の評価が「再度」の場合、$D_0(1)=w_4$です。</p>
+<hr />
+<p>平均回帰の目標は次のように更新されます：</p>
+<p>$$D^{\prime\prime} = w_7 \cdot D_0(4) + (1 - w_7) \cdot D^\prime$$</p>
+<h1 id="fsrs-45"><a class="header" href="#fsrs-45">FSRS-4.5</a></h1>
+<h2 id="デフォルトパラメータ-1"><a class="header" href="#デフォルトパラメータ-1">デフォルトパラメータ</a></h2>
+<pre><code class="language-python">[0.4872, 1.4003, 3.7145, 13.8206, 5.1618, 1.2298, 0.8975, 0.031, 1.6474, 0.1367, 1.0461, 2.1072, 0.0793, 0.3246, 1.587, 0.2272, 2.8755]
+</code></pre>
+<h2 id="方程式"><a class="header" href="#方程式">方程式</a></h2>
+<p>忘却曲線の式がこの更新で変更されました。</p>
+<p>最後のレビューから$t$日後の想起可能性は次の通りです：</p>
+<p>$$R(t,S) = \left(1 + FACTOR \cdot \cfrac{t}{S}\right)^{DECAY},$$</p>
+<p>ここで、$t=S$のとき$R(t,S)=0.9$です。</p>
+<p>次の間隔は、上記の式で$R$の代わりに要求される保持率を代入し、$t$を解くことで計算できます：</p>
+<p>$$I(r,S) = \cfrac{S}{FACTOR} \cdot \left(r^\cfrac{1}{DECAY} - 1\right),$$</p>
+<p>ここで、$r=0.9$のとき$I(r,S)=S$です。</p>
+<p>FSRS v4では、$DECAY=-1$および$FACTOR=\cfrac{1}{9}$です。</p>
+<p>FSRS-4.5では、$DECAY=-0.5$および$FACTOR=\cfrac{19}{81}$です。</p>
+<p>新しい忘却曲線は、$S$の前に急激に落ち、$S$の後に緩やかになります。</p>
+<h1 id="fsrs-v4"><a class="header" href="#fsrs-v4">FSRS v4</a></h1>
+<h2 id="デフォルトパラメータ-2"><a class="header" href="#デフォルトパラメータ-2">デフォルトパラメータ</a></h2>
+<pre><code class="language-python">[0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05, 0.34, 1.26, 0.29, 2.61]
+</code></pre>
+<h2 id="式-1"><a class="header" href="#式-1">式</a></h2>
+<blockquote>
+<p>$w_i$はw[i]を表します。</p>
+</blockquote>
+<p>最初の評価後の初期安定性：</p>
+<p>$$S_0(G) = w_{G-1}.$$</p>
+<p>例えば、最初の評価が「再度」の場合、初期安定性は$S_0(1)=w_0$です。最初の評価が「簡単」の場合、初期安定性は$S_0(4)=w_3$です。</p>
+<hr />
+<p>最初の評価後の初期難易度：</p>
+<p>$$D_0(G) = w_4 - (G-3) \cdot w_5,$$</p>
+<p>ここで、最初の評価が「正解(Good)」の場合、$D_0(3)=w_4$です。</p>
+<hr />
+<p>レビュー後の新しい難易度：</p>
+<p>$$D^\prime(D,G) = w_7 \cdot D_0(3) +(1 - w_7) \cdot (D - w_6 \cdot (G - 3)).$$</p>
+<p>これは、$D^\prime = D - w_6 \cdot (G - 3)$で新しい難易度を計算し、次に平均回帰$w_7 \cdot D_0(3) + (1 - w_7) \cdot D^\prime$を適用して「イーズヘル」を避けます。</p>
+<hr />
+<p>最後のレビューから$t$日後の想起可能性：</p>
+<p>$$R(t,S) = \left(1 + \cfrac{t}{9 \cdot S}\right)^{-1},$$</p>
+<p>ここで、$t=S$のとき$R(t,S)=0.9$です。</p>
+<p>次の間隔は、上記の式で$R$の代わりに要求される保持率を代入し、$t$を解くことで計算できます：</p>
+<p>$$I(r,S) = 9 \cdot S \cdot \left(\cfrac{1}{r} - 1\right),$$</p>
+<p>ここで、$r=0.9$のとき$I(r,S)=S$です。</p>
+<hr />
+<p>成功したレビュー後の新しい安定性（ユーザーが「難しい」、「良い」または「簡単」を押した場合）：</p>
+<p>$$S^\prime_r(D,S,R,G) = S\cdot(e^{w_8} \cdot (11-D) \cdot S^{-w_9} \cdot (e^{w_{10}\cdot(1-R)}-1) \cdot w_{15}(\textrm{G = 2の場合}) \cdot w_{16}(\textrm{G = 4の場合}) + 1).$$</p>
+<p>安定性の増加を示す$SInc$は、$\cfrac{S^\prime_r(D,S,R,G)}{S}$で表され、これはAnkiのファクターに相当します。</p>
+<ol>
+<li>$D$の値が大きいほど、$SInc$の値は小さくなります。これは、難しい教材の記憶安定性の増加が簡単な教材よりも小さいことを意味します。</li>
+<li>$S$の値が大きいほど、$SInc$の値は小さくなります。これは、記憶の安定性が高いほど、その記憶をさらに安定させることが難しくなることを意味します。</li>
+<li>$R$の値が小さいほど、$SInc$の値は大きくなります。これは、教材をレビューする最適なタイミングがほぼ忘れかけたときであることを意味します（ただし、想起に成功した場合に限ります）。</li>
+<li>レビューが成功した場合、$SInc$の値は常に1以上です。</li>
+</ol>
+<p>FSRSでは、レビューの遅延（すなわち、期限を過ぎたレビュー）が次の間隔に影響を与えます：</p>
+<p>遅延が増加すると、保持率（R）は減少します。レビューが成功した場合、上記のポイント3に従って、次の安定性（S）は高くなります。ただし、SM-2/Ankiアルゴリズムのように遅延とともに線形に増加するのではなく、次の安定性はFSRSパラメータに依存する上限に収束します。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/235642239-25de48b8-5dc6-4450-94e5-0bbf8165a559.png" alt="image" /></p>
+<p>このプレイグラウンドでパラメータを変更できます: https://www.geogebra.org/calculator/ahqmqjvx.</p>
+<hr />
+<p>忘却後の安定性（すなわち、失敗後の安定性）：</p>
+<p>$$S^\prime_f(D,S,R) = w_{11}\cdot D^{-w_{12}}\cdot ((S+1)^{w_{13}} - 1)\cdot e^{w_{14}\cdot(1-R)}.$$</p>
+<p>例えば、$D=2$および$R=0.9$の場合、デフォルトのパラメータを使用すると、$S^\prime_f(S=100) = 2\cdot 2^{-0.2} \cdot ((100+1)^{0.2}-1) \cdot e^{1(1-0.9)} \approx 3$ であり、$S^\prime_f(S=1) \approx 0.3$ となります。</p>
+<h1 id="fsrs-v3"><a class="header" href="#fsrs-v3">FSRS v3</a></h1>
+<h2 id="デフォルトパラメータ-3"><a class="header" href="#デフォルトパラメータ-3">デフォルトパラメータ</a></h2>
+<pre><code class="language-python">[0.9605, 1.7234, 4.8527, -1.1917, -1.2956, 0.0573, 1.7352, -0.1673, 1.065, 1.8907, -0.3832, 0.5867, 1.0721]
+</code></pre>
+<h2 id="式-2"><a class="header" href="#式-2">式</a></h2>
+<blockquote>
+<p>$w_i$はw[i]を表します。</p>
+</blockquote>
+<p>最初の評価後の初期安定性：</p>
+<p>$$S_0(G) = w_0 + (G-1) \cdot w_1,$$</p>
+<p>ここで、最初の評価が「再度」の場合、初期安定性は$S_0(1)=w_0$です。最初の評価が「簡単」の場合、初期安定性は$S_0(4)=w_0 + 3 \cdot w_1$です。</p>
+<hr />
+<p>最初の評価後の初期難易度：</p>
+<p>$$D_0(G) = w_2 + (G-3) \cdot w_3,$$</p>
+<p>ここで、最初の評価が「正解(Good)」の場合、$D_0(3)=w_2$です。</p>
+<hr />
+<p>レビュー後の新しい難易度：</p>
+<p>$$D^\prime(D,G) = w_5 \cdot D_0(3) +(1 - w_5) \cdot (D + w_4 \cdot (G - 3)).$$</p>
+<p>これは、$D^\prime = D + w_4 \cdot (G - 3)$で新しい難易度を計算し、次に平均回帰$w_5 \cdot D_0(3) + (1 - w_5) \cdot D^\prime$を適用して「イーズヘル」を避けます。</p>
+<hr />
+<p>最後のレビューから$t$日後の想起可能性：</p>
+<p>$$R(t,S) = 0.9^{\frac{t}{S}},$$</p>
+<p>ここで、$t=S$のとき$R(t,S)=0.9$です。</p>
+<p>次の間隔は、上記の式で$R$の代わりに要求される保持率を代入し、$t$を解くことで計算できます。</p>
+<p>$$I(r,S) = S \cdot \cfrac{\ln(r)}{\ln(0.9)},$$</p>
+<p>ここで、$r=0.9$のとき$I(r,S)=S$です。</p>
+<p>注意：<code>難しい</code>と<code>簡単</code>の評価後の間隔は異なる方法で計算されます。<code>簡単</code>の評価後の間隔は<code>easyBonus</code>を掛けます。<code>難しい</code>の評価後の間隔は<code>lastInterval</code>に<code>hardInterval</code>を掛けたものです。</p>
+<hr />
+<p>想起後の新しい安定性：</p>
+<p>$$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot S^{w_7}\cdot(e^{w_8\cdot(1-R)}-1)+1).$$</p>
+<p>$SInc$（安定性の増加）を$\cfrac{S^\prime_r(D,S,R)}{S}$とします。これはAnkiのファクターに相当します。</p>
+<ol>
+<li>$D$の値が大きいほど、$SInc$の値は小さくなります。これは、難しい教材の記憶安定性の増加が簡単な教材よりも小さいことを意味します。</li>
+<li>$S$の値が大きいほど、$SInc$の値は小さくなります。これは、記憶の安定性が高いほど、その記憶をさらに安定させることが難しくなることを意味します。</li>
+<li>$R$の値が小さいほど、$SInc$の値は大きくなります。これは、教材をレビューする最適なタイミングがほぼ忘れかけたときであることを意味します（ただし、想起に成功した場合に限ります）。</li>
+<li>レビューが成功した場合、$SInc$の値は常に1以上です。</li>
+</ol>
+<p>以下の3Dビジュアライゼーションが理解の助けになるでしょう。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192936891-1a3c4fd8-974b-4b87-ad76-8ba774500361.png" alt="image" /></p>
+<p>FSRSでは、レビューの遅延（すなわち、期限を過ぎたレビュー）が次の間隔に影響を与えます：</p>
+<p>遅延が増加すると、保持率（R）は減少します。レビューが成功した場合、上記のポイント3に従って、次の安定性（S）は高くなります。ただし、SM-2/Ankiアルゴリズムのように遅延とともに線形に増加するのではなく、次の安定性はFSRSパラメータに依存する上限に収束します。</p>
+<hr />
+<p>忘却後の安定性（すなわち、失敗後の安定性）：</p>
+<p>$$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{w_{12}\cdot(1-R)}.$$</p>
+<p>例えば、$D=2$および$R=0.9$の場合、デフォルトのパラメータを使用すると、$S^\prime_f(S=100) = 2\cdot 2^{-0.2} \cdot 100^{0.2} \cdot e^{1(1-0.9)} \approx 5$ であり、$S^\prime_f(S=1) \approx 2$ となります。</p>
+<p>この関数を<a href="https://www.geogebra.org/calculator/dzwn2zwh">post-lapse stability - GeoGebra</a>で試すことができます。</p>
+<p><img src="https://user-images.githubusercontent.com/32575846/192935271-3b868490-b893-41bd-873c-2a0cf9d96bb1.png" alt="image" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="The-Benchmark.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="The-Benchmark.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
