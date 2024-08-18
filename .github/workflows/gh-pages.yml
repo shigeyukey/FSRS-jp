@@ -32,3 +32,4 @@ jobs:
 
       - name: Build
         run: CHECK=1 .github/workflows/build.sh
+
