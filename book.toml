@@ -8,3 +8,6 @@ title = "FSRS Wiki 日本語版"
 [output.html]
 git-repository-url = "https://github.com/shigeyukey/FSRS-jp"
 git-repository-icon = "fa-github"
+
+[output.html.additional-links]
+"誤訳を報告" = "https://forms.gle/jbnPepH378mVb2Sz5"

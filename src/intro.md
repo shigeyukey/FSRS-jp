@@ -41,7 +41,7 @@ FSRSアルゴリズムの詳細については、[アルゴリズム](The-Algori
 - [間隔反復スケジューリングを最適化するための確率的最短経路アルゴリズム](https://www.maimemo.com/paper/)（無料アクセス）、および
 - [記憶のダイナミクスを捉えて間隔反復スケジュールを最適化する](https://www.researchgate.net/publication/369045947_Optimizing_Spaced_Repetition_Schedule_by_Capturing_the_Dynamics_of_Memory)（リクエストを提出）。
 
-FSRS4Anki Helperは、FSRS4Anki Schedulerを補完するAnkiのアドオンです。詳細はこちらをご覧ください：https://github.com/open-spaced-repetition/fsrs4anki-helper
+FSRS4Anki Helperは、FSRS4Anki Schedulerを補完するAnkiのアドオンです。詳細はこちらをご覧ください：[https://github.com/open-spaced-repetition/fsrs4anki-helper](https://github.com/open-spaced-repetition/fsrs4anki-helper)
 
 # 始め方
 
@@ -57,23 +57,23 @@ Anki v23.10以降では、FSRSの設定がはるかに簡単になっていま�
 
 | アドオン                                                       | 互換性あり? | コメント |
 | ------------------------------------------------------------ |-------------------| ------- |
-| [Review Heatmap](https://ankiweb.net/shared/info/1771074083) | はい :white_check_mark: | FSRSに関連するものには影響しません。 |
-| [Advanced Browser](https://ankiweb.net/shared/info/874215009) | はい :white_check_mark: | 最新バージョンを使用してください。 |
-| [Advanced Review Bottom Bar](https://ankiweb.net/shared/info/1136455830) | はい :white_check_mark: | 最新バージョンを使用してください。 |
-| [The KING of Button Add-ons](https://ankiweb.net/shared/info/374005964) | はい :white_check_mark: | 最新バージョンを使用してください。 |
-| [Pass/Fail](https://ankiweb.net/shared/info/876946123) | はい :white_check_mark: | `Pass`は`Good`に相当し、`Fail`は`Again`に相当します。 |
-| [AJT Card Management](https://ankiweb.net/shared/info/1021636467) | はい :white_check_mark: | Anki 23.12以降と互換性があります。 |
-| [Incremental Reading v4.11.3 (unofficial clone)](https://ankiweb.net/shared/info/999215520) | 不明 :question: | スタンドアロン版のFSRSを使用している場合、Ankiの内蔵スケジューラーによって提供される間隔が表示され、カスタムスケジューラーでは表示されません。このアドオンは技術的には内蔵FSRSと互換性がありますが、FSRSはインクリメンタルリーディング用に設計されておらず、FSRSの設定はIRカードには適用されません。IRカードは他のカードタイプとは異なる方法で動作します。 |
-| [Delay siblings](https://ankiweb.net/shared/info/1369579727) | いいえ :x:| Delay siblingsはFSRSによって提供される間隔を変更します。ただし、FSRS4Anki HelperアドオンにはFSRSとよりよく連携する類似の機能があります。FSRS4Anki Helperアドオンを使用してください。 |
-| [Auto Ease Factor](https://ankiweb.net/shared/info/1672712021) | いいえ :x: | FSRSが有効な場合、Ease Factorはもはや関連性がないため、このアドオンを使用してもメリットはありません。 |
-| [autoLapseNewInterval](https://ankiweb.net/shared/info/372281481) |いいえ :x:| FSRSが有効な場合、`New Interval`設定はもはや関連性がないため、このアドオンを使用してもメリットはありません。 |
-| [Straight Reward](https://ankiweb.net/shared/info/957961234) | いいえ :x: | FSRSが有効な場合、Ease Factorはもはや関連性がないため、このアドオンを使用してもメリットはありません。 |
+| [Review Heatmap](https://ankiweb.net/shared/info/1771074083) | はい ✅ | FSRSに関連するものには影響しません。 |
+| [Advanced Browser](https://ankiweb.net/shared/info/874215009) | はい ✅ | 最新バージョンを使用してください。 |
+| [Advanced Review Bottom Bar](https://ankiweb.net/shared/info/1136455830) | はい ✅ | 最新バージョンを使用してください。 |
+| [The KING of Button Add-ons](https://ankiweb.net/shared/info/374005964) | はい ✅ | 最新バージョンを使用してください。 |
+| [Pass/Fail](https://ankiweb.net/shared/info/876946123) | はい ✅ | `Pass`は`Good`に相当し、`Fail`は`Again`に相当します。 |
+| [AJT Card Management](https://ankiweb.net/shared/info/1021636467) | はい ✅ | Anki 23.12以降と互換性があります。 |
+| [Incremental Reading v4.11.3 (unofficial clone)](https://ankiweb.net/shared/info/999215520) | 不明 ❓ | スタンドアロン版のFSRSを使用している場合、Ankiの内蔵スケジューラーによって提供される間隔が表示され、カスタムスケジューラーでは表示されません。このアドオンは技術的には内蔵FSRSと互換性がありますが、FSRSはインクリメンタルリーディング用に設計されておらず、FSRSの設定はIRカードには適用されません。IRカードは他のカードタイプとは異なる方法で動作します。 |
+| [Delay siblings](https://ankiweb.net/shared/info/1369579727) | いいえ ❌| Delay siblingsはFSRSによって提供される間隔を変更します。ただし、FSRS4Anki HelperアドオンにはFSRSとよりよく連携する類似の機能があります。FSRS4Anki Helperアドオンを使用してください。 |
+| [Auto Ease Factor](https://ankiweb.net/shared/info/1672712021) | いいえ ❌ | FSRSが有効な場合、Ease Factorはもはや関連性がないため、このアドオンを使用してもメリットはありません。 |
+| [autoLapseNewInterval](https://ankiweb.net/shared/info/372281481) |いいえ ❌| FSRSが有効な場合、`New Interval`設定はもはや関連性がないため、このアドオンを使用してもメリットはありません。 |
+| [Straight Reward](https://ankiweb.net/shared/info/957961234) | いいえ ❌ | FSRSが有効な場合、Ease Factorはもはや関連性がないため、このアドオンを使用してもメリットはありません。 |
 
 FSRSと他のアドオンの互換性を確認してほしい場合は、[issues](https://github.com/open-spaced-repetition/fsrs4anki/issues)でお知らせください。
 
 # 貢献
 
-FSRS4Ankiに貢献する方法として、ベータテスト、コードの提出、データの共有があります。データを共有したい場合は、こちらのフォームにご記入ください：https://forms.gle/KaojsBbhMCytaA7h8
+FSRS4Ankiに貢献する方法として、ベータテスト、コードの提出、データの共有があります。データを共有したい場合は、こちらのフォームにご記入ください：[https://forms.gle/KaojsBbhMCytaA7h8](https://forms.gle/KaojsBbhMCytaA7h8)
 
 ## 貢献者
 
