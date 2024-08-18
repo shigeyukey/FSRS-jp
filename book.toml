@@ -10,7 +10,7 @@ create-missing = true
 
 [output.html]
 # no-section-label = true
-git-repository-url = "https://github.com/shigeyukey/FSRS-jp/"
+git-repository-url = "https://github.com/shigeyukey/FSRS-jp"
 
 [preprocessor.toc]
 command = "mdbook-toc"
