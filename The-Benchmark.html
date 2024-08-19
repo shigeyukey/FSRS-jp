@@ -87,7 +87,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="Home.html"><strong aria-hidden="true">2.</strong> ようこそ</a></li><li class="chapter-item expanded "><a href="FAQ.html"><strong aria-hidden="true">3.</strong> よくある質問 (FAQ)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial.html"><strong aria-hidden="true">3.1.</strong> チュートリアル1</a></li><li class="chapter-item expanded "><a href="tutorial2.html"><strong aria-hidden="true">3.2.</strong> チュートリアル2</a></li></ol></li><li class="chapter-item expanded "><a href="ABC-of-FSRS.html"><strong aria-hidden="true">4.</strong> FSRSのABC</a></li><li class="chapter-item expanded "><a href="Advanced-methods-of-optimization.html"><strong aria-hidden="true">5.</strong> 最適化の高度な方法</a></li><li class="chapter-item expanded "><a href="Compare-Anki's-built-in-scheduler-and-FSRS.html"><strong aria-hidden="true">6.</strong> Ankiの内蔵スケジューラーとFSRSの比較</a></li><li class="chapter-item expanded "><a href="How-does-the-scheduler-work.html"><strong aria-hidden="true">7.</strong> スケジューラーの仕組み</a></li><li class="chapter-item expanded "><a href="Notebooks.html"><strong aria-hidden="true">8.</strong> ノートブック</a></li><li class="chapter-item expanded "><a href="Research-resources.html"><strong aria-hidden="true">9.</strong> 研究リソース</a></li><li class="chapter-item expanded "><a href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html"><strong aria-hidden="true">10.</strong> 間隔反復アルゴリズム - 初心者から専門家への3日間の旅</a></li><li class="chapter-item expanded "><a href="The-Algorithm.html"><strong aria-hidden="true">11.</strong> アルゴリズム</a></li><li class="chapter-item expanded "><a href="The-Benchmark.html" class="active"><strong aria-hidden="true">12.</strong> ベンチマーク</a></li><li class="chapter-item expanded "><a href="The-mechanism-of-optimization.html"><strong aria-hidden="true">13.</strong> 最適化の仕組み</a></li><li class="chapter-item expanded "><a href="The-Metric.html"><strong aria-hidden="true">14.</strong> メトリック</a></li><li class="chapter-item expanded "><a href="The-Optimal-Retention.html"><strong aria-hidden="true">15.</strong> 最適な保持率</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="Home.html"><strong aria-hidden="true">2.</strong> ようこそ</a></li><li class="chapter-item expanded "><a href="FAQ.html"><strong aria-hidden="true">3.</strong> よくある質問 (FAQ)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial.html"><strong aria-hidden="true">3.1.</strong> チュートリアル1</a></li><li class="chapter-item expanded "><a href="tutorial2.html"><strong aria-hidden="true">3.2.</strong> チュートリアル2</a></li></ol></li><li class="chapter-item expanded "><a href="ABC-of-FSRS.html"><strong aria-hidden="true">4.</strong> FSRSのABC</a></li><li class="chapter-item expanded "><a href="Compare-Anki's-built-in-scheduler-and-FSRS.html"><strong aria-hidden="true">5.</strong> Ankiの内蔵スケジューラーとFSRSの比較</a></li><li class="chapter-item expanded "><a href="How-does-the-scheduler-work.html"><strong aria-hidden="true">6.</strong> スケジューラーの仕組み</a></li><li class="chapter-item expanded "><a href="Spaced-Repetition-Algorithm-‐-A-Three‐Day-Journey-from-Novice-to-Expert.html"><strong aria-hidden="true">7.</strong> 間隔反復アルゴリズム - 初心者から専門家への3日間の旅</a></li><li class="chapter-item expanded "><a href="The-Algorithm.html"><strong aria-hidden="true">8.</strong> アルゴリズム</a></li><li class="chapter-item expanded "><a href="The-mechanism-of-optimization.html"><strong aria-hidden="true">9.</strong> 最適化の仕組み</a></li><li class="chapter-item expanded "><a href="The-Optimal-Retention.html"><strong aria-hidden="true">10.</strong> 最適な保持率</a></li><li class="chapter-item expanded "><a href="Advanced-methods-of-optimization.html"><strong aria-hidden="true">11.</strong> 最適化の高度な方法</a></li><li class="chapter-item expanded "><a href="The-Benchmark.html" class="active"><strong aria-hidden="true">12.</strong> ベンチマーク</a></li><li class="chapter-item expanded "><a href="The-Metric.html"><strong aria-hidden="true">13.</strong> メトリック</a></li><li class="chapter-item expanded "><a href="Notebooks.html"><strong aria-hidden="true">14.</strong> ノートブック</a></li><li class="chapter-item expanded "><a href="Research-resources.html"><strong aria-hidden="true">15.</strong> 研究リソース</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -172,17 +172,159 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>こちら: https://github.com/open-spaced-repetition/srs-benchmark</p>
+                        <p>訳注: 原文とデータはこちら <a href="https://github.com/open-spaced-repetition/srs-benchmark">SRS Benchmark</a></p>
+<h1 id="srs-ベンチマーク-性能評価テスト"><a class="header" href="#srs-ベンチマーク-性能評価テスト">SRS ベンチマーク (性能評価テスト)</a></h1>
+<h2 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h2>
+<p>間隔反復アルゴリズムは、フラッシュカードのレビューをスケジュールするのに役立つコンピュータプログラムです。良い間隔反復アルゴリズムは、より効率的に物事を覚えるのに役立ちます。一度に詰め込むのではなく、時間をかけてレビューを分散させます。これを効率的に行うために、これらのアルゴリズムはあなたの記憶の仕組みを理解しようとします。いつ何かを忘れそうかを予測し、それに応じてレビューをスケジュールすることを目指しています。</p>
+<p>このベンチマークは、さまざまなアルゴリズムの予測精度を評価するために設計されたツールです。多くのアルゴリズムが評価され、最も正確な予測を提供するものを見つけ出します。</p>
+<h2 id="データセット"><a class="header" href="#データセット">データセット</a></h2>
+<p>SRSベンチマークのデータセットは、フラッシュカードアプリであるAnkiを使用する2万人から提供されたものです。合計で、このデータセットには約17億回のフラッシュカードレビューに関する情報が含まれています。完全なデータセットはHugging Face Datasetsにホストされています: <a href="https://huggingface.co/datasets/open-spaced-repetition/FSRS-Anki-20k">open-spaced-repetition/FSRS-Anki-20k</a>。</p>
+<h2 id="評価"><a class="header" href="#評価">評価</a></h2>
+<h3 id="データ分割"><a class="header" href="#データ分割">データ分割</a></h3>
+<p>SRSベンチマークでは、<code>TimeSeriesSplit</code>というツールを使用します。これは機械学習に使用される<a href="https://scikit-learn.org/">sklearn</a>ライブラリの一部です。このツールはデータを時間で分割するのに役立ちます。古いレビューはトレーニングに使用し、新しいレビューはテストに使用します。これにより、アルゴリズムに与えるべきでない未来の情報を誤って与えることを防ぎます。実際には、過去の学習セッションを使用して未来のセッションを予測します。これにより、<code>TimeSeriesSplit</code>はベンチマークに適しています。</p>
+<p>注意: TimeSeriesSplitは評価から最初の分割を除外します。これは最初の分割がトレーニングに使用され、同じデータでアルゴリズムを評価したくないためです。</p>
+<h3 id="メトリクス"><a class="header" href="#メトリクス">メトリクス</a></h3>
+<p>SRSベンチマークでは、これらのアルゴリズムがどれだけうまく機能するかを評価するために、ログ損失、AUC、およびカスタムRMSE（RMSE (bins)）の3つのメトリクスを使用します。</p>
+<ul>
+<li>ログ損失（Binary Cross Entropyとも呼ばれる）: 主にバイナリ分類問題に適用されるために利用され、ログ損失は予測されたリコール確率とレビュー結果（1または0）の間の不一致を測定します。これは、アルゴリズムが真のリコール確率をどれだけ正確に近似するかを定量化し、間隔反復システムにおけるアルゴリズム評価の重要なメトリクスとなります。ログ損失は0から無限大までの範囲で、低いほど良いです。</li>
+<li>AUC（ROC曲線下面積）: AUCは分離度の程度または測定を表します。これは、アルゴリズムがクラス間をどれだけ区別できるかを示します。AUCは0から1の範囲ですが、実際にはほとんどの場合0.5より大きくなります。高いほど良いです。</li>
+<li>ビン内の二乗平均平方根誤差（RMSE (bins)）: これはSRSベンチマークで使用するために設計されたメトリクスです。このアプローチでは、予測とレビュー結果が間隔の長さ、レビューの回数、およびラプスの回数に基づいてビンにグループ化されます。各ビン内で、平均予測リコール確率と平均リコール率の間の二乗差が計算されます。これらの値は各ビンのサンプルサイズに応じて重み付けされ、最終的な重み付けされた二乗平均平方根誤差が計算されます。このメトリクスは、異なる確率範囲にわたるアルゴリズムの性能を詳細に理解するためのものです。詳細については、<a href="The-Metric.html">メトリック</a>を参照してください。RMSE (bins)は0から1の範囲で、低いほど良いです。</li>
+</ul>
+<h3 id="アルゴリズム"><a class="header" href="#アルゴリズム">アルゴリズム</a></h3>
+<ul>
+<li>FSRS v3: 実際に使用された最初のFSRSアルゴリズムのバージョン。</li>
+<li>FSRS v4: コミュニティの助けを借りて改良されたFSRSのアップグレード版。</li>
+<li>FSRS-4.5: FSRS v4に基づいてわずかに改良されたバージョン。忘却曲線の形状が変更されています。このベンチマークには、デフォルトパラメータ（20,000のコレクションすべてでFSRS-4.5を実行して取得されたもの）を使用したFSRS-4.5と、最初の4つのパラメータ（最初のレビュー後の初期安定性の値）のみを最適化し、残りはデフォルトに設定したFSRS-4.5が含まれています。</li>
+<li>FSRS-5: 最新のFSRSバージョン。以前のバージョンとは異なり、同日レビューを考慮に入れています。同日レビューはトレーニングにのみ使用され、評価には使用されません。</li>
+<li>FSRS-rs: FSRS-5のRust移植版。詳細はこちら: https://github.com/open-spaced-repetition/fsrs-rs</li>
+<li>GRU: データのシーケンスに基づいて予測を行うために頻繁に使用されるニューラルネットワークの一種。時間関連のタスクにおける機械学習の古典です。
+<ul>
+<li>GRU-P: 忘却曲線を取り除き、リコールの確率を直接予測するGRUのバリアント。</li>
+<li>GRU-P-short: 上記と同じですが、同日レビューも考慮に入れています。</li>
+</ul>
+</li>
+<li>DASH: <a href="https://scholar.colorado.edu/concern/graduate_thesis_or_dissertations/zp38wc97m">この論文</a>で提案されたモデル。名前はDifficulty（難易度）、Ability（能力）、Study History（学習履歴）を表します。このベンチマークでは、データセットに適用できないため、難易度部分を除いたAbilityとStudy Historyのみを使用しています。また、このモデルの他の2つのバリアントであるDASH[MCM]とDASH[ACT-R]も追加しました。詳細については、<a href="https://www.politesi.polimi.it/retrieve/b39227dd-0963-40f2-a44b-624f205cb224/2022_4_Randazzo_01.pdf">この論文</a>を参照してください。</li>
+<li>ACT-R: <a href="http://act-r.psy.cmu.edu/wordpress/wp-content/themes/ACT-R/workshops/2003/proceedings/46.pdf">この論文</a>で提案されたモデル。宣言的記憶の活性化ベースのシステムを含みます。記憶痕跡の活性化によって間隔効果を説明します。</li>
+<li>HLR: Duolingoによって提案されたモデル。正式名称はHalf-Life Regressionです。詳細については、<a href="https://github.com/duolingo/halflife-regression">この論文</a>を参照してください。</li>
+<li>Transformer: 自然言語処理において優れた性能を発揮するため、近年人気を集めているニューラルネットワークの一種。ChatGPTはこのアーキテクチャに基づいています。</li>
+<li>SM-2: SuperMemoによって使用された初期のアルゴリズムの1つで、最初の間隔反復ソフトウェアです。30年以上前に開発され、現在でも人気があります。<a href="https://faqs.ankiweb.net/what-spaced-repetition-algorithm.html">AnkiのデフォルトアルゴリズムはSM-2に基づいています</a>、<a href="https://mnemosyne-proj.org/principles.php">Mnemosyne</a>もそれを使用しています。このアルゴリズムはリコールの確率をネイティブに予測しないため、ベンチマークのために忘却曲線に関するいくつかの仮定に基づいて出力を変更しました。</li>
+<li>NN-17: <a href="https://supermemo.guru/wiki/Algorithm_SM-17">SM-17</a>のニューラルネットワーク近似。パラメータの数が同等であり、我々の推定によれば、SM-17と同様の性能を発揮します。</li>
+<li>AVG: ユーザーの平均保持率に等しい定数を出力する「アルゴリズム」。実用的な用途はなく、ベースラインとしてのみ機能します。</li>
+</ul>
+<p>FSRSアルゴリズムに関する詳細は、次のWikiページを参照してください: <a href="The-Algorithm.html">The Algorithm</a>.</p>
+<h2 id="結果"><a class="header" href="#結果">結果</a></h2>
+<p>総ユーザー数: 19,990人。</p>
+<p>評価に使用された総レビュー数: 702,721,850回。
+同日レビューはFSRS-5およびGRU-P-shortを除いて除外されています。つまり、各アルゴリズムは1日につき1回のレビュー（時間順に最初のもの）しか使用しません。いくつかのレビューはフィルタリングされています。例えば、期日を手動で変更したり、「このデッキでの回答に基づいてカードを再スケジュールする」が無効になっているフィルターデッキでカードをレビューした場合に作成されたrevlogエントリなどです。最後に、外れ値フィルターが適用されます。これらの理由により、評価に使用されたレビュー数は以前に述べた17億回という数字よりも大幅に少なくなっています。</p>
+<p>以下の表は、平均値と99%信頼区間を示しています。最良の結果は<strong>太字</strong>で強調されています。最右列には最適化可能（トレーニング可能）なパラメータの数が示されています。パラメータが定数である場合、それは含まれていません。</p>
+<h3 id="レビュー数で重み付け"><a class="header" href="#レビュー数で重み付け">レビュー数で重み付け</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>モデル</th><th>パラメータ数</th><th>ログ損失</th><th>RMSE（ビン）</th><th>AUC</th></tr></thead><tbody>
+<tr><td><strong>GRU-P-short</strong></td><td>297</td><td><strong>0.313±0.0051</strong></td><td><strong>0.0420±0.00085</strong></td><td><strong>0.707±0.0029</strong></td></tr>
+<tr><td>GRU-P</td><td>297</td><td>0.318±0.0053</td><td>0.0435±0.00091</td><td>0.697±0.0027</td></tr>
+<tr><td>FSRS-5</td><td>19</td><td>0.320±0.0052</td><td>0.050±0.0010</td><td>0.700±0.0028</td></tr>
+<tr><td>FSRS-rs</td><td>19</td><td>0.322±0.0053</td><td>0.052±0.0011</td><td>0.692±0.0029</td></tr>
+<tr><td>FSRS-4.5</td><td>17</td><td>0.324±0.0053</td><td>0.052±0.0011</td><td>0.693±0.0027</td></tr>
+<tr><td>FSRSv4</td><td>17</td><td>0.329±0.0056</td><td>0.057±0.0012</td><td>0.690±0.0027</td></tr>
+<tr><td>DASH</td><td>9</td><td>0.331±0.0053</td><td>0.060±0.0010</td><td>0.642±0.0031</td></tr>
+<tr><td>DASH[MCM]</td><td>9</td><td>0.331±0.0054</td><td>0.062±0.0011</td><td>0.644±0.0030</td></tr>
+<tr><td>DASH[ACT-R]</td><td>5</td><td>0.334±0.0055</td><td>0.065±0.0012</td><td>0.632±0.0031</td></tr>
+<tr><td>FSRSv3</td><td>13</td><td>0.360±0.0068</td><td>0.070±0.0015</td><td>0.667±0.0029</td></tr>
+<tr><td>FSRS-5-pretrain</td><td>4</td><td>0.338±0.0058</td><td>0.072±0.0016</td><td>0.685±0.0028</td></tr>
+<tr><td>NN-17</td><td>39</td><td>0.346±0.0069</td><td>0.075±0.0015</td><td>0.595±0.0031</td></tr>
+<tr><td>GRU</td><td>39</td><td>0.375±0.0072</td><td>0.079±0.0016</td><td>0.658±0.0027</td></tr>
+<tr><td>FSRS-5-dry-run</td><td>0</td><td>0.346±0.0060</td><td>0.081±0.0017</td><td>0.681±0.0028</td></tr>
+<tr><td>ACT-R</td><td>5</td><td>0.354±0.0057</td><td>0.084±0.0019</td><td>0.536±0.0030</td></tr>
+<tr><td>AVG</td><td>0</td><td>0.354±0.0059</td><td>0.085±0.0019</td><td>0.508±0.0029</td></tr>
+<tr><td>HLR</td><td>3</td><td>0.404±0.0079</td><td>0.102±0.0020</td><td>0.632±0.0034</td></tr>
+<tr><td>SM2</td><td>0</td><td>0.54±0.012</td><td>0.147±0.0029</td><td>0.599±0.0031</td></tr>
+<tr><td>Transformer</td><td>127</td><td>0.51±0.011</td><td>0.182±0.0033</td><td>0.515±0.0043</td></tr>
+</tbody></table>
+</div>
+<h3 id="重み付けなし"><a class="header" href="#重み付けなし">重み付けなし</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Model</th><th>Parameters</th><th>Log Loss</th><th>RMSE (bins)</th><th>AUC</th></tr></thead><tbody>
+<tr><td>GRU-P</td><td>297</td><td>0.345±0.0030</td><td><strong>0.0655±0.00082</strong></td><td>0.679±0.0017</td></tr>
+<tr><td>GRU-P-short</td><td>297</td><td><strong>0.340±0.0030</strong></td><td>0.0659±0.00084</td><td>0.687±0.0019</td></tr>
+<tr><td>FSRS-5</td><td>19</td><td>0.346±0.0031</td><td>0.0712±0.00084</td><td><strong>0.697±0.0017</strong></td></tr>
+<tr><td>FSRS-rs</td><td>19</td><td>0.348±0.0031</td><td>0.0726±0.00086</td><td>0.693±0.0017</td></tr>
+<tr><td>FSRS-4.5</td><td>17</td><td>0.352±0.0032</td><td>0.0742±0.00088</td><td>0.688±0.0017</td></tr>
+<tr><td>DASH</td><td>9</td><td>0.358±0.0031</td><td>0.0810±0.00095</td><td>0.632±0.0018</td></tr>
+<tr><td>FSRSv4</td><td>17</td><td>0.362±0.0033</td><td>0.082±0.0010</td><td>0.685±0.0016</td></tr>
+<tr><td>DASH[MCM]</td><td>9</td><td>0.358±0.0030</td><td>0.0831±0.00094</td><td>0.636±0.0019</td></tr>
+<tr><td>DASH[ACT-R]</td><td>5</td><td>0.362±0.0033</td><td>0.086±0.0011</td><td>0.627±0.0019</td></tr>
+<tr><td>FSRS-5-pretrain</td><td>4</td><td>0.359±0.0032</td><td>0.0866±0.00091</td><td>0.692±0.0016</td></tr>
+<tr><td>NN-17</td><td>39</td><td>0.380±0.0035</td><td>0.100±0.0013</td><td>0.570±0.0018</td></tr>
+<tr><td>FSRS-5-dry-run</td><td>0</td><td>0.373±0.0032</td><td>0.101±0.0011</td><td>0.691±0.0016</td></tr>
+<tr><td>AVG</td><td>0</td><td>0.385±0.0036</td><td>0.101±0.0011</td><td>0.500±0.0018</td></tr>
+<tr><td>ACT-R</td><td>5</td><td>0.395±0.0040</td><td>0.106±0.0012</td><td>0.524±0.0018</td></tr>
+<tr><td>FSRSv3</td><td>13</td><td>0.422±0.0046</td><td>0.106±0.0013</td><td>0.661±0.0017</td></tr>
+<tr><td>GRU</td><td>39</td><td>0.440±0.0052</td><td>0.108±0.0013</td><td>0.650±0.0017</td></tr>
+<tr><td>HLR</td><td>3</td><td>0.456±0.0051</td><td>0.124±0.0013</td><td>0.636±0.0018</td></tr>
+<tr><td>Transformer</td><td>127</td><td>0.554±0.0064</td><td>0.185±0.0018</td><td>0.527±0.0021</td></tr>
+<tr><td>SM2</td><td>0</td><td>0.71±0.013</td><td>0.199±0.0021</td><td>0.604±0.0018</td></tr>
+</tbody></table>
+</div>
+<p>レビュー数で重み付けされた平均は、データが豊富にある場合の「ベストケース」パフォーマンスをよりよく表しています。ほとんどすべてのアルゴリズムは、学習するデータが多いほど良いパフォーマンスを発揮するため、レビュー数で重み付けすることは平均を低い値に偏らせます。</p>
+<p>重み付けされていない平均は、「平均的なケース」のパフォーマンスをよりよく表しています。実際には、すべてのユーザーが何十万ものレビューを持っているわけではないので、アルゴリズムが常にその完全な潜在能力を発揮できるわけではありません。</p>
+<p>以下の画像は、すべてのアルゴリズムのペアのRMSEに対してWilcoxon符号付き順位検定を実行して得られたp値を示しています。赤は行のアルゴリズムが対応する列のアルゴリズムよりも劣ることを意味し、緑は行のアルゴリズムが対応する列のアルゴリズムよりも優れていることを意味します。灰色はp値が0.01より大きいことを意味し、どちらのアルゴリズムが優れているか結論を出せないことを示します。</p>
+<p>ほとんどすべてのp値は非常に小さく、0.01よりも何桁も小さいです。もちろん、これほど低いp値は「これらの値を信頼できるのか？」という疑問を投げかけます。<code>scipy.stats.wilcoxon</code>自体はn&gt;50の場合に近似を使用しており、我々の修正された実装は64ビット浮動小数点数の制限を避けるために、p値自体ではなくp値の小数対数を返す近似を使用しています。したがって、これは近似の近似です。しかし、より重要なのは、このテストが重み付けされていないことであり、RMSEがレビュー数に依存するという事実を考慮していないことです。</p>
+<p>全体として、これらのp値は定性的（しかし定量的ではない）レベルで信頼できます。</p>
+<p><img src="https://raw.githubusercontent.com/open-spaced-repetition/srs-benchmark/main/plots/Wilcoxon-19990-collections.png" alt="Wilcoxon, 19990 collections" /></p>
+<h2 id="デフォルトパラメーター"><a class="header" href="#デフォルトパラメーター">デフォルトパラメーター</a></h2>
+<p>FSRS-5:</p>
+<pre><code>0.4197, 1.1869, 3.0412, 15.2441,
+7.1434, 0.6477, 1.0007, 0.0674,
+1.6597, 0.1712, 1.1178,
+2.0225, 0.0904, 0.3025, 2.1214,
+0.2498, 2.9466,
+0.4891, 0.6468
+</code></pre>
+<h2 id="supermemo-151617との比較"><a class="header" href="#supermemo-151617との比較">SuperMemo 15/16/17との比較</a></h2>
+<p>以下のリポジトリを参照してください:</p>
+<ul>
+<li><a href="https://github.com/open-spaced-repetition/fsrs-vs-sm15">fsrs-vs-sm15</a></li>
+<li><a href="https://github.com/open-spaced-repetition/fsrs-vs-sm17">fsrs-vs-sm17</a></li>
+</ul>
+<h2 id="ベンチマークの実行方法"><a class="header" href="#ベンチマークの実行方法">ベンチマークの実行方法</a></h2>
+<h3 id="必要条件"><a class="header" href="#必要条件">必要条件</a></h3>
+<p>データセット（小規模版）: https://github.com/open-spaced-repetition/fsrs-benchmark/issues/28#issuecomment-1876196288</p>
+<p>依存関係:</p>
+<pre><code class="language-bash">pip install -r requirements.txt
+</code></pre>
+<h3 id="コマンド"><a class="header" href="#コマンド">コマンド</a></h3>
+<p>FSRS-4.5:</p>
+<pre><code class="language-bash">python script.py
+</code></pre>
+<p>FSRS-4.5 with default parameters:</p>
+<pre><code class="language-bash">DRY_RUN=1 python script.py
+</code></pre>
+<p>FSRS-rs:</p>
+<pre><code class="language-bash">FSRS_RS=1 FSRS_NO_OUTLIER=1 PYTHONPATH=~/Codes/anki/out/pylib:~/Codes/anki/pylib python script.py
+</code></pre>
+<blockquote>
+<p><code>PYTHONPATH</code>変数をAnkiのソースコードのパスに変更してください。</p>
+</blockquote>
+<p>FSRSv4/FSRSv3/HLR/LSTM/SM2:</p>
+<pre><code class="language-bash">MODEL=FSRSv4 python other.py
+</code></pre>
+<blockquote>
+<p><code>MODEL</code>変数を<code>FSRSv3</code>、<code>HLR</code>、<code>GRU</code>、または<code>SM2</code>に変更して、対応するモデルを実行してください。</p>
+</blockquote>
+<p>fsrs-optimizerでの開発モデル:</p>
+<pre><code class="language-bash">DEV_MODE=1 python script.py
+</code></pre>
+<blockquote>
+<p>fsrs-optimizerリポジトリをこのリポジトリと同じディレクトリに配置してください。</p>
+</blockquote>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="The-Algorithm.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="Advanced-methods-of-optimization.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="The-mechanism-of-optimization.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="The-Metric.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -192,11 +334,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="The-Algorithm.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="Advanced-methods-of-optimization.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="The-mechanism-of-optimization.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="The-Metric.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
