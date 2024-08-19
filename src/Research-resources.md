@@ -105,3 +105,4 @@ Pavlik, P. I., & Anderson, J. R. (2005). 語彙記憶における練習と忘却
 Woźniak, P. A., Gorzelańczyk, E. J., & Murakowski, J. A. (1995). 長期記憶の2つの要素。Acta neurobiologiae experimentalis, 55(4), 301–305. [https://pubmed.ncbi.nlm.nih.gov/8713361/](https://pubmed.ncbi.nlm.nih.gov/8713361/)
 
 Woźniak, P. A., & Gorzelańczyk, E. J. (1994). 学習の実践における反復間隔の最適化。Acta neurobiologiae experimentalis, 54(1), 59–62. [https://pubmed.ncbi.nlm.nih.gov/8023714/](https://pubmed.ncbi.nlm.nih.gov/8023714/)
+
