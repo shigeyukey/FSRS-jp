@@ -10,7 +10,7 @@ FSRSで使用される記憶の公式: [アルゴリズム](The-Algorithm.md)
 
 FSRSのトレーニングプロセス: [最適化の仕組み](The-mechanism-of-optimization.md)
 
-SM-2、FSRS v3、FSRS v4、および他のアルゴリズムの比較: [ベンチマーク](The-benchmark.md)
+SM-2、FSRS v3、FSRS v4、および他のアルゴリズムの比較: [ベンチマーク](The-Benchmark.md)
 
 その他のリソース/ツール:
 
