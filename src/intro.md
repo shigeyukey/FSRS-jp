@@ -15,7 +15,6 @@
 </small>
 
 
-
 <p align="center">
   <a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki">
     <img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/9efb2ca5-51bd-411d-9694-a77b09f51fa7" width="150" height="150" alt="FSRS4Anki">
