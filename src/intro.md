@@ -1,3 +1,21 @@
+
+
+----
+
+訳注:  
+* この日本語版ページはボランティア開発者の[ <img src="https://raw.githubusercontent.com/shigeyukey/Anki-Manuals-jp/main/Shigeyuki_icon.png" style="width: 1.2em; height: 1.2em;"> Shigeyuki ](http://patreon.com/Shigeyuki)が実験的に翻訳したものです｡ AIツールとか使って自動翻訳したのでまだ誤訳が多いので注意してください｡ (たとえば"Good"が"良い"になったり"Bury"が"埋める"になったりしてます)  
+* ページ右上の✉️メールアイコンから誤訳を私に連絡できます →  [誤訳を連絡](https://forms.gle/FeBrhcgasYfYcQkZ7)
+* このページの英語版原文はこちら→ [①FSRS4Anki](https://github.com/open-spaced-repetition/fsrs4anki/), [②Wiki](https://github.com/open-spaced-repetition/fsrs4anki/wiki)
+
+* その他のAnki日本語翻訳版はこちら  → [Anki翻訳版まとめ](https://shigeyukey.github.io/Anki-Manuals-jp/anki_manuals_jp.html)  
+
+最終更新日: 2024-08-19
+
+----
+
+
+
+
 <p align="center">
   <a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki">
     <img src="https://github.com/open-spaced-repetition/fsrs4anki/assets/32575846/9efb2ca5-51bd-411d-9694-a77b09f51fa7" width="150" height="150" alt="FSRS4Anki">
@@ -23,6 +41,8 @@ _✨ [フリー間隔反復スケジューラーアルゴリズム](The-Algorith
 
 # 目次
 
+- [FSRS4Anki](#fsrs4anki)
+- [目次](#目次)
 - [はじめに](#はじめに)
 - [始め方](#始め方)
 - [アドオンの互換性](#アドオンの互換性)
@@ -45,9 +65,9 @@ FSRS4Anki Helperは、FSRS4Anki Schedulerを補完するAnkiのアドオンで�
 
 # 始め方
 
-Anki v23.10以降を使用している場合は、[このチュートリアル](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md)を参照してください。
+Anki v23.10以降を使用している場合は、[このチュートリアル](tutorial.md)を参照してください。
 
-古いバージョンのAnkiを使用している場合は、[このチュートリアル](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial2.md)を参照してください。
+古いバージョンのAnkiを使用している場合は、[このチュートリアル](tutorial2.md)を参照してください。
 
 Anki v23.10以降では、FSRSの設定がはるかに簡単になっています。
 

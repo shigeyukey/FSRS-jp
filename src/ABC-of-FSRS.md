@@ -18,7 +18,7 @@ DSR値を正確に推定するために、FSRSはユーザーのレビュー履�
 
 ユーザーが望む保持率を選択できることに加えて、FSRSにはAnkiのデフォルトアルゴリズムと比較していくつかの利点があります。FSRSを使用すると、同じ保持率を達成するためにAnkiのデフォルトアルゴリズムよりも20〜30％少ないレビューで済みます。また、FSRSは遅延してレビューされたカードのスケジューリングが非常に得意です。例えば、ユーザーが数週間Ankiを休んだ場合などです。さらに、[FSRS4Anki Helperアドオン](https://github.com/open-spaced-repetition/fsrs4anki-helper)は、他では利用できないいくつかの便利な機能を提供します。
 
-Ankiのバージョンが23.10以降の場合は、[このガイド](https://github.com/open-spaced-repetition/fsrs4anki/blob/main/docs/tutorial.md)を読んでください。Ankiのバージョンが23.10より古い場合は、FSRSのスタンドアロンバージョンを使用できます。インストール方法については、[このガイド](https://github.com/open-spaced-repetition/fsrs4anki#how-to-get-started)を読んでください。
+Ankiのバージョンが23.10以降の場合は、[このガイド](tutorial.md)を読んでください。Ankiのバージョンが23.10より古い場合は、FSRSのスタンドアロンバージョンを使用できます。インストール方法については、[このガイド](intro.md#始め方)を読んでください。
 
 FSRSが他のアルゴリズムと比較してどのように機能するかを確認したい場合は、次のページを読んでください: [ベンチマーク](https://github.com/open-spaced-repetition/fsrs-benchmark) および [FSRS vs SM-17](https://github.com/open-spaced-repetition/fsrs-vs-sm17)（最新のSuperMemoアルゴリズムの一つ）。
 
