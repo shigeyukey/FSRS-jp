@@ -10,9 +10,9 @@ FSRSで使用される記憶の公式: [アルゴリズム](The-Algorithm.md)
 
 FSRSのトレーニングプロセス: [最適化の仕組み](The-mechanism-of-optimization.md)
 
-SM-2、FSRS v3、FSRS v4、および他のアルゴリズムの比較: [ベンチマーク](https://github.com/open-spaced-repetition/srs-benchmark)
+SM-2、FSRS v3、FSRS v4、および他のアルゴリズムの比較: [ベンチマーク](The-benchmark.md)
 
 その他のリソース/ツール:
 
-- [FSRSに関する投稿や記事](https://www.reddit.com/r/Anki/comments/18jvyun/some_posts_and_articles_about_fsrs/)
+- [FSRSに関する投稿や記事(英語)](https://www.reddit.com/r/Anki/comments/18jvyun/some_posts_and_articles_about_fsrs/)
 - [Anki FSRS Visualizer (open-spaced-repetition.github.io)](https://open-spaced-repetition.github.io/anki_fsrs_visualizer/)
